@@ -1,0 +1,74 @@
+[hyoo_scout] {
+	--mol_theme_current: hsl( 30, 93%, 90% );
+	--mol_theme_control: hsl( 30 , 60% , 30% );
+}
+
+[hyoo_scout] [mol_theme="$mol_theme_base"] {
+	--mol_theme_back: hsl( 30 , 90% , 50% );
+	--mol_theme_text: white;
+	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
+	--mol_theme_control: white;
+	stroke: currentColor;
+}
+
+[hyoo_scout_filters] {
+	flex: 1 1 200px;
+}
+
+[hyoo_scout_gists] {
+	flex: 1 1 300px;
+}
+
+[hyoo_scout_gist] {
+	flex: 1000 1 400px;
+}
+
+[hyoo_scout_placeholder] {
+	flex: 1000 1 400px;
+}
+
+[hyoo_scout_gists_list] {
+	padding: .5rem;
+}
+
+[hyoo_scout_gist_link] {
+	display: flex;
+}
+
+[hyoo_scout_gist_link_icon] {
+	width: 2rem;
+}
+
+[hyoo_scout_gist_link_title] {
+	flex: 1 1 auto;
+}
+
+[hyoo_scout_gist_content] {
+	box-shadow: none;
+}
+
+[hyoo_scout_gist_stages_title] ,
+[hyoo_scout_gist_types_title] ,
+[hyoo_scout_gist_ages_title] {
+	font-weight: 600;
+}
+
+[hyoo_scout_gist_stages] > *,
+[hyoo_scout_gist_types] > * ,
+[hyoo_scout_gist_ages] > * {
+	margin: 0 .5rem;
+}
+
+[hyoo_scout_age_id="Малыши"] { color: hsl( 340 , 80% , 50% ) }
+[hyoo_scout_age_id="Среднячки"] { color: hsl( 280 , 80% , 50% ) }
+[hyoo_scout_age_id="Старшаки"] { color: hsl( 40 , 80% , 50% ) }
+
+[hyoo_scout_stage_id="Подготовительный"] { color: hsl( 100 , 80% , 40% ) }
+[hyoo_scout_stage_id="Начальный"] { color: hsl( 160 , 80% , 40% ) }
+[hyoo_scout_stage_id="Основной"] { color: hsl( 220 , 80% , 50% ) }
+[hyoo_scout_stage_id="Завершающий"] { color: hsl( 280 , 80% , 50% ) }
+[hyoo_scout_stage_id="Аналитический"] { color: hsl( 340 , 80% , 50% ) }
+
+[hyoo_scout_feedback] {
+	padding: .5rem 1rem;
+}
