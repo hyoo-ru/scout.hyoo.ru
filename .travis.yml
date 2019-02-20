@@ -12,12 +12,12 @@ install:
 script:
   - npm start hyoo/scout
   - rm hyoo/scout/.gitignore
-  - mv hyoo/scout/CNAME hyoo/scout/-/CNAME
-  - mv hyoo/scout scout.hyoo.ru
+  - mv hyoo/scout/- scout.hyoo.ru
+  - mv hyoo/scout/CNAME scout.hyoo.ru/CNAME
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: ./-
+  local_dir: .
   on:
     branch: master
