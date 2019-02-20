@@ -12,6 +12,7 @@ install:
 script:
   - npm start hyoo/scout
   - rm hyoo/scout/.gitignore
+  - mv hyoo/scout/CNAME hyoo/scout/-/CNAME
   - mv hyoo/scout scout.hyoo.ru
 deploy:
   provider: pages
