@@ -27,6 +27,32 @@
 	flex: 1000 1 400px;
 }
 
+[hyoo_scout_filter_aspect] {
+	padding: .5rem;
+	display :flex;
+	flex-direction: column;
+	box-shadow: 0 0 0 1px var(--mol_theme_line);
+	background: var(--mol_theme_back);
+}
+
+[hyoo_scout_filter_aspect_title] {
+	padding: .5rem;
+	font-weight: 600;
+}
+
+[hyoo_scout_filter_aspect_tags] {
+	display: flex;
+	flex-direction: column;
+}
+
+[hyoo_scout_filter_tag] {
+	padding-left: 1.5rem;
+}
+
+[hyoo_scout_filter_tag][mol_check_checked] {
+	font-weight: 600;
+}
+
 [hyoo_scout_gists_list] {
 	padding: .5rem;
 }
@@ -47,28 +73,30 @@
 	box-shadow: none;
 }
 
-[hyoo_scout_gist_stages_title] ,
-[hyoo_scout_gist_types_title] ,
-[hyoo_scout_gist_ages_title] {
+[hyoo_scout_gist_aspect] {
 	font-weight: 600;
 }
 
-[hyoo_scout_gist_stages] > *,
-[hyoo_scout_gist_types] > * ,
-[hyoo_scout_gist_ages] > * {
+[hyoo_scout_gist_aspect] > * {
 	margin: 0 .5rem;
 }
 
-[hyoo_scout_age_id="Малыши"] { color: hsl( 340 , 80% , 50% ) }
-[hyoo_scout_age_id="Среднячки"] { color: hsl( 280 , 80% , 50% ) }
-[hyoo_scout_age_id="Старшаки"] { color: hsl( 40 , 80% , 50% ) }
+[hyoo_scout_tag_id="Любой"] { color: hsl( 40 , 80% , 50% ) }
+[hyoo_scout_tag_id="Малыши"] { color: hsl( 340 , 80% , 50% ) }
+[hyoo_scout_tag_id="Среднячки"] { color: hsl( 280 , 80% , 50% ) }
+[hyoo_scout_tag_id="Старшаки"] { color: hsl( 40 , 80% , 50% ) }
 
-[hyoo_scout_stage_id="Подготовительный"] { color: hsl( 100 , 80% , 40% ) }
-[hyoo_scout_stage_id="Начальный"] { color: hsl( 160 , 80% , 40% ) }
-[hyoo_scout_stage_id="Основной"] { color: hsl( 220 , 80% , 50% ) }
-[hyoo_scout_stage_id="Завершающий"] { color: hsl( 280 , 80% , 50% ) }
-[hyoo_scout_stage_id="Аналитический"] { color: hsl( 340 , 80% , 50% ) }
+[hyoo_scout_tag_id="Знакомство"] { color: hsl( 100 , 80% , 40% ) }
+[hyoo_scout_tag_id="Раскрепощение"] { color: hsl( 160 , 80% , 40% ) }
+[hyoo_scout_tag_id="Внимание"] { color: hsl( 220 , 80% , 50% ) }
+[hyoo_scout_tag_id="Разминка"] { color: hsl( 280 , 80% , 50% ) }
+[hyoo_scout_tag_id="Обратная связь"] { color: hsl( 340 , 80% , 50% ) }
 
 [hyoo_scout_feedback] {
 	padding: .5rem 1rem;
 }
+
+:not([mol_check_checked]) > [hyoo_scout_filter_tag_title] {
+	color: var(--mol_theme_shade);
+}
+

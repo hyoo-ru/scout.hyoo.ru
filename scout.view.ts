@@ -6,7 +6,23 @@ namespace $.$$ {
 		}
 
 		gist_links() {
-			return this.data().map( gist => this.Gist_link( gist.id() ) )
+			return this.data()
+			.filter( gist => {
+
+				const tags = gist.tags()
+				
+				aspect : for( const aspect in tags ) {
+
+					for( const tag of tags[ aspect ] ) {
+						if( this.filter_tag_checked({ aspect , tag }) ) continue aspect
+					}
+					
+					return false
+				}
+				
+				return true
+			} )
+			.map( gist => this.Gist_link( gist.id() ) )
 		}
 
 		@ $mol_mem_key
@@ -26,16 +42,16 @@ namespace $.$$ {
 			return this.gist( id ).content()
 		}
 
-		gist_stages() {
-			return this.gist_current().stages().map( stage => this.Gist_stage( stage ) )
+		tag_title( key : { aspect : string , tag : string } ) {
+			return key.tag
 		}
 
-		gist_types() {
-			return this.gist_current().types().map( stage => this.Gist_type( stage ) )
+		gist_aspects() {
+			return Object.keys( this.gist_current().tags() ).map( aspect => this.Gist_aspect( aspect ) )
 		}
 
-		gist_ages() {
-			return this.gist_current().ages().map( stage => this.Gist_age( stage ) )
+		gist_aspect_tags( aspect : string ) {
+			return this.gist_current().tags()[ aspect ].map( ( tag : string ) => this.Gist_tag({ aspect , tag }) )
 		}
 
 		gist_current() {
@@ -46,9 +62,24 @@ namespace $.$$ {
 			return this.gist( id )
 		}
 
+		filter_aspects() {
+			return Object.keys( $hyoo_scout_gist.make({}).tags() ).map( aspect => this.Filter_aspect( aspect ) )
+		}
+
+		filter_aspect_tags( aspect : string ) {
+			return $hyoo_scout_gist.make({}).tags()[ aspect ].map( ( tag : string ) => this.Filter_tag({ aspect , tag }) )
+		}
+
+		@ $mol_mem_key
+		filter_tag_checked( key : { aspect : string , tag : string } , next? : boolean ) {
+			next = this.$.$mol_state_local.value( `${ this }.filter_tag_checked(${ JSON.stringify( key ) })` , next )
+			if( next == null ) next = super.filter_tag_checked( key )
+			return next
+		}
+
 		pages() {
 			return [
-				// this.Filters() ,
+				this.Filter() ,
 				this.Gists() ,
 				... this.gist_current() ? [ this.Gist( this.gist_current().id() ) ] : [] ,
 			]
