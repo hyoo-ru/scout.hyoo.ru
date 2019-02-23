@@ -3,6 +3,11 @@
 	"name": "Игротека вожатого",
 	"icons": [
 		{
+			"src": "../../mol/logo/logo_16.png",
+			"type": "image/png",
+			"sizes": "16x16"
+		},
+		{
 			"src": "../../mol/logo/logo_48.png",
 			"type": "image/png",
 			"sizes": "48x48"
@@ -11,6 +16,11 @@
 			"src": "../../mol/logo/logo_96.png",
 			"type": "image/png",
 			"sizes": "96x96"
+		},
+		{
+			"src": "../../mol/logo/logo_128.png",
+			"type": "image/png",
+			"sizes": "128x128"
 		},
 		{
 			"src": "../../mol/logo/logo_192.png",

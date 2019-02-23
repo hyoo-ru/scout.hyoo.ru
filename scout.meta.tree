@@ -1,6 +1,8 @@
 deploy \/mol/logo/logo.svg
+deploy \/mol/logo/logo_16.png
 deploy \/mol/logo/logo_48.png
 deploy \/mol/logo/logo_96.png
+deploy \/mol/logo/logo_128.png
 deploy \/mol/logo/logo_192.png
 deploy \/mol/logo/logo_512.png
 deploy \/hyoo/scout/manifest.json
