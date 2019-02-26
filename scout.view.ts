@@ -66,8 +66,18 @@ namespace $.$$ {
 			return Object.keys( $hyoo_scout_gist.make({}).tags() ).map( aspect => this.Filter_aspect( aspect ) )
 		}
 
+		@ $mol_mem_key
 		filter_aspect_tags( aspect : string ) {
-			return $hyoo_scout_gist.make({}).tags()[ aspect ].map( ( tag : string ) => this.Filter_tag({ aspect , tag }) )
+
+			const values = new Set< string >()
+			
+			for( const gist of this.data() ) {
+				for( const value of gist.tags()[ aspect ] ) {
+					values.add( value )
+				}
+			}
+			
+			return [ ... values ].map( ( tag : string ) => this.Filter_tag({ aspect , tag }) )
 		}
 
 		@ $mol_mem_key
