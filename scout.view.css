@@ -95,7 +95,8 @@
 [hyoo_scout_tag_id="Обратная связь"] { color: hsl( 300 , 80% , 50% ) }
 
 [hyoo_scout_tag_id="Нет"] { color: hsl( 100 , 80% , 50% ) }
-[hyoo_scout_tag_id="Бумага и карандаши"] { color: hsl( 150 , 80% , 50% ) }
+[hyoo_scout_tag_id="Простой"] { color: hsl( 150 , 80% , 50% ) }
+[hyoo_scout_tag_id="Бумага и карандаши"] { color: hsl( 200 , 80% , 50% ) }
 
 [hyoo_scout_feedback] {
 	padding: .5rem 1rem;
