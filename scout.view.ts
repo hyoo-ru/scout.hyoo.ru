@@ -1,8 +1,8 @@
 namespace $.$$ {
 	export class $hyoo_scout extends $.$hyoo_scout {
 
-		id( id : string ) {
-			return id
+		key( key : string ) {
+			return key
 		}
 
 		gist_links() {
@@ -22,12 +22,12 @@ namespace $.$$ {
 				
 				return true
 			} )
-			.map( gist => this.Gist_link( gist.id() ) )
+			.map( gist => this.Gist_link( gist.title() ) )
 		}
 
 		@ $mol_mem_key
 		gist( id : string ) {
-			return this.data().find( gist => gist.id() === id ) as $hyoo_scout_gist
+			return this.data().find( gist => gist.title() === id ) as $hyoo_scout_gist
 		}
 
 		gist_icon( id : string ) {
@@ -91,7 +91,7 @@ namespace $.$$ {
 			return [
 				this.Filter() ,
 				this.Gists() ,
-				... this.gist_current() ? [ this.Gist( this.gist_current().id() ) ] : [] ,
+				... this.gist_current() ? [ this.Gist( this.gist_current().title() ) ] : [] ,
 			]
 		}
 
