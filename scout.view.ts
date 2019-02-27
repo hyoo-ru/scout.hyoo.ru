@@ -63,7 +63,9 @@ namespace $.$$ {
 		}
 
 		filter_aspects() {
-			return Object.keys( $hyoo_scout_gist.make({}).tags() ).map( aspect => this.Filter_aspect( aspect ) )
+			return Object.keys( $hyoo_scout_gist.make({}).tags() )
+			.filter( aspect => this.filter_aspect_tags( aspect ).length > 1 )
+			.map( aspect => this.Filter_aspect( aspect ) )
 		}
 
 		@ $mol_mem_key
@@ -76,8 +78,8 @@ namespace $.$$ {
 					values.add( value )
 				}
 			}
-			
-			return [ ... values ].map( ( tag : string ) => this.Filter_tag({ aspect , tag }) )
+
+			return [ ... values ].sort().map( ( tag : string ) => this.Filter_tag({ aspect , tag }) )
 		}
 
 		@ $mol_mem_key
