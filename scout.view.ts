@@ -22,6 +22,7 @@ namespace $.$$ {
 				
 				return true
 			} )
+			.filter( $mol_match_text( this.gists_filter_query() , gist => [ gist.title() , gist.content() ] ) )
 			.sort( $mol_compare_text( gist => gist.title() ) )
 			.map( gist => this.Gist_link( gist.title() ) )
 		}
