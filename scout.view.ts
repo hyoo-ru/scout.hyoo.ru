@@ -22,6 +22,7 @@ namespace $.$$ {
 				
 				return true
 			} )
+			.sort( $mol_compare_text( gist => gist.title() ) )
 			.map( gist => this.Gist_link( gist.title() ) )
 		}
 
@@ -46,8 +47,12 @@ namespace $.$$ {
 			return key.tag
 		}
 
-		gist_aspects() {
-			return Object.keys( this.gist_current().tags() ).map( aspect => this.Gist_aspect( aspect ) )
+		gist_aspects( id : string ) {
+			return Object.keys( this.gist( id ).tags() ).map( aspect => this.Gist_aspect( aspect ) )
+		}
+
+		gist_remarks( id : string , next? : string ) {
+			return this.$.$mol_state_local.value( `${ this }.gist_remarks(${ JSON.stringify( id ) })` , next ) || ''
 		}
 
 		gist_aspect_tags( aspect : string ) {
@@ -79,7 +84,9 @@ namespace $.$$ {
 				}
 			}
 
-			return [ ... values ].sort().map( ( tag : string ) => this.Filter_tag({ aspect , tag }) )
+			return [ ... values ]
+			.sort( $mol_compare_text( tag => tag ) )
+			.map( ( tag : string ) => this.Filter_tag({ aspect , tag }) )
 		}
 
 		@ $mol_mem_key
