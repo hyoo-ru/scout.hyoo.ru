@@ -51,7 +51,9 @@ $hyoo_scout $mol_book
 	Gist_link!id $mol_link
 		sub /
 			<= Gist_link_icon!id $mol_view sub / <= gist_icon!id \
-			<= Gist_link_title!id $mol_view sub / <= gist_title!id \
+			<= Gist_link_title!id $mol_dimmer
+				needle <= gists_filter_query
+				haystack <= gist_title!id \
 		arg * gist <= key!id \
 	
 	Gist!id $mol_page
