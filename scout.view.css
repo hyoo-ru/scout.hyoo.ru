@@ -107,14 +107,16 @@
 [hyoo_scout_tag_id="Знакомство"] { color: hsl( 50 , 80% , 40% ) }
 [hyoo_scout_tag_id="Раскрепощение"] { color: hsl( 100 , 80% , 40% ) }
 [hyoo_scout_tag_id="Разминка"] { color: hsl( 150 , 80% , 40% ) }
-[hyoo_scout_tag_id="Креатив"] { color: hsl( 200 , 80% , 40% ) }
+[hyoo_scout_tag_id="Творчество"] { color: hsl( 200 , 80% , 40% ) }
 [hyoo_scout_tag_id="Сплочение"] { color: hsl( 250 , 80% , 40% ) }
 [hyoo_scout_tag_id="Обратная связь"] { color: hsl( 300 , 80% , 40% ) }
 [hyoo_scout_tag_id="Обсуждение"] { color: hsl( 350 , 80% , 40% ) }
 [hyoo_scout_tag_id="Лидерство"] { color: hsl( 30 , 80% , 40% ) }
+[hyoo_scout_tag_id="Доверие"] { color: hsl( 80 , 80% , 40% ) }
+[hyoo_scout_tag_id="Усвоение"] { color: hsl( 130 , 80% , 40% ) }
 
 [hyoo_scout_tag_id="Нет"] { color: hsl( 100 , 80% , 40% ) }
-[hyoo_scout_tag_id="Специальные карточки"] { color: hsl( 150 , 80% , 40% ) }
+[hyoo_scout_tag_id="Особый"] { color: hsl( 150 , 80% , 40% ) }
 [hyoo_scout_tag_id="Бумага"] { color: hsl( 200 , 80% , 40% ) }
 [hyoo_scout_tag_id="Скотч"] { color: hsl( 250 , 80% , 40% ) }
 [hyoo_scout_tag_id="Стикеры"] { color: hsl( 300 , 80% , 40% ) }
@@ -122,6 +124,7 @@
 [hyoo_scout_tag_id="Ручки"] { color: hsl( 40 , 80% , 40% ) }
 [hyoo_scout_tag_id="Платочек"] { color: hsl( 90 , 80% , 40% ) }
 [hyoo_scout_tag_id="Удобная обувь"] { color: hsl( 140 , 80% , 40% ) }
+[hyoo_scout_tag_id="Мешочек"] { color: hsl( 190 , 80% , 40% ) }
 
 [hyoo_scout_tag_id="Нет"] { color: hsl( 100 , 80% , 40% ) }
 [hyoo_scout_tag_id="1 минута"] { color: hsl( 150 , 80% , 40% ) }
@@ -130,6 +133,11 @@
 [hyoo_scout_tag_id="20 минут"] { color: hsl( 300 , 80% , 40% ) }
 [hyoo_scout_tag_id="30 минут"] { color: hsl( 350 , 80% , 40% ) }
 [hyoo_scout_tag_id="40 минут"] { color: hsl( 40 , 80% , 40% ) }
+
+[hyoo_scout_tag_id="Любое"] { color: hsl( 100 , 80% , 40% ) }
+[hyoo_scout_tag_id="Зал"] { color: hsl( 150 , 80% , 40% ) }
+[hyoo_scout_tag_id="Просторное"] { color: hsl( 200 , 80% , 40% ) }
+[hyoo_scout_tag_id="Тихое"] { color: hsl( 250 , 80% , 40% ) }
 
 [hyoo_scout_feedback] {
 	padding: .5rem 1rem;
