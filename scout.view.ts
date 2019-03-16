@@ -9,26 +9,49 @@ namespace $.$$ {
 			return `${ super.gists_title() } (${ this.gist_links().length })`
 		}
 
+		@ $mol_mem
+		gists_favorite( next? : boolean ) {
+			return this.$.$mol_state_local.value( `${ this }.gists_favorite()` , next ) || false
+		}
+
+		@ $mol_mem_key
+		gist_favorite( id : string , next? : boolean ) {
+			return this.$.$mol_state_local.value( `${ this }.gist_favorite(${ id })` , next ) || false
+		}
+
 		gist_links() {
-			return this.data()
-			.filter( gist => {
 
-				const tags = gist.tags()
-				
-				aspect : for( const aspect in tags ) {
+			let gists = this.data()
 
-					for( const tag of tags[ aspect ] ) {
-						if( this.filter_tag_checked({ aspect , tag }) ) continue aspect
+			if( this.gists_favorite() ) {
+
+				gists = gists.filter( gist => this.gist_favorite( gist.title() ) )
+			
+			} else {
+			
+				gists = gists.filter( gist => {
+
+					const tags = gist.tags()
+					
+					aspect : for( const aspect in tags ) {
+
+						for( const tag of tags[ aspect ] ) {
+							if( this.filter_tag_checked({ aspect , tag }) ) continue aspect
+						}
+						
+						return false
 					}
 					
-					return false
-				}
+					return true
+				} )
 				
-				return true
-			} )
-			.filter( $mol_match_text( this.gists_filter_query() , gist => [ gist.title() , gist.content() ] ) )
-			.sort( $mol_compare_text( gist => gist.title() ) )
-			.map( gist => this.Gist_link( gist.title() ) )
+			}
+
+			gists = gists.filter( $mol_match_text( this.gists_filter_query() , gist => [ gist.title() , gist.content() ] ) )
+			
+			gists.sort( $mol_compare_text( gist => gist.title() ) )
+			
+			return gists.map( gist => this.Gist_link( gist.title() ) )
 		}
 
 		@ $mol_mem_key

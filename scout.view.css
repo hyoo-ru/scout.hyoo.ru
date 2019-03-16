@@ -58,8 +58,16 @@
 	font-weight: 600;
 }
 
+[hyoo_scout_gists_favorite] {
+	align-items: center;
+}
+
 [hyoo_scout_gists_list] {
 	padding: .5rem;
+}
+
+[hyoo_scout_gist_favorite] {
+	align-items: center;
 }
 
 [hyoo_scout_gist_link] {
