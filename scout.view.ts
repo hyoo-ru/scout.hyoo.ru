@@ -5,6 +5,10 @@ namespace $.$$ {
 			return key
 		}
 
+		gists_title() {
+			return `${ super.gists_title() } (${ this.gist_links().length })`
+		}
+
 		gist_links() {
 			return this.data()
 			.filter( gist => {

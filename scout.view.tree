@@ -30,7 +30,7 @@ $hyoo_scout $mol_book
 					title \Ошибки? Предложения?
 					uri \https://vk.com/scout_hyoo_ru
 		<= Gists $mol_page
-			title \Игротека вожатого
+			title <= gists_title \Игротека вожатого
 			minimal_width 400
 			event_top?val <=> event_front_up?val
 			body /
