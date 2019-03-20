@@ -6,7 +6,7 @@ namespace $.$$ {
 		}
 
 		gists_title() {
-			return `${ super.gists_title() } (${ this.gist_links().length })`
+			return `${ super.gists_title() } (${ this.gist_links().length } шт)`
 		}
 
 		@ $mol_mem
@@ -18,6 +18,21 @@ namespace $.$$ {
 		gist_favorite( id : string , next? : boolean ) {
 			return this.$.$mol_state_local.value( `${ this }.gist_favorite(${ id })` , next ) || false
 		}
+
+		@ $mol_mem_key
+		gists_favorite_duration() {
+			
+			const dur = this.data()
+			.filter( gist => this.gist_favorite( gist.title() ) )
+			.reduce( ( sum , gist )=> sum + parseInt( gist.tags()['Длительность'][0] ) , 0 )
+			
+			return dur ? `${ dur } мин` : ''
+		}
+
+		@ $mol_mem_key
+		gists_favorite_label() {
+			return this.gists_favorite_duration() ? [ this.Gists_favorite_duration() ] : []
+		}			
 
 		gist_links() {
 

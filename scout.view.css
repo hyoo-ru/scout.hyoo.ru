@@ -60,6 +60,12 @@
 
 [hyoo_scout_gists_favorite] {
 	align-items: center;
+	flex-direction: row-reverse;
+}
+
+[hyoo_scout_gists_favorite_duration] {
+	margin-right: .25rem;
+	color: var(--mol_theme_text);
 }
 
 [hyoo_scout_gists_list] {

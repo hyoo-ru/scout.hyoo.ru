@@ -38,6 +38,9 @@ $hyoo_scout $mol_book
 					hint \Только избранное
 					checked?val <=> gists_favorite?val false
 					Icon <= Gists_favorite_icon $mol_icon_favorite
+					label <= gists_favorite_label /
+						<= Gists_favorite_duration $mol_view
+							sub / <= gists_favorite_duration \
 			body /
 				<= Gists_search $mol_search
 					query?val <=> gists_filter_query?val \
