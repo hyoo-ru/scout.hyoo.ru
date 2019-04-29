@@ -129,6 +129,7 @@
 [hyoo_scout_tag_id="Доверие"] { color: hsl( 80 , 80% , 40% ) }
 [hyoo_scout_tag_id="Усвоение"] { color: hsl( 130 , 80% , 40% ) }
 [hyoo_scout_tag_id="Мышление"] { color: hsl( 180 , 80% , 40% ) }
+[hyoo_scout_tag_id="Развлечение"] { color: hsl( 230 , 80% , 40% ) }
 
 [hyoo_scout_tag_id="Нет"] { color: hsl( 100 , 80% , 40% ) }
 [hyoo_scout_tag_id="Особый"] { color: hsl( 150 , 80% , 40% ) }
@@ -156,6 +157,7 @@
 [hyoo_scout_tag_id="Тихое"] { color: hsl( 250 , 80% , 40% ) }
 
 [hyoo_scout_feedback] {
+	display: block;
 	padding: .5rem 1rem;
 }
 
