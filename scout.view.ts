@@ -102,9 +102,9 @@ namespace $.$$ {
 			return this.gist_current().tags()[ aspect ].map( ( tag : string ) => this.Gist_tag({ aspect , tag }) )
 		}
 
-		gist_current() {
+		gist_current( next? : $hyoo_scout_gist ) {
 
-			const id = this.$.$mol_state_arg.value( 'gist' )
+			const id = this.$.$mol_state_arg.value( 'gist' , next && next.title() )
 			if( !id ) return null
 
 			return this.gist( id )
@@ -134,6 +134,10 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		filter_tag_checked( key : { aspect : string , tag : string } , next? : boolean ) {
+			if( next !== undefined ) new $mol_defer( ()=> {
+				this.gist_current( null )
+				this.Gists().Body().scroll_top( 0 )
+			} )
 			next = this.$.$mol_state_local.value( `${ this }.filter_tag_checked(${ JSON.stringify( key ) })` , next )
 			if( next == null ) next = super.filter_tag_checked( key )
 			return next

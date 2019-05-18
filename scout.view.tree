@@ -21,7 +21,7 @@ $hyoo_scout $mol_book
 	pages /
 		<= Filter $mol_page
 			title \Фильтры
-			minimal_width 200
+			minimal_width 400
 			event_top?val <=> event_front_up?val
 			body /
 				<= Filter_aspects $mol_list rows <= filter_aspects /
@@ -48,7 +48,7 @@ $hyoo_scout $mol_book
 	
 	Filter_aspect!id $mol_list rows /
 		<= Filter_aspect_title!id $mol_view sub / <= key!id \
-		<= Filter_aspect_tags!id $mol_list rows <= filter_aspect_tags!id /
+		<= Filter_aspect_tags!id $mol_row sub <= filter_aspect_tags!id /
 	Filter_tag!id $mol_check
 		checked?val <=> filter_tag_checked!id?val true
 		label /

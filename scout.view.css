@@ -12,7 +12,8 @@
 }
 
 [hyoo_scout_filter] {
-	flex: 1 1 200px;
+	flex: 1 1 400px;
+	max-width: 400px;
 }
 
 [hyoo_scout_gists] {
@@ -46,16 +47,15 @@
 }
 
 [hyoo_scout_filter_aspect_tags] {
-	display: flex;
-	flex-direction: column;
+	padding: 0;
 }
 
 [hyoo_scout_filter_tag] {
-	padding-left: 1.5rem;
+	margin: 0;
+	font-weight: 600;
 }
 
 [hyoo_scout_filter_tag][mol_check_checked] {
-	font-weight: 600;
 }
 
 [hyoo_scout_gists_favorite] {
