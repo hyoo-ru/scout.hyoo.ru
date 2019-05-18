@@ -12,8 +12,9 @@
 }
 
 [hyoo_scout_filter] {
-	flex: 1 1 400px;
-	max-width: 400px;
+	flex: 0 1 400px;
+	width: 400px;
+	max-width: 75%;
 }
 
 [hyoo_scout_gists] {
