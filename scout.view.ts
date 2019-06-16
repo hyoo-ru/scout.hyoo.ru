@@ -62,11 +62,11 @@ namespace $.$$ {
 				
 			}
 
-			gists = gists.filter( $mol_match_text( this.gists_filter_query() , gist => [ gist.title() , gist.content() ] ) )
+			const filtered = gists.filter( $mol_match_text( this.gists_filter_query() , gist => [ gist.title() , gist.content() ] ) )
 			
-			gists.sort( $mol_compare_text( gist => gist.title() ) )
+			filtered.sort( $mol_compare_text( gist => gist.title() ) )
 			
-			return gists.map( gist => this.Gist_link( gist.title() ) )
+			return filtered.map( gist => this.Gist_link( gist.title() ) )
 		}
 
 		@ $mol_mem_key
