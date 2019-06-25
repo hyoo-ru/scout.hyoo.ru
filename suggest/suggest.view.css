@@ -1,0 +1,21 @@
+[hyoo_scout_suggest] {
+	flex: 1000 1 400px;
+}
+
+[hyoo_scout_suggest_form] [mol_switch] {
+	background: var(--mol_theme_field);
+}
+
+[hyoo_scout_suggest_duration_option] ,
+[hyoo_scout_suggest_prep_option] {
+	flex: 1 1 6rem;
+}
+
+[hyoo_scout_suggest_age_option] ,
+[hyoo_scout_suggest_place_option] {
+	flex: 1 1 8rem;
+}
+
+[hyoo_scout_suggest_reason_option] {
+	flex: 1 1 10rem;
+}

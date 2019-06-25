@@ -1,0 +1,111 @@
+$hyoo_scout_suggest $mol_page
+	title \Новая игра
+	minimal_width 400
+	tools /
+		<= Close $mol_link
+			arg * suggest null
+			sub / <= close_icon $mol_icon_cross
+	body /
+		<= Form $mol_form
+			form_fields /
+				<= Name_field $mol_form_field
+					name \Название
+					bid <= name_bid \
+					control <= Name $mol_string
+						hint \Раз два три
+						value?val <=> name?val \
+				<= Icon_field $mol_form_field
+					name \Эмодзи
+					bid <= icon_bid \
+					control <= Icon $mol_string
+						length_max 2
+						hint \?
+						value?val <=> icon?val \
+				<= Descr_field $mol_form_field
+					name \Описание
+					bid <= descr_bid \
+					control <= Descr $mol_textarea
+						hint \Вместе считаем - вот и вся игра.
+						value?val <=> descr?val \
+				<= Reason_field $mol_form_field
+					name \Цель
+					bid <= reason_bid \
+					control <= Reason $mol_switch
+						value?val <=> reason?val \
+						options /
+							\Внимание
+							\Группировка
+							\Доверие
+							\Знакомство
+							\Лидерство
+							\Мышление
+							\Обратная связь
+							\Обсуждение
+							\Развлечение
+							\Разминка
+							\Раскрепощение
+							\Сплочение
+							\Творчество
+							\Усвоение
+				<= Age_field $mol_form_field
+					name \Возраст
+					control <= Age $mol_switch
+						value?val <=> age?val \any
+						options *
+							low \Малыши
+							mid \Среднячки
+							high \Старшаки
+							any \Любой
+				<= Place_field $mol_form_field
+					name \Место
+					control <= Place $mol_switch
+						value?val <=> place?val \any
+						options *
+							hall \Зал
+							space \Просторное
+							quiet \Тихое
+							any \Любое
+				<= Stuff_field $mol_form_field
+					name \Реквизит
+					control <= Stuff $mol_string
+						hint \Руки, Ноги, Голова
+						value?val <=> stuff?val \
+				<= Prep_field $mol_form_field
+					name \Подготовка
+					bid <= prep_bid \
+					control <= Prep $mol_switch
+						value?val <=> prep?val \0
+						options *
+							0 \Нет
+							1 \1 минута
+							5 \5 минут
+							10 \10 минут
+							20 \20 минут
+							40 \40 минут
+				<= Duration_field $mol_form_field
+					name \Длительность
+					control <= Duration $mol_switch
+						value?val <=> duration?val \10
+						options *
+							1 \1 минута
+							5 \5 минут
+							10 \10 минут
+							20 \20 минут
+							40 \40 минут
+							60 \60 минут
+			- Bar_fields $mol_view
+				sub <= fields /
+					<= Main_bar $mol_bar sub /
+						<= Name_field
+						<= Icon_field
+					<= Descr_field
+					<= Tags_bar $mol_bar sub /
+						<= Duration_field
+						<= Reason_field
+			submit_blocked => submit_blocked
+			buttons /
+				<= Submit $mol_button_major
+					sub / \Добавить игру
+					event_click?val <=> submit?val null
+					disabled <= submit_blocked
+

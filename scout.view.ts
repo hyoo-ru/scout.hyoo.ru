@@ -143,11 +143,16 @@ namespace $.$$ {
 			return next
 		}
 
+		suggest() {
+			return this.$.$mol_state_arg.value( 'suggest' ) !== null
+		}
+
 		pages() {
 			return [
 				this.Filter() ,
 				this.Gists() ,
 				... this.gist_current() ? [ this.Gist( this.gist_current().title() ) ] : [] ,
+				... this.suggest() ? [ this.Suggest() ] : [] ,
 			]
 		}
 

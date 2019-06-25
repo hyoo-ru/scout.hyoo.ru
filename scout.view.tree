@@ -33,6 +33,12 @@ $hyoo_scout $mol_book
 			minimal_width 400
 			event_top?val <=> event_front_up?val
 			tools /
+				<= Suggest_link $mol_link
+					arg *
+						suggest \
+						gist null
+					sub /
+						<= Suggest_icon $mol_icon_plus
 				<= Gists_favorite $mol_check_icon
 					hint \Только избранное
 					checked?val <=> gists_favorite?val false
@@ -44,6 +50,8 @@ $hyoo_scout $mol_book
 				<= Gists_search $mol_search
 					query?val <=> gists_filter_query?val \
 				<= Gists_list $mol_list rows <= gist_links /
+		<= Suggest $hyoo_scout_suggest
+			event_top?val <=> event_front_up?val
 	Placeholder $hyoo_scout_placeholder
 	
 	Filter_aspect!id $mol_list rows /
@@ -74,7 +82,7 @@ $hyoo_scout $mol_book
 				Icon <= Gist_favorite_icon $mol_icon_favorite
 			<= Gist_close $mol_link
 				arg * gist null
-				sub / <= GistClose_icon $mol_icon_cross
+				sub / <= Gist_close_icon $mol_icon_cross
 		body /
 			<= Gist_content!id $mol_text text <= gist_content!id \
 			<= Gist_aspects!id $mol_list rows <= gist_aspects!id /
