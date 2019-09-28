@@ -102,6 +102,9 @@ $mol_touch $mol_plugin
 	pan?val /
 		0
 		0
+	pos?val /
+		NaN
+		NaN
 	-
 	start_pos?val null
 	swipe_precision 16
@@ -129,7 +132,7 @@ $mol_touch $mol_plugin
 		mousedown?event <=> event_start?event null
 		mousemove?event <=> event_move?event null
 		mouseup?event <=> event_end?event null
-	event_async *
+		mouseleave?event <=> event_leave?event null
 		wheel?event <=> event_wheel?event null
 
 $mol_ghost $mol_view
@@ -186,7 +189,9 @@ $mol_link $mol_view
 $mol_svg $mol_view
 	dom_name \svg
 	dom_name_space \http://www.w3.org/2000/svg
-
+	text_width?text 0
+	font_size 16
+	font_family \
 
 $mol_svg_root $mol_svg
 	dom_name \svg
@@ -204,11 +209,13 @@ $mol_svg_path $mol_svg
 
 $mol_icon $mol_svg_root
 	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
 	sub /
 		<= Path $mol_svg_path
 			geometry <= path \
 
-$mol_icon_plus $mol_icon path \M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z
+$mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 
 $mol_check_icon $mol_check
 
@@ -217,6 +224,7 @@ $mol_icon_favorite $mol_icon path \M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,
 $mol_bar $mol_view
 
 $mol_pop $mol_view
+	event * keydown?event <=> keydown?event null
 	showed?val false
 	plugins /
 		<= Meter $mol_meter
@@ -273,8 +281,9 @@ $mol_nav $mol_plugin
 $mol_string $mol_view
 	dom_name \input
 	enabled true
-	debounce 200
+	debounce 0
 	minimal_height 40
+	autocomplete false
 	field *
 		^
 		disabled <= disabled false
@@ -282,13 +291,14 @@ $mol_string $mol_view
 		placeholder <= hint \
 		type <= type?val \text
 		spellcheck <= spellcheck false
+		autocomplete <= autocomplete_native \
 	attr *
 		^
 		maxlength <= length_max Infinity
 	event *
 		^
 		input?event <=> event_change?event null
-		keypress?event <=> event_key_press?event null
+		keydown?event <=> event_key_press?event null
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
@@ -314,8 +324,9 @@ $mol_select $mol_pop
 				<= option_rows
 			current_y?component <=> option_focused?component null
 			cycle?val <=> nav_cycle?val true
-	showed <= options_showed false
+	showed?val <=> options_showed?val false
 	Anchor <= Trigger $mol_button_minor
+		click?event <=> open?event null
 		sub <= trigger_content /
 			<= option_content_current /
 			<= Filter $mol_string
@@ -364,6 +375,10 @@ $mol_row_sub $mol_view
 
 $mol_form $mol_view
 	submit_blocked false
+	event *
+		^
+		keydown?event <=> keydown?event null
+	submit?event null
 	sub /
 		<= Bar_fields $mol_view
 			sub <= form_fields /
@@ -469,6 +484,21 @@ $mol_grid_cell $mol_view
 
 $mol_grid_number $mol_grid_cell
 
+$mol_image $mol_view
+	dom_name \img
+	field *
+		^
+		src <= uri \
+		alt <= title
+
+$mol_link_iconed $mol_link
+	sub /
+		<= Icon $mol_image
+			uri <= icon \
+		<= content /
+			<= title <= uri
+	host \
+
 $mol_text $mol_list
 	uri_base \
 	text \
@@ -515,13 +545,12 @@ $mol_text_span $mol_view
 		mol_text_type <= type?val \
 	sub <= content?val /
 
-$mol_text_link $mol_view
-	dom_name \a
+$mol_text_link $mol_link_iconed
 	attr *
 		^
 		mol_text_type <= type?val \
-		href <= link?val \
-	sub <= content?val /
+	uri <= link?val \
+	content?val /
 
 $mol_text_image $mol_view
 	dom_name \object

@@ -1,9 +1,7 @@
-function require( path ){ return $node[ path ] }
-;
+function require( path ){ return $node[ path ] };
 
 var $node = $node || {}
 void function( module ) { var exports = module.exports = this; function require( id ) { return $node[ id.replace( /^.\// , "' + src.parent().relate( this.root().resolve( 'node_modules' ) ) + '/" ) + ".js" ] }; 
-
 ;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -12,7 +10,6 @@ module.exports;
 ;
 
 $node[ "../mol/mol.js" ] = $node[ "../mol/mol.js" ] = module.exports }.call( {} , {} )
-
 ;
 "use strict"
 /// Fake namespace for optional overrides
@@ -30,16 +27,22 @@ $.$mol = $  // deprecated
 "use strict";
 var $;
 (function ($) {
-    function $mol_fail_hidden(error) {
-        throw error;
-    }
-    $.$mol_fail_hidden = $mol_fail_hidden;
     function $mol_fail(error) {
         throw error;
     }
     $.$mol_fail = $mol_fail;
 })($ || ($ = {}));
 //fail.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_fail_hidden(error) {
+        throw error;
+    }
+    $.$mol_fail_hidden = $mol_fail_hidden;
+})($ || ($ = {}));
+//hidden.js.map
 ;
 "use strict";
 var $;
@@ -308,7 +311,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    let filter = null;
+    let filter = undefined;
     $.$mol_log_filter = function $mol_log_filter(next) {
         if (next !== undefined) {
             if (next == null) {
@@ -344,7 +347,7 @@ var $;
                 if (prev)
                     prev();
                 started = true;
-                if (filter)
+                if (filter || prev)
                     console.group(name);
                 else
                     console.groupCollapsed(name);
@@ -462,6 +465,17 @@ var $;
         $mol_atom_status["pulling"] = "pulling";
         $mol_atom_status["actual"] = "actual";
     })($mol_atom_status = $.$mol_atom_status || ($.$mol_atom_status = {}));
+    function $mol_atom_fence(task) {
+        const slave = $mol_atom.stack[0];
+        $mol_atom.stack[0] = null;
+        try {
+            return task();
+        }
+        finally {
+            $mol_atom.stack[0] = slave;
+        }
+    }
+    $.$mol_atom_fence = $mol_atom_fence;
     class $mol_atom extends $.$mol_object {
         constructor(id, handler = next => next) {
             super();
@@ -724,7 +738,7 @@ var $;
                         if (val instanceof $mol_atom_wait)
                             return val;
                         if (val)
-                            val.valueOf();
+                            val['valueOf']();
                         prev = val;
                     }
                     if (next == undefined) {
@@ -732,7 +746,7 @@ var $;
                         if (val instanceof $mol_atom_wait)
                             return val;
                         if (val)
-                            val.valueOf();
+                            val['valueOf']();
                         next = val;
                     }
                     return next;
@@ -1451,7 +1465,7 @@ var $;
         attr_static() {
             let attrs = {};
             for (let name of this.view_names())
-                attrs[name.replace(/\$/g, '').toLowerCase()] = '';
+                attrs[name.replace(/\$/g, '').replace(/^(?=\d)/, '_').toLowerCase()] = '';
             return attrs;
         }
         attr() {
@@ -1548,7 +1562,7 @@ var $;
             return (event !== void 0) ? event : null;
         }
         event() {
-            return (Object.assign({}, super.event(), { "click": (event) => this.event_activate(event), "keypress": (event) => this.event_key_press(event) }));
+            return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.event_activate(event), "keypress": (event) => this.event_key_press(event) }));
         }
         event_activate(event, force) {
             return (event !== void 0) ? event : null;
@@ -1557,7 +1571,7 @@ var $;
             return (event !== void 0) ? event : null;
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
         }
         disabled() {
             return false;
@@ -1629,7 +1643,7 @@ var $;
 (function ($) {
     class $mol_button_major extends $.$mol_button_typed {
         attr() {
-            return (Object.assign({}, super.attr(), { "mol_theme": "$mol_theme_accent" }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": "$mol_theme_accent" }));
         }
     }
     $.$mol_button_major = $mol_button_major;
@@ -1652,7 +1666,7 @@ var $;
 (function ($) {
     class $mol_check extends $.$mol_button_minor {
         attr() {
-            return (Object.assign({}, super.attr(), { "mol_check_checked": this.checked(), "aria-checked": this.checked(), "role": "checkbox" }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_check_checked": this.checked(), "aria-checked": this.checked(), "role": "checkbox" }));
         }
         checked(val, force) {
             return (val !== void 0) ? val : false;
@@ -1723,7 +1737,7 @@ var $;
             return (val !== void 0) ? val : false;
         }
         field() {
-            return (Object.assign({}, super.field(), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
+            return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
         }
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
@@ -1738,7 +1752,7 @@ var $;
             return (val !== void 0) ? val : 0;
         }
         event_async() {
-            return (Object.assign({}, super.event_async(), { "scroll": (event) => this.event_scroll(event) }));
+            return (Object.assign(Object.assign({}, super.event_async()), { "scroll": (event) => this.event_scroll(event) }));
         }
         event_scroll(event, force) {
             return (event !== void 0) ? event : null;
@@ -2231,18 +2245,19 @@ var $;
         class $mol_meter extends $.$mol_meter {
             rect() {
                 const node = this.dom_node();
+                const win = this.$.$mol_dom_context;
                 if (node !== $.$mol_dom_context.document.body) {
                     $.$mol_state_time.now();
                     try {
                         const { left, top, right, bottom, width, height } = node.getBoundingClientRect();
-                        return { left, top, right, bottom, width, height, zoom: window.devicePixelRatio || 1 };
+                        return { left, top, right, bottom, width, height, zoom: win.devicePixelRatio || 1 };
                     }
                     catch (error) {
                     }
                 }
                 const size = $.$mol_window.size();
                 return {
-                    zoom: window.devicePixelRatio || 1,
+                    zoom: win.devicePixelRatio || 1,
                     left: 0,
                     top: 0,
                     right: size.width,
@@ -2327,6 +2342,9 @@ var $;
         pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        pos(val, force) {
+            return (val !== void 0) ? val : [].concat(NaN, NaN);
+        }
         start_pos(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -2370,7 +2388,7 @@ var $;
             return (val !== void 0) ? val : null;
         }
         event() {
-            return (Object.assign({}, super.event(), { "touchstart": (event) => this.event_start(event), "touchmove": (event) => this.event_move(event), "touchend": (event) => this.event_end(event), "mousedown": (event) => this.event_start(event), "mousemove": (event) => this.event_move(event), "mouseup": (event) => this.event_end(event) }));
+            return (Object.assign(Object.assign({}, super.event()), { "touchstart": (event) => this.event_start(event), "touchmove": (event) => this.event_move(event), "touchend": (event) => this.event_end(event), "mousedown": (event) => this.event_start(event), "mousemove": (event) => this.event_move(event), "mouseup": (event) => this.event_end(event), "mouseleave": (event) => this.event_leave(event), "wheel": (event) => this.event_wheel(event) }));
         }
         event_start(event, force) {
             return (event !== void 0) ? event : null;
@@ -2381,10 +2399,8 @@ var $;
         event_end(event, force) {
             return (event !== void 0) ? event : null;
         }
-        event_async() {
-            return ({
-                "wheel": (event) => this.event_wheel(event),
-            });
+        event_leave(event, force) {
+            return (event !== void 0) ? event : null;
         }
         event_wheel(event, force) {
             return (event !== void 0) ? event : null;
@@ -2405,6 +2421,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "pan", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_touch.prototype, "pos", null);
     __decorate([
         $.$mol_mem
     ], $mol_touch.prototype, "start_pos", null);
@@ -2455,6 +2474,9 @@ var $;
     ], $mol_touch.prototype, "event_end", null);
     __decorate([
         $.$mol_mem
+    ], $mol_touch.prototype, "event_leave", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_touch.prototype, "event_wheel", null);
     $.$mol_touch = $mol_touch;
 })($ || ($ = {}));
@@ -2466,19 +2488,23 @@ var $;
     var $$;
     (function ($$) {
         class $mol_touch extends $.$mol_touch {
+            rect() {
+                return this.dom_node().getBoundingClientRect();
+            }
             event_start(event) {
                 if (event.defaultPrevented)
                     return;
                 this.start_pan(this.pan());
+                let pos;
                 if (event instanceof MouseEvent) {
                     if (event.buttons === 1) {
-                        const pos = [event.pageX, event.pageY];
+                        pos = [event.pageX, event.pageY];
                         this.start_pos(pos);
                     }
                 }
                 else if (event instanceof TouchEvent) {
                     if (event.touches.length === 1) {
-                        const pos = [event.touches[0].pageX, event.touches[0].pageY];
+                        pos = [event.touches[0].pageX, event.touches[0].pageY];
                         this.start_pos(pos);
                     }
                     if (event.touches.length === 2) {
@@ -2488,32 +2514,52 @@ var $;
                     }
                 }
             }
+            event_leave(event) {
+                if (event.defaultPrevented)
+                    return;
+                if (event instanceof MouseEvent)
+                    this.pos(super.pos());
+            }
             event_move(event) {
                 if (event.defaultPrevented)
                     return;
                 const start_pan = this.start_pan();
                 let pos;
+                let cursor_pos;
                 if (event instanceof MouseEvent) {
+                    cursor_pos = [event.pageX, event.pageY];
                     if (event.buttons === 1)
-                        pos = [event.pageX, event.pageY];
+                        pos = cursor_pos;
                     else
                         this.start_pos(null);
                 }
                 else if (event instanceof TouchEvent) {
+                    cursor_pos = [event.touches[0].pageX, event.touches[0].pageY];
                     if (event.touches.length === 1)
-                        pos = [event.touches[0].pageX, event.touches[0].pageY];
+                        pos = cursor_pos;
                     else
                         this.start_pos(null);
+                }
+                if (cursor_pos) {
+                    const { left, top } = this.rect();
+                    this.pos([
+                        Math.max(0, Math.round(cursor_pos[0] - left)),
+                        Math.max(0, Math.round(cursor_pos[1] - top)),
+                    ]);
                 }
                 if (pos) {
                     const start_pos = this.start_pos();
                     if (!start_pos)
                         return;
-                    const precision = this.swipe_precision();
                     if (this.pan !== $mol_touch.prototype.pan) {
                         this.pan([start_pan[0] + pos[0] - start_pos[0], start_pan[1] + pos[1] - start_pos[1]]);
                         event.preventDefault();
                     }
+                    if (typeof TouchEvent === 'undefined')
+                        return;
+                    if (!(event instanceof TouchEvent))
+                        return;
+                    const precision = this.swipe_precision();
                     if ((this.swipe_right !== $mol_touch.prototype.swipe_right
                         || this.swipe_from_left !== $mol_touch.prototype.swipe_from_left
                         || this.swipe_to_right !== $mol_touch.prototype.swipe_to_right)
@@ -2547,7 +2593,11 @@ var $;
                         event.preventDefault();
                     }
                 }
-                if (typeof TouchEvent !== 'undefined' && event instanceof TouchEvent && event.touches.length === 2) {
+                if (typeof TouchEvent === 'undefined')
+                    return;
+                if (!(event instanceof TouchEvent))
+                    return;
+                if (event.touches.length === 2) {
                     if (this.zoom === $mol_touch.prototype.zoom)
                         return;
                     const pos0 = [event.touches[0].pageX, event.touches[0].pageY];
@@ -2563,39 +2613,46 @@ var $;
                 }
             }
             swipe_left(event) {
-                if (this.dom_node().getBoundingClientRect().right - this.start_pos()[0] < this.swipe_precision() * 2)
+                if (this.rect().right - this.start_pos()[0] < this.swipe_precision() * 2)
                     this.swipe_from_right(event);
                 else
                     this.swipe_to_left(event);
+                this.event_end(event);
             }
             swipe_right(event) {
-                if (this.start_pos()[0] - this.dom_node().getBoundingClientRect().left < this.swipe_precision() * 2)
+                if (this.start_pos()[0] - this.rect().left < this.swipe_precision() * 2)
                     this.swipe_from_left(event);
                 else
                     this.swipe_to_right(event);
+                this.event_end(event);
             }
             swipe_top(event) {
-                if (this.dom_node().getBoundingClientRect().bottom - this.start_pos()[1] < this.swipe_precision() * 2)
+                if (this.rect().bottom - this.start_pos()[1] < this.swipe_precision() * 2)
                     this.swipe_from_bottom(event);
                 else
                     this.swipe_to_top(event);
+                this.event_end(event);
             }
             swipe_bottom(event) {
-                if (this.start_pos()[1] - this.dom_node().getBoundingClientRect().top < this.swipe_precision() * 2)
+                if (this.start_pos()[1] - this.rect().top < this.swipe_precision() * 2)
                     this.swipe_from_top(event);
                 else
                     this.swipe_to_bottom(event);
+                this.event_end(event);
             }
             event_end(event) {
                 this.start_pos(null);
             }
             event_wheel(event) {
-                const zoom_prev = this.zoom();
+                if (this.pan !== $mol_touch.prototype.pan) {
+                    event.preventDefault();
+                }
+                const zoom_prev = this.zoom() || 0.001;
                 const zoom_next = zoom_prev * (1 - .1 * Math.sign(event.deltaY));
                 const mult = zoom_next / zoom_prev;
                 this.zoom(zoom_next);
                 const pan_prev = this.pan();
-                const center = [event.layerX, event.layerY];
+                const center = [event.offsetX, event.offsetY];
                 const pan_next = [(pan_prev[0] - center[0]) * mult + center[0], (pan_prev[1] - center[1]) * mult + center[1]];
                 this.pan(pan_next);
             }
@@ -2648,7 +2705,9 @@ var $;
                 return node;
             }
             dom_tree() {
-                const node = this.Sub().dom_tree();
+                const Sub = this.Sub();
+                Sub.$ = this.$;
+                const node = Sub.dom_tree();
                 super.render();
                 return node;
             }
@@ -2753,7 +2812,7 @@ var $;
             return 400;
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "tabindex": null }));
+            return (Object.assign(Object.assign({}, super.attr()), { "tabindex": null }));
         }
     }
     $.$mol_book_placeholder = $mol_book_placeholder;
@@ -2761,7 +2820,7 @@ var $;
 (function ($) {
     class $mol_book_page extends $.$mol_ghost {
         attr() {
-            return (Object.assign({}, super.attr(), { "tabindex": 0, "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "tabindex": 0, "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
         }
         visible() {
             return true;
@@ -2837,6 +2896,9 @@ var $;
                     return;
                 this.page(1).focused(false);
             }
+            minimal_width() {
+                return this.pages().reduce((sum, page) => page.minimal_width() + sum, 0);
+            }
         }
         __decorate([
             $.$mol_mem
@@ -2847,6 +2909,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $mol_book.prototype, "pages_wrapped", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_book.prototype, "minimal_width", null);
         $$.$mol_book = $mol_book;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -3081,7 +3146,7 @@ var $;
             return "a";
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "href": this.uri(), "title": this.hint(), "target": this.target(), "download": this.file_name(), "mol_link_current": this.current() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "href": this.uri(), "title": this.hint(), "target": this.target(), "download": this.file_name(), "mol_link_current": this.current() }));
         }
         uri() {
             return "";
@@ -3105,7 +3170,7 @@ var $;
             return ({});
         }
         event() {
-            return (Object.assign({}, super.event(), { "click": (event) => this.click(event) }));
+            return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.click(event) }));
         }
         click(event, force) {
             return this.event_click(event);
@@ -3137,7 +3202,7 @@ var $;
     (function ($$) {
         class $mol_link extends $.$mol_link {
             uri() {
-                return new $.$mol_state_arg(this.state_key()).link(this.arg());
+                return new this.$.$mol_state_arg(this.state_key()).link(this.arg());
             }
             current() {
                 if (this.uri() === this.$.$mol_state_arg.href())
@@ -3175,6 +3240,37 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    let canvas;
+    function $mol_font_canvas(next = canvas) {
+        if (!next)
+            next = $.$mol_dom_context.document.createElement('canvas').getContext('2d');
+        return canvas = next;
+    }
+    $.$mol_font_canvas = $mol_font_canvas;
+})($ || ($ = {}));
+//canvas.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_font_measure(size, face, text) {
+        const canvas = $.$mol_font_canvas();
+        canvas.font = size + 'px ' + face;
+        return Math.ceil(canvas.measureText(text).width);
+    }
+    $.$mol_font_measure = $mol_font_measure;
+})($ || ($ = {}));
+//measure.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
     class $mol_svg extends $.$mol_view {
         dom_name() {
             return "svg";
@@ -3182,10 +3278,65 @@ var $;
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
+        text_width(text, force) {
+            return (text !== void 0) ? text : 0;
+        }
+        font_size() {
+            return 16;
+        }
+        font_family() {
+            return "";
+        }
     }
+    __decorate([
+        $.$mol_mem
+    ], $mol_svg.prototype, "text_width", null);
     $.$mol_svg = $mol_svg;
 })($ || ($ = {}));
 //svg.view.tree.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_svg extends $.$mol_svg {
+            computed_style() {
+                const win = this.$.$mol_dom_context;
+                const style = win.getComputedStyle(this.dom_node());
+                if (!style['font-size'])
+                    $.$mol_state_time.now();
+                return style;
+            }
+            font_size() {
+                return parseInt(this.computed_style()['font-size']) || 16;
+            }
+            font_family() {
+                return this.computed_style()['font-family'];
+            }
+            text_width(text) {
+                return $.$mol_font_measure(this.font_size(), this.font_family(), text);
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_svg.prototype, "computed_style", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_svg.prototype, "font_size", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_svg.prototype, "font_family", null);
+        $$.$mol_svg = $mol_svg;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//svg.view.js.map
 ;
 "use strict";
 var $;
@@ -3195,7 +3346,7 @@ var $;
             return "svg";
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "viewBox": this.view_box(), "preserveAspectRatio": this.aspect() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "viewBox": this.view_box(), "preserveAspectRatio": this.aspect() }));
         }
         view_box() {
             return "0 0 100 100";
@@ -3216,7 +3367,7 @@ var $;
             return "path";
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "d": this.geometry() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "d": this.geometry() }));
         }
         geometry() {
             return "";
@@ -3238,6 +3389,12 @@ var $;
     class $mol_icon extends $.$mol_svg_root {
         view_box() {
             return "0 0 24 24";
+        }
+        minimal_width() {
+            return 16;
+        }
+        minimal_height() {
+            return 16;
         }
         sub() {
             return [].concat(this.Path());
@@ -3264,7 +3421,7 @@ var $;
 (function ($) {
     class $mol_icon_plus extends $.$mol_icon {
         path() {
-            return "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z";
+            return "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z";
         }
     }
     $.$mol_icon_plus = $mol_icon_plus;
@@ -3311,6 +3468,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_pop extends $.$mol_view {
+        event() {
+            return ({
+                "keydown": (event) => this.keydown(event),
+            });
+        }
+        keydown(event, force) {
+            return (event !== void 0) ? event : null;
+        }
         showed(val, force) {
             return (val !== void 0) ? val : false;
         }
@@ -3360,6 +3525,9 @@ var $;
     }
     __decorate([
         $.$mol_mem
+    ], $mol_pop.prototype, "keydown", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_pop.prototype, "showed", null);
     __decorate([
         $.$mol_mem
@@ -3378,13 +3546,13 @@ var $;
             return [].concat();
         }
         style() {
-            return (Object.assign({}, super.style(), { "maxHeight": this.height_max() }));
+            return (Object.assign(Object.assign({}, super.style()), { "maxHeight": this.height_max() }));
         }
         height_max() {
             return 9999;
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "mol_pop_align": this.align(), "tabindex": 0 }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_pop_align": this.align(), "tabindex": 0 }));
         }
         align() {
             return "";
@@ -3414,6 +3582,14 @@ var $;
                 const vert = this.top() > (viewport.height - this.bottom()) ? 'top' : 'bottom';
                 const hor = this.left() > (viewport.width - this.right()) ? 'left' : 'right';
                 return `${vert}_${hor}`;
+            }
+            keydown(event) {
+                if (event.defaultPrevented)
+                    return;
+                if (event.keyCode === 27) {
+                    event.preventDefault();
+                    this.showed(false);
+                }
             }
         }
         $$.$mol_pop = $mol_pop;
@@ -3631,7 +3807,7 @@ var $;
                     this.response(next, $.$mol_atom_force_cache);
                 }
                 else {
-                    this.response(new Error(next.statusText || next.responseText || `HTTP error ${next.status}`), $.$mol_atom_force_cache);
+                    this.response(new Error('HTTP Error\n' + next.statusText + '\n' + next.responseText), $.$mol_atom_force_cache);
                 }
             });
             next.onerror = $.$mol_log_group(this.object_id() + ' error', (event) => {
@@ -3808,7 +3984,7 @@ var $;
             return $.$mol_state_local.value('locale', next) || $.$mol_dom_context.navigator.language.replace(/-.*/, '') || this.lang_default();
         }
         static source(lang) {
-            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).content());
+            return JSON.parse($.$mol_file.relative(`web.locale=${lang}.json`).content().toString());
         }
         static texts(lang, next) {
             if (next)
@@ -3901,7 +4077,7 @@ var $;
             return (event !== void 0) ? event : null;
         }
         event() {
-            return (Object.assign({}, super.event(), { "keydown": (event) => this.event_key(event) }));
+            return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.event_key(event) }));
         }
         event_key(event, force) {
             return (event !== void 0) ? event : null;
@@ -4048,13 +4224,16 @@ var $;
             return true;
         }
         debounce() {
-            return 200;
+            return 0;
         }
         minimal_height() {
             return 40;
         }
+        autocomplete() {
+            return false;
+        }
         field() {
-            return (Object.assign({}, super.field(), { "disabled": this.disabled(), "value": this.value_changed(), "placeholder": this.hint(), "type": this.type(), "spellcheck": this.spellcheck() }));
+            return (Object.assign(Object.assign({}, super.field()), { "disabled": this.disabled(), "value": this.value_changed(), "placeholder": this.hint(), "type": this.type(), "spellcheck": this.spellcheck(), "autocomplete": this.autocomplete_native() }));
         }
         disabled() {
             return false;
@@ -4074,14 +4253,17 @@ var $;
         spellcheck() {
             return false;
         }
+        autocomplete_native() {
+            return "";
+        }
         attr() {
-            return (Object.assign({}, super.attr(), { "maxlength": this.length_max() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "maxlength": this.length_max() }));
         }
         length_max() {
             return Infinity;
         }
         event() {
-            return (Object.assign({}, super.event(), { "input": (event) => this.event_change(event), "keypress": (event) => this.event_key_press(event) }));
+            return (Object.assign(Object.assign({}, super.event()), { "input": (event) => this.event_change(event), "keydown": (event) => this.event_key_press(event) }));
         }
         event_change(event, force) {
             return (event !== void 0) ? event : null;
@@ -4136,6 +4318,9 @@ var $;
             }
             disabled() {
                 return !this.enabled();
+            }
+            autocomplete_native() {
+                return this.autocomplete() ? 'on' : 'off';
             }
         }
         $$.$mol_string = $mol_string;
@@ -4249,20 +4434,24 @@ var $;
         nav_cycle(val, force) {
             return (val !== void 0) ? val : true;
         }
-        showed() {
-            return this.options_showed();
+        showed(val, force) {
+            return this.options_showed(val);
         }
-        options_showed() {
-            return false;
+        options_showed(val, force) {
+            return (val !== void 0) ? val : false;
         }
         Anchor() {
             return this.Trigger();
         }
         Trigger() {
             return ((obj) => {
+                obj.click = (event) => this.open(event);
                 obj.sub = () => this.trigger_content();
                 return obj;
             })(new this.$.$mol_button_minor());
+        }
+        open(event, force) {
+            return (event !== void 0) ? event : null;
         }
         trigger_content() {
             return [].concat(this.option_content_current(), this.Filter(), this.Trigger_icon());
@@ -4337,7 +4526,16 @@ var $;
     ], $mol_select.prototype, "nav_cycle", null);
     __decorate([
         $.$mol_mem
+    ], $mol_select.prototype, "showed", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_select.prototype, "options_showed", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_select.prototype, "Trigger", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_select.prototype, "open", null);
     __decorate([
         $.$mol_mem
     ], $mol_select.prototype, "Filter", null);
@@ -4368,11 +4566,16 @@ var $;
                     return '';
                 return next || '';
             }
-            options_showed() {
-                const showed = this.focused() || this.filter_pattern().length > 0;
-                if (showed && this.Filter())
+            open() {
+                this.options_showed(true);
+            }
+            options_showed(next) {
+                this.focused();
+                if (next === undefined)
+                    next = this.filter_pattern().length > 0;
+                if (next && this.Filter())
                     new $.$mol_defer(() => this.Filter().focused(true));
-                return showed;
+                return next;
             }
             options() {
                 return Object.keys(this.dictionary());
@@ -4771,6 +4974,15 @@ var $;
         submit_blocked() {
             return false;
         }
+        event() {
+            return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.keydown(event) }));
+        }
+        keydown(event, force) {
+            return (event !== void 0) ? event : null;
+        }
+        submit(event, force) {
+            return (event !== void 0) ? event : null;
+        }
         sub() {
             return [].concat(this.Bar_fields(), this.Bar_buttons());
         }
@@ -4795,6 +5007,12 @@ var $;
     }
     __decorate([
         $.$mol_mem
+    ], $mol_form.prototype, "keydown", null);
+    __decorate([
+        $.$mol_mem
+    ], $mol_form.prototype, "submit", null);
+    __decorate([
+        $.$mol_mem
     ], $mol_form.prototype, "Bar_fields", null);
     __decorate([
         $.$mol_mem
@@ -4817,6 +5035,10 @@ var $;
         class $mol_form extends $.$mol_form {
             submit_blocked() {
                 return this.form_fields().some(field => field.bid());
+            }
+            keydown(next) {
+                if (next.ctrlKey && next.keyCode === 13 && !this.submit_blocked())
+                    this.submit(event);
             }
         }
         __decorate([
@@ -4974,7 +5196,7 @@ var $;
             return 0;
         }
         style() {
-            return (Object.assign({}, super.style(), { "paddingLeft": this.level_style() }));
+            return (Object.assign(Object.assign({}, super.style()), { "paddingLeft": this.level_style() }));
         }
         level_style() {
             return "0px";
@@ -5204,7 +5426,7 @@ var $;
             return "table";
         }
         style() {
-            return (Object.assign({}, super.style(), { "top": this.offset() }));
+            return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
         offset() {
             return 0;
@@ -5215,7 +5437,7 @@ var $;
 (function ($) {
     class $mol_grid_gap extends $.$mol_view {
         style() {
-            return (Object.assign({}, super.style(), { "top": this.offset() }));
+            return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
         offset() {
             return 0;
@@ -5229,7 +5451,7 @@ var $;
             return "tr";
         }
         style() {
-            return (Object.assign({}, super.style(), { "height": this.height() }));
+            return (Object.assign(Object.assign({}, super.style()), { "height": this.height() }));
         }
         height() {
             return 40;
@@ -5450,6 +5672,97 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_image extends $.$mol_view {
+        dom_name() {
+            return "img";
+        }
+        field() {
+            return (Object.assign(Object.assign({}, super.field()), { "src": this.uri(), "alt": this.title() }));
+        }
+        uri() {
+            return "";
+        }
+    }
+    $.$mol_image = $mol_image;
+})($ || ($ = {}));
+//image.view.tree.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    class $mol_link_iconed extends $.$mol_link {
+        sub() {
+            return [].concat(this.Icon(), this.content());
+        }
+        Icon() {
+            return ((obj) => {
+                obj.uri = () => this.icon();
+                return obj;
+            })(new this.$.$mol_image());
+        }
+        icon() {
+            return "";
+        }
+        content() {
+            return [].concat(this.title());
+        }
+        title() {
+            return this.uri();
+        }
+        host() {
+            return "";
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_iconed.prototype, "Icon", null);
+    $.$mol_link_iconed = $mol_link_iconed;
+})($ || ($ = {}));
+//iconed.view.tree.js.map
+;
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_link_iconed extends $.$mol_link_iconed {
+            icon() {
+                return `https://favicon.yandex.net/favicon/${this.host()}?color=0,0,255,0&size=32`;
+            }
+            host() {
+                const url = new URL(this.uri());
+                return url.hostname;
+            }
+            title() {
+                return decodeURIComponent(this.uri().split(this.host(), 2)[1]);
+            }
+        }
+        __decorate([
+            $.$mol_mem
+        ], $mol_link_iconed.prototype, "host", null);
+        __decorate([
+            $.$mol_mem
+        ], $mol_link_iconed.prototype, "title", null);
+        $$.$mol_link_iconed = $mol_link_iconed;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//iconed.view.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_syntax {
         constructor(lexems) {
             this['lexems()'] = lexems;
@@ -5547,15 +5860,16 @@ var $;
     });
     $.$mol_syntax_md_code = new $.$mol_syntax({
         'code-docs': /\/\/\/.*?$/,
-        'code-comment-block': /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/)/,
-        'code-string': /(?:".*?"|'.*?'|`.*?`|\/.+?\/[gmi]*)/,
+        'code-comment-block': /(?:\/\*[^]*?\*\/|\/\+[^]*?\+\/|<![^]*?>)/,
+        'code-link': /\w+:\/\/\S*/,
         'code-comment-inline': /\/\/.*?$/,
+        'code-string': /(?:".*?"|'.*?'|`.*?`|\/.+?\/[gmi]*|(?:^|[ \t])\\[^\n]*\n)/,
         'code-number': /[+-]?(?:\d*\.)?\d+\w*/,
-        'code-keyword': /\b(class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/,
         'code-call': /\.?\w+(?=\()/,
-        'code-field': /(?:\.\w+|[\w-]+\??\s*:)/,
+        'code-field': /(?:\.\w+|[\w-]+\??\s*:(?!\/\/))/,
+        'code-keyword': /\b(class|interface|type|function|extends|implements|module|namespace|import|export|include|require|var|let|const|for|do|while|until|in|of|new|if|then|else|switch|case|this|return|async|await|try|catch|break|continue|get|set|public|private|protected|string|boolean|number|null|undefined|true|false|void)\b/,
         'code-global': /[$]\w*/,
-        'code-decorator': /@.*?$/,
+        'code-decorator': /@\s*\S+/,
         'code-tag': /<\/?[\w-]+\/?>?/,
         'code-punctuation': /[\-\[\]\{\}\(\)<=>`~!\?@#\$%&\*_\+\\\/\|'";:\.,\^]/,
     });
@@ -5707,7 +6021,7 @@ var $;
             return 40;
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "mol_text_type": this.type() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
         type() {
             return "";
@@ -5724,7 +6038,7 @@ var $;
             return 50;
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "mol_text_header_level": this.level() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_text_header_level": this.level() }));
         }
         level(val, force) {
             return (val !== void 0) ? val : 0;
@@ -5747,7 +6061,7 @@ var $;
             return "span";
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "mol_text_type": this.type() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
         type(val, force) {
             return (val !== void 0) ? val : "";
@@ -5768,21 +6082,18 @@ var $;
     $.$mol_text_span = $mol_text_span;
 })($ || ($ = {}));
 (function ($) {
-    class $mol_text_link extends $.$mol_view {
-        dom_name() {
-            return "a";
-        }
+    class $mol_text_link extends $.$mol_link_iconed {
         attr() {
-            return (Object.assign({}, super.attr(), { "mol_text_type": this.type(), "href": this.link() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        uri() {
+            return this.link();
+        }
         link(val, force) {
             return (val !== void 0) ? val : "";
-        }
-        sub() {
-            return this.content();
         }
         content(val, force) {
             return (val !== void 0) ? val : [].concat();
@@ -5805,7 +6116,7 @@ var $;
             return "object";
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "allowfullscreen": true, "mol_text_type": this.type(), "data": this.link() }));
+            return (Object.assign(Object.assign({}, super.attr()), { "allowfullscreen": true, "mol_text_type": this.type(), "data": this.link() }));
         }
         type(val, force) {
             return (val !== void 0) ? val : "";
@@ -5846,7 +6157,7 @@ var $;
     (function ($$) {
         class $mol_text extends $.$mol_text {
             tokens() {
-                return $.$mol_syntax_md_flow.tokenize(this.text());
+                return this.$.$mol_syntax_md_flow.tokenize(this.text());
             }
             rows() {
                 return this.tokens().map((token, index) => {
@@ -5904,7 +6215,7 @@ var $;
                 return url.toString();
             }
             text2spans(prefix, text) {
-                return $.$mol_syntax_md_line.tokenize(text).map((token, index) => {
+                return this.$.$mol_syntax_md_line.tokenize(text).map((token, index) => {
                     const id = `${prefix}/${index}`;
                     switch (token.name) {
                         case 'text-link': {
@@ -5945,7 +6256,7 @@ var $;
                 });
             }
             code2spans(prefix, text) {
-                return $.$mol_syntax_md_code.tokenize(text).map((token, index) => {
+                return this.$.$mol_syntax_md_code.tokenize(text).map((token, index) => {
                     const id = `${prefix}/${index}`;
                     const span = this.Span(id);
                     span.type(token.name);
@@ -6863,7 +7174,7 @@ var $;
             return 400;
         }
         attr() {
-            return (Object.assign({}, super.attr(), { "tabindex": null }));
+            return (Object.assign(Object.assign({}, super.attr()), { "tabindex": null }));
         }
         title() {
             return "";

@@ -7,8 +7,6 @@
   "types": "web.d.ts",
   "dependencies": {
     "jsdom": "*",
-    "path": "*",
-    "chokidar": "*",
-    "fs": "*"
+    "chokidar": "*"
   }
 }
