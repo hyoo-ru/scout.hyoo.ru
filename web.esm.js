@@ -38,7 +38,7 @@ var $;
 var $;
 (function ($) {
     function $mol_fail_hidden(error) {
-        throw error;
+        throw error; /// Use 'Never Pause Here' breakpoint in DevTools or simply blackbox this script
     }
     $.$mol_fail_hidden = $mol_fail_hidden;
 })($ || ($ = {}));
@@ -408,6 +408,7 @@ var $;
             this.schedule();
             for (var defer; defer = this.all.shift();)
                 defer.run();
+            //this.unschedule()
         }
     }
     $mol_defer.all = [];
@@ -422,6 +423,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    /// Global storage of temporary state
     $.$mol_state_stack = new Map();
 })($ || ($ = {}));
 //stack.js.map
@@ -615,6 +617,9 @@ var $;
             }
         }
         check() {
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `May be obsolated while pulling ${ this }` )
+            //}
             if (this.status === $mol_atom_status.actual || this.status === $mol_atom_status.pulling) {
                 this.status = $mol_atom_status.checking;
                 this.check_slaves();
@@ -623,6 +628,9 @@ var $;
         obsolete() {
             if (this.status === $mol_atom_status.obsolete)
                 return;
+            //if( this.status === $mol_atom_status.pulling ) {
+            //	throw new Error( `Obsolated while pulling ${ this }` )
+            //} 
             this.status = $mol_atom_status.obsolete;
             this.check_slaves();
             return;
@@ -1235,6 +1243,7 @@ var $;
             const val = fields[key];
             if (val === undefined)
                 continue;
+            // if( el[ key ] === val ) continue
             el[key] = val;
         }
     }
@@ -1286,6 +1295,7 @@ var $;
         return suffix;
     }
     $.$mol_view_state_key = $mol_view_state_key;
+    /// Reactive statefull lazy ViewModel
     class $mol_view extends $.$mol_object {
         static Root(id) {
             return new this;
@@ -1327,13 +1337,18 @@ var $;
         state_key(suffix = '') {
             return this.$.$mol_view_state_key(suffix);
         }
+        /// Name of element that created when element not found in DOM
         dom_name() {
             return this.constructor.toString().replace('$', '');
         }
+        /// NameSpace of element that created when element not found in DOM
         dom_name_space() { return 'http://www.w3.org/1999/xhtml'; }
+        /// Raw child views
         sub() {
             return null;
         }
+        /// Visible sub views with defined context()
+        /// Render all by default
         sub_visible() {
             const sub = this.sub();
             if (!sub)
@@ -1346,6 +1361,7 @@ var $;
             });
             return sub;
         }
+        /// Minimal width that used for lazy rendering
         minimal_width() {
             const sub = this.sub();
             if (!sub)
@@ -1358,6 +1374,7 @@ var $;
             });
             return min;
         }
+        /// Minimal height that used for lazy rendering
         minimal_height() {
             return this.content_height();
         }
@@ -1527,6 +1544,7 @@ var $;
 var $;
 (function ($) {
     if ($.$mol_dom_context.document) {
+        /// Autoattach view roots to loaded DOM.
         const event_name = self.cordova ? 'deviceready' : 'DOMContentLoaded';
         $.$mol_dom_context.document.addEventListener(event_name, $.$mol_log_group(`$mol_view ${event_name}`, (event) => {
             $.$mol_view.autobind();
@@ -1537,6 +1555,111 @@ var $;
 //view.web.js.map
 ;
 "use strict";
+var $;
+(function ($) {
+    let $mol_keyboard_code;
+    (function ($mol_keyboard_code) {
+        $mol_keyboard_code[$mol_keyboard_code["backspace"] = 8] = "backspace";
+        $mol_keyboard_code[$mol_keyboard_code["tab"] = 9] = "tab";
+        $mol_keyboard_code[$mol_keyboard_code["enter"] = 13] = "enter";
+        $mol_keyboard_code[$mol_keyboard_code["shift"] = 16] = "shift";
+        $mol_keyboard_code[$mol_keyboard_code["ctrl"] = 17] = "ctrl";
+        $mol_keyboard_code[$mol_keyboard_code["alt"] = 18] = "alt";
+        $mol_keyboard_code[$mol_keyboard_code["pause"] = 19] = "pause";
+        $mol_keyboard_code[$mol_keyboard_code["capsLock"] = 20] = "capsLock";
+        $mol_keyboard_code[$mol_keyboard_code["escape"] = 27] = "escape";
+        $mol_keyboard_code[$mol_keyboard_code["space"] = 32] = "space";
+        $mol_keyboard_code[$mol_keyboard_code["pageUp"] = 33] = "pageUp";
+        $mol_keyboard_code[$mol_keyboard_code["pageDown"] = 34] = "pageDown";
+        $mol_keyboard_code[$mol_keyboard_code["end"] = 35] = "end";
+        $mol_keyboard_code[$mol_keyboard_code["home"] = 36] = "home";
+        $mol_keyboard_code[$mol_keyboard_code["left"] = 37] = "left";
+        $mol_keyboard_code[$mol_keyboard_code["up"] = 38] = "up";
+        $mol_keyboard_code[$mol_keyboard_code["right"] = 39] = "right";
+        $mol_keyboard_code[$mol_keyboard_code["down"] = 40] = "down";
+        $mol_keyboard_code[$mol_keyboard_code["insert"] = 45] = "insert";
+        $mol_keyboard_code[$mol_keyboard_code["delete"] = 46] = "delete";
+        $mol_keyboard_code[$mol_keyboard_code["key0"] = 48] = "key0";
+        $mol_keyboard_code[$mol_keyboard_code["key1"] = 49] = "key1";
+        $mol_keyboard_code[$mol_keyboard_code["key2"] = 50] = "key2";
+        $mol_keyboard_code[$mol_keyboard_code["key3"] = 51] = "key3";
+        $mol_keyboard_code[$mol_keyboard_code["key4"] = 52] = "key4";
+        $mol_keyboard_code[$mol_keyboard_code["key5"] = 53] = "key5";
+        $mol_keyboard_code[$mol_keyboard_code["key6"] = 54] = "key6";
+        $mol_keyboard_code[$mol_keyboard_code["key7"] = 55] = "key7";
+        $mol_keyboard_code[$mol_keyboard_code["key8"] = 56] = "key8";
+        $mol_keyboard_code[$mol_keyboard_code["key9"] = 57] = "key9";
+        $mol_keyboard_code[$mol_keyboard_code["A"] = 65] = "A";
+        $mol_keyboard_code[$mol_keyboard_code["B"] = 66] = "B";
+        $mol_keyboard_code[$mol_keyboard_code["C"] = 67] = "C";
+        $mol_keyboard_code[$mol_keyboard_code["D"] = 68] = "D";
+        $mol_keyboard_code[$mol_keyboard_code["E"] = 69] = "E";
+        $mol_keyboard_code[$mol_keyboard_code["F"] = 70] = "F";
+        $mol_keyboard_code[$mol_keyboard_code["G"] = 71] = "G";
+        $mol_keyboard_code[$mol_keyboard_code["H"] = 72] = "H";
+        $mol_keyboard_code[$mol_keyboard_code["I"] = 73] = "I";
+        $mol_keyboard_code[$mol_keyboard_code["J"] = 74] = "J";
+        $mol_keyboard_code[$mol_keyboard_code["K"] = 75] = "K";
+        $mol_keyboard_code[$mol_keyboard_code["L"] = 76] = "L";
+        $mol_keyboard_code[$mol_keyboard_code["M"] = 77] = "M";
+        $mol_keyboard_code[$mol_keyboard_code["N"] = 78] = "N";
+        $mol_keyboard_code[$mol_keyboard_code["O"] = 79] = "O";
+        $mol_keyboard_code[$mol_keyboard_code["P"] = 80] = "P";
+        $mol_keyboard_code[$mol_keyboard_code["Q"] = 81] = "Q";
+        $mol_keyboard_code[$mol_keyboard_code["R"] = 82] = "R";
+        $mol_keyboard_code[$mol_keyboard_code["S"] = 83] = "S";
+        $mol_keyboard_code[$mol_keyboard_code["T"] = 84] = "T";
+        $mol_keyboard_code[$mol_keyboard_code["U"] = 85] = "U";
+        $mol_keyboard_code[$mol_keyboard_code["V"] = 86] = "V";
+        $mol_keyboard_code[$mol_keyboard_code["W"] = 87] = "W";
+        $mol_keyboard_code[$mol_keyboard_code["X"] = 88] = "X";
+        $mol_keyboard_code[$mol_keyboard_code["Y"] = 89] = "Y";
+        $mol_keyboard_code[$mol_keyboard_code["Z"] = 90] = "Z";
+        $mol_keyboard_code[$mol_keyboard_code["metaLeft"] = 91] = "metaLeft";
+        $mol_keyboard_code[$mol_keyboard_code["metaRight"] = 92] = "metaRight";
+        $mol_keyboard_code[$mol_keyboard_code["select"] = 93] = "select";
+        $mol_keyboard_code[$mol_keyboard_code["numpad0"] = 96] = "numpad0";
+        $mol_keyboard_code[$mol_keyboard_code["numpad1"] = 97] = "numpad1";
+        $mol_keyboard_code[$mol_keyboard_code["numpad2"] = 98] = "numpad2";
+        $mol_keyboard_code[$mol_keyboard_code["numpad3"] = 99] = "numpad3";
+        $mol_keyboard_code[$mol_keyboard_code["numpad4"] = 100] = "numpad4";
+        $mol_keyboard_code[$mol_keyboard_code["numpad5"] = 101] = "numpad5";
+        $mol_keyboard_code[$mol_keyboard_code["numpad6"] = 102] = "numpad6";
+        $mol_keyboard_code[$mol_keyboard_code["numpad7"] = 103] = "numpad7";
+        $mol_keyboard_code[$mol_keyboard_code["numpad8"] = 104] = "numpad8";
+        $mol_keyboard_code[$mol_keyboard_code["numpad9"] = 105] = "numpad9";
+        $mol_keyboard_code[$mol_keyboard_code["multiply"] = 106] = "multiply";
+        $mol_keyboard_code[$mol_keyboard_code["add"] = 107] = "add";
+        $mol_keyboard_code[$mol_keyboard_code["subtract"] = 109] = "subtract";
+        $mol_keyboard_code[$mol_keyboard_code["decimal"] = 110] = "decimal";
+        $mol_keyboard_code[$mol_keyboard_code["divide"] = 111] = "divide";
+        $mol_keyboard_code[$mol_keyboard_code["F1"] = 112] = "F1";
+        $mol_keyboard_code[$mol_keyboard_code["F2"] = 113] = "F2";
+        $mol_keyboard_code[$mol_keyboard_code["F3"] = 114] = "F3";
+        $mol_keyboard_code[$mol_keyboard_code["F4"] = 115] = "F4";
+        $mol_keyboard_code[$mol_keyboard_code["F5"] = 116] = "F5";
+        $mol_keyboard_code[$mol_keyboard_code["F6"] = 117] = "F6";
+        $mol_keyboard_code[$mol_keyboard_code["F7"] = 118] = "F7";
+        $mol_keyboard_code[$mol_keyboard_code["F8"] = 119] = "F8";
+        $mol_keyboard_code[$mol_keyboard_code["F9"] = 120] = "F9";
+        $mol_keyboard_code[$mol_keyboard_code["F10"] = 121] = "F10";
+        $mol_keyboard_code[$mol_keyboard_code["F11"] = 122] = "F11";
+        $mol_keyboard_code[$mol_keyboard_code["F12"] = 123] = "F12";
+        $mol_keyboard_code[$mol_keyboard_code["numLock"] = 144] = "numLock";
+        $mol_keyboard_code[$mol_keyboard_code["scrollLock"] = 145] = "scrollLock";
+        $mol_keyboard_code[$mol_keyboard_code["semicolon"] = 186] = "semicolon";
+        $mol_keyboard_code[$mol_keyboard_code["equals"] = 187] = "equals";
+        $mol_keyboard_code[$mol_keyboard_code["comma"] = 188] = "comma";
+        $mol_keyboard_code[$mol_keyboard_code["dash"] = 189] = "dash";
+        $mol_keyboard_code[$mol_keyboard_code["period"] = 190] = "period";
+        $mol_keyboard_code[$mol_keyboard_code["forwardSlash"] = 191] = "forwardSlash";
+        $mol_keyboard_code[$mol_keyboard_code["graveAccent"] = 192] = "graveAccent";
+        $mol_keyboard_code[$mol_keyboard_code["bracketOpen"] = 219] = "bracketOpen";
+        $mol_keyboard_code[$mol_keyboard_code["slashBack"] = 220] = "slashBack";
+        $mol_keyboard_code[$mol_keyboard_code["bracketClose"] = 221] = "bracketClose";
+        $mol_keyboard_code[$mol_keyboard_code["quoteSingle"] = 222] = "quoteSingle";
+    })($mol_keyboard_code = $.$mol_keyboard_code || ($.$mol_keyboard_code = {}));
+})($ || ($ = {}));
 //code.js.map
 ;
 "use strict";
@@ -1549,39 +1672,107 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_button extends $.$mol_view {
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  click?event null
+         *  ```
+         **/
         click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> event_activate?event
+         *  	keypress?event <=> event_key_press?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.event_activate(event), "keypress": (event) => this.event_key_press(event) }));
         }
+        /**
+         *  ```
+         *  event_activate?event null
+         *  ```
+         **/
         event_activate(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	disabled <= disabled
+         *  	role \button
+         *  	tabindex <= tab_index
+         *  	title <= hint
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "disabled": this.disabled(), "role": "button", "tabindex": this.tab_index(), "title": this.hint() }));
         }
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled() {
             return false;
         }
+        /**
+         *  ```
+         *  tab_index 0
+         *  ```
+         **/
         tab_index() {
             return 0;
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
@@ -1620,7 +1811,7 @@ var $;
                 this.click(next);
             }
             event_key_press(event) {
-                if (event.keyCode === 13) {
+                if (event.keyCode === $.$mol_keyboard_code.enter) {
                     return this.event_activate(event);
                 }
             }
@@ -1642,6 +1833,13 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_button_major extends $.$mol_button_typed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_theme \$mol_theme_accent
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_theme": "$mol_theme_accent" }));
         }
@@ -1665,27 +1863,68 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check extends $.$mol_button_minor {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_check_checked <= checked?val
+         *  	aria-checked <= checked?val
+         *  	role \checkbox
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_check_checked": this.checked(), "aria-checked": this.checked(), "role": "checkbox" }));
         }
+        /**
+         *  ```
+         *  checked?val false
+         *  ```
+         **/
         checked(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= label
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.label());
         }
+        /**
+         *  ```
+         *  Icon null
+         *  ```
+         **/
         Icon() {
             return null;
         }
+        /**
+         *  ```
+         *  label / <= Title
+         *  ```
+         **/
         label() {
             return [].concat(this.Title());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub / <= title
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
@@ -1727,36 +1966,98 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_scroll extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 0
+         *  ```
+         **/
         minimal_height() {
             return 0;
         }
+        /**
+         *  ```
+         *  moving_hor?val false
+         *  ```
+         **/
         moving_hor(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  moving_vert?val false
+         *  ```
+         **/
         moving_vert(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	scrollTop <= scroll_top?val
+         *  	scrollLeft <= scroll_left?val
+         *  	scrollBottom <= scroll_bottom?val
+         *  	scrollRight <= scroll_right?val
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "scrollTop": this.scroll_top(), "scrollLeft": this.scroll_left(), "scrollBottom": this.scroll_bottom(), "scrollRight": this.scroll_right() }));
         }
+        /**
+         *  ```
+         *  scroll_top?val 0
+         *  ```
+         **/
         scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_left?val 0
+         *  ```
+         **/
         scroll_left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_bottom?val 0
+         *  ```
+         **/
         scroll_bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  scroll_right?val 0
+         *  ```
+         **/
         scroll_right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  event_async *
+         *  	^
+         *  	scroll?event <=> event_scroll?event
+         *  ```
+         **/
         event_async() {
             return (Object.assign(Object.assign({}, super.event_async()), { "scroll": (event) => this.event_scroll(event) }));
         }
+        /**
+         *  ```
+         *  event_scroll?event null
+         *  ```
+         **/
         event_scroll(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  Strut $mol_view style * transform <= strut_transform
+         *  ```
+         **/
         Strut() {
             return ((obj) => {
                 obj.style = () => ({
@@ -1765,6 +2066,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  strut_transform \
+         *  ```
+         **/
         strut_transform() {
             return "";
         }
@@ -1830,6 +2136,13 @@ var $;
         $$.$mol_scroll_moving_hor = $mol_scroll_moving_hor;
         class $mol_scroll extends $.$mol_scroll {
             constructor() {
+                // scroll_top( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_top()` , next ) || 0
+                // }
+                // 
+                // scroll_left( next? : number ) {
+                // 	return $mol_state_session.value( `${ this }.scroll_left()` , next ) || 0
+                // }
                 super(...arguments);
                 this._moving_task_timer = null;
             }
@@ -1992,9 +2305,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_page extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Head
+         *  	<= Body
+         *  	<= Foot
+         *  ```
+         **/
         sub() {
             return [].concat(this.Head(), this.Body(), this.Foot());
         }
+        /**
+         *  ```
+         *  Head $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= head
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -2004,9 +2332,23 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  head /
+         *  	<= Title
+         *  	<= Tools
+         *  ```
+         **/
         head() {
             return [].concat(this.Title(), this.Tools());
         }
+        /**
+         *  ```
+         *  Title $mol_button
+         *  	sub / <= title
+         *  	event_click?val <=> event_top?val
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.title());
@@ -2014,18 +2356,40 @@ var $;
                 return obj;
             })(new this.$.$mol_button());
         }
+        /**
+         *  ```
+         *  event_top?val null
+         *  ```
+         **/
         event_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Tools $mol_view sub <= tools
+         *  ```
+         **/
         Tools() {
             return ((obj) => {
                 obj.sub = () => this.tools();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  tools /
+         *  ```
+         **/
         tools() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Body $mol_scroll
+         *  	scroll_top?val <=> body_scroll_top?val
+         *  	sub <= body
+         *  ```
+         **/
         Body() {
             return ((obj) => {
                 obj.scroll_top = (val) => this.body_scroll_top(val);
@@ -2033,12 +2397,29 @@ var $;
                 return obj;
             })(new this.$.$mol_scroll());
         }
+        /**
+         *  ```
+         *  body_scroll_top?val 0
+         *  ```
+         **/
         body_scroll_top(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  body /
+         *  ```
+         **/
         body() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Foot $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= foot
+         *  ```
+         **/
         Foot() {
             return ((obj) => {
                 obj.attr = () => ({
@@ -2048,6 +2429,11 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  foot /
+         *  ```
+         **/
         foot() {
             return [].concat();
         }
@@ -2096,15 +2482,35 @@ var $;
 var $;
 (function ($) {
     class $mol_plugin extends $.$mol_object {
+        /**
+         *  ```
+         *  dom_node null
+         *  ```
+         **/
         dom_node() {
             return null;
         }
+        /**
+         *  ```
+         *  attr_static *
+         *  ```
+         **/
         attr_static() {
             return ({});
         }
+        /**
+         *  ```
+         *  event *
+         *  ```
+         **/
         event() {
             return ({});
         }
+        /**
+         *  ```
+         *  event_async *
+         *  ```
+         **/
         event_async() {
             return ({});
         }
@@ -2187,24 +2593,59 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_meter extends $.$mol_plugin {
+        /**
+         *  ```
+         *  zoom 1
+         *  ```
+         **/
         zoom() {
             return 1;
         }
+        /**
+         *  ```
+         *  width?val 0
+         *  ```
+         **/
         width(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  height?val 0
+         *  ```
+         **/
         height(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  left?val 0
+         *  ```
+         **/
         left(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  right?val 0
+         *  ```
+         **/
         right(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  bottom?val 0
+         *  ```
+         **/
         bottom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  top?val 0
+         *  ```
+         **/
         top(val, force) {
             return (val !== void 0) ? val : 0;
         }
@@ -2253,6 +2694,7 @@ var $;
                         return { left, top, right, bottom, width, height, zoom: win.devicePixelRatio || 1 };
                     }
                     catch (error) {
+                        // IE11
                     }
                 }
                 const size = $.$mol_window.size();
@@ -2327,81 +2769,226 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_touch extends $.$mol_plugin {
+        /**
+         *  ```
+         *  start_zoom?val 0
+         *  ```
+         **/
         start_zoom(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  start_distance?val 0
+         *  ```
+         **/
         start_distance(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  zoom?val 1
+         *  ```
+         **/
         zoom(val, force) {
             return (val !== void 0) ? val : 1;
         }
+        /**
+         *  ```
+         *  start_pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         start_pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         pan(val, force) {
             return (val !== void 0) ? val : [].concat(0, 0);
         }
+        /**
+         *  ```
+         *  pos?val /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         pos(val, force) {
             return (val !== void 0) ? val : [].concat(NaN, NaN);
         }
+        /**
+         *  ```
+         *  start_pos?val null
+         *  ```
+         **/
         start_pos(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_precision 16
+         *  ```
+         **/
         swipe_precision() {
             return 16;
         }
+        /**
+         *  ```
+         *  swipe_right?val null
+         *  ```
+         **/
         swipe_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_bottom?val null
+         *  ```
+         **/
         swipe_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_left?val null
+         *  ```
+         **/
         swipe_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_top?val null
+         *  ```
+         **/
         swipe_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_right?val null
+         *  ```
+         **/
         swipe_from_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_bottom?val null
+         *  ```
+         **/
         swipe_from_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_left?val null
+         *  ```
+         **/
         swipe_from_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_from_top?val null
+         *  ```
+         **/
         swipe_from_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_right?val null
+         *  ```
+         **/
         swipe_to_right(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_bottom?val null
+         *  ```
+         **/
         swipe_to_bottom(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_left?val null
+         *  ```
+         **/
         swipe_to_left(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  swipe_to_top?val null
+         *  ```
+         **/
         swipe_to_top(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	touchstart?event <=> event_start?event
+         *  	touchmove?event <=> event_move?event
+         *  	touchend?event <=> event_end?event
+         *  	mousedown?event <=> event_start?event
+         *  	mousemove?event <=> event_move?event
+         *  	mouseup?event <=> event_end?event
+         *  	mouseleave?event <=> event_leave?event
+         *  	wheel?event <=> event_wheel?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "touchstart": (event) => this.event_start(event), "touchmove": (event) => this.event_move(event), "touchend": (event) => this.event_end(event), "mousedown": (event) => this.event_start(event), "mousemove": (event) => this.event_move(event), "mouseup": (event) => this.event_end(event), "mouseleave": (event) => this.event_leave(event), "wheel": (event) => this.event_wheel(event) }));
         }
+        /**
+         *  ```
+         *  event_start?event null
+         *  ```
+         **/
         event_start(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_move?event null
+         *  ```
+         **/
         event_move(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_end?event null
+         *  ```
+         **/
         event_end(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_leave?event null
+         *  ```
+         **/
         event_leave(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_wheel?event null
+         *  ```
+         **/
         event_wheel(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -2672,6 +3259,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_ghost extends $.$mol_view {
+        /**
+         *  ```
+         *  Sub $mol_view
+         *  ```
+         **/
         Sub() {
             return ((obj) => {
                 return obj;
@@ -2733,26 +3325,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_book extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= pages_wrapped
+         *  ```
+         **/
         sub() {
             return this.pages_wrapped();
         }
+        /**
+         *  ```
+         *  pages_wrapped /
+         *  ```
+         **/
         pages_wrapped() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  pages /
+         *  ```
+         **/
         pages() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  plugins /
+         *  	<= Meter
+         *  	<= Touch
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter(), this.Touch());
         }
         width() {
             return this.Meter().width();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter width => width
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  Touch $mol_touch
+         *  	swipe_from_left?val <=> event_front_up?val
+         *  	swipe_to_left?val <=> event_front_down?val
+         *  ```
+         **/
         Touch() {
             return ((obj) => {
                 obj.swipe_from_left = (val) => this.event_front_up(val);
@@ -2760,12 +3386,29 @@ var $;
                 return obj;
             })(new this.$.$mol_touch());
         }
+        /**
+         *  ```
+         *  event_front_up?val null
+         *  ```
+         **/
         event_front_up(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  event_front_down?val null
+         *  ```
+         **/
         event_front_down(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  Page!index $mol_book_page
+         *  	Sub <= page!index
+         *  	visible <= page_visible!index
+         *  ```
+         **/
         Page(index) {
             return ((obj) => {
                 obj.Sub = () => this.page(index);
@@ -2773,12 +3416,27 @@ var $;
                 return obj;
             })(new this.$.$mol_book_page());
         }
+        /**
+         *  ```
+         *  page!index null
+         *  ```
+         **/
         page(index) {
             return null;
         }
+        /**
+         *  ```
+         *  page_visible!index true
+         *  ```
+         **/
         page_visible(index) {
             return true;
         }
+        /**
+         *  ```
+         *  Placeholder $mol_book_placeholder title <= title
+         *  ```
+         **/
         Placeholder() {
             return ((obj) => {
                 obj.title = () => this.title();
@@ -2808,9 +3466,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_placeholder extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width() {
             return 400;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex null
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": null }));
         }
@@ -2819,9 +3489,23 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_book_page extends $.$mol_ghost {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex 0
+         *  	mol_book_page_focused <= focused
+         *  	mol_book_page_visible <= visible
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": 0, "mol_book_page_focused": this.focused(), "mol_book_page_visible": this.visible() }));
         }
+        /**
+         *  ```
+         *  visible true
+         *  ```
+         **/
         visible() {
             return true;
         }
@@ -2921,12 +3605,27 @@ var $;
 var $;
 (function ($) {
     class $mol_list extends $.$mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub() {
             return this.rows();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
         Empty() {
             return null;
         }
@@ -3139,42 +3838,115 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  dom_name \a
+         *  ```
+         **/
         dom_name() {
             return "a";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	href <= uri
+         *  	title <= hint
+         *  	target <= target
+         *  	download <= file_name
+         *  	mol_link_current <= current
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "href": this.uri(), "title": this.hint(), "target": this.target(), "download": this.file_name(), "mol_link_current": this.current() }));
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  target \_self
+         *  ```
+         **/
         target() {
             return "_self";
         }
+        /**
+         *  ```
+         *  file_name \
+         *  ```
+         **/
         file_name() {
             return "";
         }
+        /**
+         *  ```
+         *  current false
+         *  ```
+         **/
         current() {
             return false;
         }
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  arg *
+         *  ```
+         **/
         arg() {
             return ({});
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> click?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "click": (event) => this.click(event) }));
         }
+        /**
+         *  ```
+         *  click?event <=> event_click?event
+         *  ```
+         **/
         click(event, force) {
             return this.event_click(event);
         }
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -3256,7 +4028,7 @@ var $;
     function $mol_font_measure(size, face, text) {
         const canvas = $.$mol_font_canvas();
         canvas.font = size + 'px ' + face;
-        return Math.ceil(canvas.measureText(text).width);
+        return canvas.measureText(text).width;
     }
     $.$mol_font_measure = $mol_font_measure;
 })($ || ($ = {}));
@@ -3272,18 +4044,43 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_svg extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  dom_name_space \http://www.w3.org/2000/svg
+         *  ```
+         **/
         dom_name_space() {
             return "http://www.w3.org/2000/svg";
         }
+        /**
+         *  ```
+         *  text_width?text 0
+         *  ```
+         **/
         text_width(text, force) {
             return (text !== void 0) ? text : 0;
         }
+        /**
+         *  ```
+         *  font_size 16
+         *  ```
+         **/
         font_size() {
             return 16;
         }
+        /**
+         *  ```
+         *  font_family \
+         *  ```
+         **/
         font_family() {
             return "";
         }
@@ -3342,15 +4139,38 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_root extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name() {
             return "svg";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	viewBox <= view_box
+         *  	preserveAspectRatio <= aspect
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "viewBox": this.view_box(), "preserveAspectRatio": this.aspect() }));
         }
+        /**
+         *  ```
+         *  view_box \0 0 100 100
+         *  ```
+         **/
         view_box() {
             return "0 0 100 100";
         }
+        /**
+         *  ```
+         *  aspect \xMidYMid
+         *  ```
+         **/
         aspect() {
             return "xMidYMid";
         }
@@ -3363,12 +4183,29 @@ var $;
 var $;
 (function ($) {
     class $mol_svg_path extends $.$mol_svg {
+        /**
+         *  ```
+         *  dom_name \path
+         *  ```
+         **/
         dom_name() {
             return "path";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	d <= geometry
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "d": this.geometry() }));
         }
+        /**
+         *  ```
+         *  geometry \
+         *  ```
+         **/
         geometry() {
             return "";
         }
@@ -3387,24 +4224,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_icon extends $.$mol_svg_root {
+        /**
+         *  ```
+         *  view_box \0 0 24 24
+         *  ```
+         **/
         view_box() {
             return "0 0 24 24";
         }
+        /**
+         *  ```
+         *  minimal_width 16
+         *  ```
+         **/
         minimal_width() {
             return 16;
         }
+        /**
+         *  ```
+         *  minimal_height 16
+         *  ```
+         **/
         minimal_height() {
             return 16;
         }
+        /**
+         *  ```
+         *  sub / <= Path
+         *  ```
+         **/
         sub() {
             return [].concat(this.Path());
         }
+        /**
+         *  ```
+         *  Path $mol_svg_path geometry <= path
+         *  ```
+         **/
         Path() {
             return ((obj) => {
                 obj.geometry = () => this.path();
                 return obj;
             })(new this.$.$mol_svg_path());
         }
+        /**
+         *  ```
+         *  path \
+         *  ```
+         **/
         path() {
             return "";
         }
@@ -3420,6 +4287,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_plus extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+         *  ```
+         **/
         path() {
             return "M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z";
         }
@@ -3441,6 +4313,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_favorite extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z
+         *  ```
+         **/
         path() {
             return "M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z";
         }
@@ -3468,17 +4345,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_pop extends $.$mol_view {
+        /**
+         *  ```
+         *  event * keydown?event <=> keydown?event
+         *  ```
+         **/
         event() {
             return ({
                 "keydown": (event) => this.keydown(event),
             });
         }
+        /**
+         *  ```
+         *  keydown?event null
+         *  ```
+         **/
         keydown(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  showed?val false
+         *  ```
+         **/
         showed(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  plugins / <= Meter
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Meter());
         }
@@ -3494,17 +4391,46 @@ var $;
         right() {
             return this.Meter().right();
         }
+        /**
+         *  ```
+         *  Meter $mol_meter
+         *  	top => top
+         *  	bottom => bottom
+         *  	left => left
+         *  	right => right
+         *  ```
+         **/
         Meter() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_meter());
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Anchor
+         *  	<= Bubble
+         *  ```
+         **/
         sub() {
             return [].concat(this.Anchor(), this.Bubble());
         }
+        /**
+         *  ```
+         *  Anchor null
+         *  ```
+         **/
         Anchor() {
             return null;
         }
+        /**
+         *  ```
+         *  Bubble $mol_pop_bubble
+         *  	align <= align
+         *  	content <= bubble_content
+         *  	height_max <= height_max
+         *  ```
+         **/
         Bubble() {
             return ((obj) => {
                 obj.align = () => this.align();
@@ -3513,12 +4439,27 @@ var $;
                 return obj;
             })(new this.$.$mol_pop_bubble());
         }
+        /**
+         *  ```
+         *  align \bottom_center
+         *  ```
+         **/
         align() {
             return "bottom_center";
         }
+        /**
+         *  ```
+         *  bubble_content /
+         *  ```
+         **/
         bubble_content() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  height_max 9999
+         *  ```
+         **/
         height_max() {
             return 9999;
         }
@@ -3539,21 +4480,56 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_pop_bubble extends $.$mol_scroll {
+        /**
+         *  ```
+         *  sub <= content
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	maxHeight <= height_max
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "maxHeight": this.height_max() }));
         }
+        /**
+         *  ```
+         *  height_max 9999
+         *  ```
+         **/
         height_max() {
             return 9999;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_pop_align <= align
+         *  	tabindex 0
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_pop_align": this.align(), "tabindex": 0 }));
         }
+        /**
+         *  ```
+         *  align \
+         *  ```
+         **/
         align() {
             return "";
         }
@@ -3586,7 +4562,7 @@ var $;
             keydown(event) {
                 if (event.defaultPrevented)
                     return;
-                if (event.keyCode === 27) {
+                if (event.keyCode === $.$mol_keyboard_code.escape) {
                     event.preventDefault();
                     this.showed(false);
                 }
@@ -3607,24 +4583,54 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_dimmer extends $.$mol_view {
+        /**
+         *  ```
+         *  haystack \
+         *  ```
+         **/
         haystack() {
             return "";
         }
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle() {
             return "";
         }
+        /**
+         *  ```
+         *  sub <= parts
+         *  ```
+         **/
         sub() {
             return this.parts();
         }
+        /**
+         *  ```
+         *  parts /
+         *  ```
+         **/
         parts() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Low!id $mol_view sub / <= string!id
+         *  ```
+         **/
         Low(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.string(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  string!id \
+         *  ```
+         **/
         string(id) {
             return "";
         }
@@ -4040,45 +5046,117 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_nav extends $.$mol_plugin {
+        /**
+         *  ```
+         *  cycle?val false
+         *  ```
+         **/
         cycle(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  mod_ctrl false
+         *  ```
+         **/
         mod_ctrl() {
             return false;
         }
+        /**
+         *  ```
+         *  mod_shift false
+         *  ```
+         **/
         mod_shift() {
             return false;
         }
+        /**
+         *  ```
+         *  mod_alt false
+         *  ```
+         **/
         mod_alt() {
             return false;
         }
+        /**
+         *  ```
+         *  keys_x?val /
+         *  ```
+         **/
         keys_x(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
+        /**
+         *  ```
+         *  keys_y?val /
+         *  ```
+         **/
         keys_y(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
+        /**
+         *  ```
+         *  current_x?val \
+         *  ```
+         **/
         current_x(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  current_y?val \
+         *  ```
+         **/
         current_y(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  event_up?event null
+         *  ```
+         **/
         event_up(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_down?event null
+         *  ```
+         **/
         event_down(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_left?event null
+         *  ```
+         **/
         event_left(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_right?event null
+         *  ```
+         **/
         event_right(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	keydown?event <=> event_key?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.event_key(event) }));
         }
+        /**
+         *  ```
+         *  event_key?event null
+         *  ```
+         **/
         event_key(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -4133,12 +5211,12 @@ var $;
                 if (this.mod_alt() && !event.altKey)
                     return;
                 switch (event.keyCode) {
-                    case 38: return this.event_up(event);
-                    case 40: return this.event_down(event);
-                    case 37: return this.event_left(event);
-                    case 39: return this.event_right(event);
-                    case 33: return this.event_up(event);
-                    case 34: return this.event_down(event);
+                    case $.$mol_keyboard_code.up: return this.event_up(event);
+                    case $.$mol_keyboard_code.down: return this.event_down(event);
+                    case $.$mol_keyboard_code.left: return this.event_left(event);
+                    case $.$mol_keyboard_code.right: return this.event_right(event);
+                    case $.$mol_keyboard_code.pageUp: return this.event_up(event);
+                    case $.$mol_keyboard_code.pageDown: return this.event_down(event);
                 }
             }
             event_up(event) {
@@ -4217,57 +5295,159 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_string extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \input
+         *  ```
+         **/
         dom_name() {
             return "input";
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  debounce 0
+         *  ```
+         **/
         debounce() {
             return 0;
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  autocomplete false
+         *  ```
+         **/
         autocomplete() {
             return false;
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	disabled <= disabled
+         *  	value <= value_changed?val
+         *  	placeholder <= hint
+         *  	type <= type?val
+         *  	spellcheck <= spellcheck
+         *  	autocomplete <= autocomplete_native
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "disabled": this.disabled(), "value": this.value_changed(), "placeholder": this.hint(), "type": this.type(), "spellcheck": this.spellcheck(), "autocomplete": this.autocomplete_native() }));
         }
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled() {
             return false;
         }
+        /**
+         *  ```
+         *  value_changed?val <=> value?val
+         *  ```
+         **/
         value_changed(val, force) {
             return this.value(val);
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  type?val \text
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "text";
         }
+        /**
+         *  ```
+         *  spellcheck false
+         *  ```
+         **/
         spellcheck() {
             return false;
         }
+        /**
+         *  ```
+         *  autocomplete_native \
+         *  ```
+         **/
         autocomplete_native() {
             return "";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	maxlength <= length_max
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "maxlength": this.length_max() }));
         }
+        /**
+         *  ```
+         *  length_max Infinity
+         *  ```
+         **/
         length_max() {
             return Infinity;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	input?event <=> event_change?event
+         *  	keydown?event <=> event_key_press?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "input": (event) => this.event_change(event), "keydown": (event) => this.event_key_press(event) }));
         }
+        /**
+         *  ```
+         *  event_change?event null
+         *  ```
+         **/
         event_change(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event, force) {
             return (event !== void 0) ? event : null;
         }
@@ -4312,7 +5492,7 @@ var $;
             event_key_press(next) {
                 if (!next)
                     return;
-                if (next.keyCode === 13) {
+                if (next.keyCode === $.$mol_keyboard_code.enter) {
                     this.value(next.target.value);
                 }
             }
@@ -4332,6 +5512,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_chevron extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+         *  ```
+         **/
         path() {
             return "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
         }
@@ -4366,18 +5551,45 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_select extends $.$mol_pop {
+        /**
+         *  ```
+         *  dictionary *
+         *  ```
+         **/
         dictionary() {
             return ({});
         }
+        /**
+         *  ```
+         *  options /
+         *  ```
+         **/
         options() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  Option_row!id $mol_button_minor
+         *  	event_click?event <=> event_select!id?event
+         *  	sub <= option_content!id
+         *  ```
+         **/
         Option_row(id) {
             return ((obj) => {
                 obj.event_click = (event) => this.event_select(id, event);
@@ -4385,12 +5597,30 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  event_select!id?event null
+         *  ```
+         **/
         event_select(id, event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  option_content!id / <= Option_label!id
+         *  ```
+         **/
         option_content(id) {
             return [].concat(this.Option_label(id));
         }
+        /**
+         *  ```
+         *  Option_label!id $mol_dimmer
+         *  	minimal_height 40
+         *  	haystack <= option_label!id
+         *  	needle <= filter_pattern?val
+         *  ```
+         **/
         Option_label(id) {
             return ((obj) => {
                 obj.minimal_height = () => 40;
@@ -4399,24 +5629,57 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  option_label!id \
+         *  ```
+         **/
         option_label(id) {
             return "";
         }
+        /**
+         *  ```
+         *  filter_pattern?val \
+         *  ```
+         **/
         filter_pattern(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  No_options $mol_view sub / <= no_options_message
+         *  ```
+         **/
         No_options() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.no_options_message());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  no_options_message @ \No options
+         *  ```
+         **/
         no_options_message() {
             return this.$.$mol_locale.text("$mol_select_no_options_message");
         }
+        /**
+         *  ```
+         *  plugins / <= Nav
+         *  ```
+         **/
         plugins() {
             return [].concat(this.Nav());
         }
+        /**
+         *  ```
+         *  Nav $mol_nav
+         *  	keys_y <= nav_components
+         *  	current_y?component <=> option_focused?component
+         *  	cycle?val <=> nav_cycle?val
+         *  ```
+         **/
         Nav() {
             return ((obj) => {
                 obj.keys_y = () => this.nav_components();
@@ -4425,24 +5688,63 @@ var $;
                 return obj;
             })(new this.$.$mol_nav());
         }
+        /**
+         *  ```
+         *  nav_components /
+         *  	<= Filter
+         *  	<= option_rows
+         *  ```
+         **/
         nav_components() {
             return [].concat(this.Filter(), this.option_rows());
         }
+        /**
+         *  ```
+         *  option_focused?component null
+         *  ```
+         **/
         option_focused(component, force) {
             return (component !== void 0) ? component : null;
         }
+        /**
+         *  ```
+         *  nav_cycle?val true
+         *  ```
+         **/
         nav_cycle(val, force) {
             return (val !== void 0) ? val : true;
         }
+        /**
+         *  ```
+         *  showed?val <=> options_showed?val
+         *  ```
+         **/
         showed(val, force) {
             return this.options_showed(val);
         }
+        /**
+         *  ```
+         *  options_showed?val false
+         *  ```
+         **/
         options_showed(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Anchor <= Trigger
+         *  ```
+         **/
         Anchor() {
             return this.Trigger();
         }
+        /**
+         *  ```
+         *  Trigger $mol_button_minor
+         *  	click?event <=> open?event
+         *  	sub <= trigger_content
+         *  ```
+         **/
         Trigger() {
             return ((obj) => {
                 obj.click = (event) => this.open(event);
@@ -4450,15 +5752,41 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  open?event null
+         *  ```
+         **/
         open(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  trigger_content /
+         *  	<= option_content_current
+         *  	<= Filter
+         *  	<= Trigger_icon
+         *  ```
+         **/
         trigger_content() {
             return [].concat(this.option_content_current(), this.Filter(), this.Trigger_icon());
         }
+        /**
+         *  ```
+         *  option_content_current /
+         *  ```
+         **/
         option_content_current() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Filter $mol_string
+         *  	value?val <=> filter_pattern?val
+         *  	hint <= filter_hint
+         *  	debounce <= debounce
+         *  ```
+         **/
         Filter() {
             return ((obj) => {
                 obj.value = (val) => this.filter_pattern(val);
@@ -4467,32 +5795,74 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  filter_hint <= hint
+         *  ```
+         **/
         filter_hint() {
             return this.hint();
         }
+        /**
+         *  ```
+         *  hint @ \Search..
+         *  ```
+         **/
         hint() {
             return this.$.$mol_locale.text("$mol_select_hint");
         }
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce() {
             return 200;
         }
+        /**
+         *  ```
+         *  Trigger_icon $mol_icon_chevron
+         *  ```
+         **/
         Trigger_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_chevron());
         }
+        /**
+         *  ```
+         *  bubble_content / <= Menu
+         *  ```
+         **/
         bubble_content() {
             return [].concat(this.Menu());
         }
+        /**
+         *  ```
+         *  Menu $mol_list rows <= menu_content
+         *  ```
+         **/
         Menu() {
             return ((obj) => {
                 obj.rows = () => this.menu_content();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  menu_content /
+         *  	<= Filter
+         *  	<= option_rows
+         *  ```
+         **/
         menu_content() {
             return [].concat(this.Filter(), this.option_rows());
         }
+        /**
+         *  ```
+         *  option_rows /
+         *  ```
+         **/
         option_rows() {
             return [].concat();
         }
@@ -4656,6 +6026,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_cross extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+         *  ```
+         **/
         path() {
             return "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z";
         }
@@ -4674,12 +6049,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_search extends $.$mol_bar {
+        /**
+         *  ```
+         *  query?val \
+         *  ```
+         **/
         query(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Suggest
+         *  	<= Clear
+         *  ```
+         **/
         sub() {
             return [].concat(this.Suggest(), this.Clear());
         }
+        /**
+         *  ```
+         *  Suggest $mol_select
+         *  	value?val <=> suggest_selected?val
+         *  	filter_pattern?val <=> suggest_selected?val
+         *  	hint <= hint
+         *  	filter_pattern?val <=> query?val
+         *  	options_showed <= suggests_showed
+         *  	options <= suggests
+         *  	Trigger_icon null
+         *  	debounce <= debounce
+         *  ```
+         **/
         Suggest() {
             return ((obj) => {
                 obj.value = (val) => this.suggest_selected(val);
@@ -4693,21 +6093,53 @@ var $;
                 return obj;
             })(new this.$.$mol_select());
         }
+        /**
+         *  ```
+         *  suggest_selected?val \
+         *  ```
+         **/
         suggest_selected(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint @ \Search...
+         *  ```
+         **/
         hint() {
             return this.$.$mol_locale.text("$mol_search_hint");
         }
+        /**
+         *  ```
+         *  suggests_showed false
+         *  ```
+         **/
         suggests_showed() {
             return false;
         }
+        /**
+         *  ```
+         *  suggests /
+         *  ```
+         **/
         suggests() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce() {
             return 200;
         }
+        /**
+         *  ```
+         *  Clear $mol_button_minor
+         *  	sub / <= Clear_icon
+         *  	event_click?val <=> event_clear?val
+         *  ```
+         **/
         Clear() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Clear_icon());
@@ -4715,11 +6147,21 @@ var $;
                 return obj;
             })(new this.$.$mol_button_minor());
         }
+        /**
+         *  ```
+         *  Clear_icon $mol_icon_cross
+         *  ```
+         **/
         Clear_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  event_clear?val null
+         *  ```
+         **/
         event_clear(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -4788,9 +6230,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_switch extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  Option!id $mol_check
+         *  	checked?val <=> option_checked!id?val
+         *  	title <= option_title!id
+         *  	enabled <= option_enabled!id
+         *  ```
+         **/
         Option(id) {
             return ((obj) => {
                 obj.checked = (val) => this.option_checked(id, val);
@@ -4799,27 +6254,67 @@ var $;
                 return obj;
             })(new this.$.$mol_check());
         }
+        /**
+         *  ```
+         *  option_checked!id?val false
+         *  ```
+         **/
         option_checked(id, val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  option_title!id \
+         *  ```
+         **/
         option_title(id) {
             return "";
         }
+        /**
+         *  ```
+         *  option_enabled!id <= enabled
+         *  ```
+         **/
         option_enabled(id) {
             return this.enabled();
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  value?val null
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : null;
         }
+        /**
+         *  ```
+         *  options *
+         *  ```
+         **/
         options() {
             return ({});
         }
+        /**
+         *  ```
+         *  sub <= items
+         *  ```
+         **/
         sub() {
             return this.items();
         }
+        /**
+         *  ```
+         *  items /
+         *  ```
+         **/
         items() {
             return [].concat();
         }
@@ -4971,36 +6466,85 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_form extends $.$mol_view {
+        /**
+         *  ```
+         *  submit_blocked false
+         *  ```
+         **/
         submit_blocked() {
             return false;
         }
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	keydown?event <=> keydown?event
+         *  ```
+         **/
         event() {
             return (Object.assign(Object.assign({}, super.event()), { "keydown": (event) => this.keydown(event) }));
         }
+        /**
+         *  ```
+         *  keydown?event null
+         *  ```
+         **/
         keydown(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  submit?event null
+         *  ```
+         **/
         submit(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Bar_fields
+         *  	<= Bar_buttons
+         *  ```
+         **/
         sub() {
             return [].concat(this.Bar_fields(), this.Bar_buttons());
         }
+        /**
+         *  ```
+         *  Bar_fields $mol_view sub <= form_fields
+         *  ```
+         **/
         Bar_fields() {
             return ((obj) => {
                 obj.sub = () => this.form_fields();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  form_fields /
+         *  ```
+         **/
         form_fields() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Bar_buttons $mol_row sub <= buttons
+         *  ```
+         **/
         Bar_buttons() {
             return ((obj) => {
                 obj.sub = () => this.buttons();
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  buttons /
+         *  ```
+         **/
         buttons() {
             return [].concat();
         }
@@ -5037,7 +6581,7 @@ var $;
                 return this.form_fields().some(field => field.bid());
             }
             keydown(next) {
-                if (next.ctrlKey && next.keyCode === 13 && !this.submit_blocked())
+                if (next.ctrlKey && next.keyCode === $.$mol_keyboard_code.enter && !this.submit_blocked())
                     this.submit(event);
             }
         }
@@ -5059,24 +6603,51 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_labeler extends $.$mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Title
+         *  	<= Content
+         *  ```
+         **/
         sub() {
             return [].concat(this.Title(), this.Content());
         }
+        /**
+         *  ```
+         *  Title $mol_view sub <= label
+         *  ```
+         **/
         Title() {
             return ((obj) => {
                 obj.sub = () => this.label();
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  label / <= title
+         *  ```
+         **/
         label() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  Content $mol_view sub / <= content
+         *  ```
+         **/
         Content() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.content());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  content null
+         *  ```
+         **/
         content() {
             return null;
         }
@@ -5101,24 +6672,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_form_field extends $.$mol_labeler {
+        /**
+         *  ```
+         *  label /
+         *  	<= name
+         *  	<= Bid
+         *  ```
+         **/
         label() {
             return [].concat(this.name(), this.Bid());
         }
+        /**
+         *  ```
+         *  name \
+         *  ```
+         **/
         name() {
             return "";
         }
+        /**
+         *  ```
+         *  Bid $mol_view sub / <= bid
+         *  ```
+         **/
         Bid() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.bid());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  bid \
+         *  ```
+         **/
         bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Content <= control
+         *  ```
+         **/
         Content() {
             return this.control();
         }
+        /**
+         *  ```
+         *  control null
+         *  ```
+         **/
         control() {
             return null;
         }
@@ -5143,6 +6746,11 @@ var $;
 var $;
 (function ($) {
     class $mol_icon_tick extends $.$mol_icon {
+        /**
+         *  ```
+         *  path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+         *  ```
+         **/
         path() {
             return "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z";
         }
@@ -5161,6 +6769,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_box extends $.$mol_check {
+        /**
+         *  ```
+         *  Icon $mol_icon_tick
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 return obj;
@@ -5184,32 +6797,79 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_check_expand extends $.$mol_check {
+        /**
+         *  ```
+         *  minimal_height 32
+         *  ```
+         **/
         minimal_height() {
             return 32;
         }
+        /**
+         *  ```
+         *  Icon $mol_icon_chevron
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_chevron());
         }
+        /**
+         *  ```
+         *  level 0
+         *  ```
+         **/
         level() {
             return 0;
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	paddingLeft <= level_style
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "paddingLeft": this.level_style() }));
         }
+        /**
+         *  ```
+         *  level_style \0px
+         *  ```
+         **/
         level_style() {
             return "0px";
         }
+        /**
+         *  ```
+         *  checked?val <=> expanded?val
+         *  ```
+         **/
         checked(val, force) {
             return this.expanded(val);
         }
+        /**
+         *  ```
+         *  expanded?val false
+         *  ```
+         **/
         expanded(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  enabled <= expandable
+         *  ```
+         **/
         enabled() {
             return this.expandable();
         }
+        /**
+         *  ```
+         *  expandable false
+         *  ```
+         **/
         expandable() {
             return false;
         }
@@ -5255,30 +6915,77 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_grid extends $.$mol_scroll {
+        /**
+         *  ```
+         *  row_ids /
+         *  ```
+         **/
         row_ids() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  row_id!index null
+         *  ```
+         **/
         row_id(index) {
             return null;
         }
+        /**
+         *  ```
+         *  col_ids /
+         *  ```
+         **/
         col_ids() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  records *
+         *  ```
+         **/
         records() {
             return ({});
         }
+        /**
+         *  ```
+         *  record!id null
+         *  ```
+         **/
         record(id) {
             return null;
         }
+        /**
+         *  ```
+         *  hierarchy null
+         *  ```
+         **/
         hierarchy() {
             return null;
         }
+        /**
+         *  ```
+         *  hierarchy_col \
+         *  ```
+         **/
         hierarchy_col() {
             return "";
         }
+        /**
+         *  ```
+         *  sub / <= Table
+         *  ```
+         **/
         sub() {
             return [].concat(this.Table());
         }
+        /**
+         *  ```
+         *  Table $mol_grid_table
+         *  	offset <= gap_top
+         *  	sub / <= rows_visible
+         *  ```
+         **/
         Table() {
             return ((obj) => {
                 obj.offset = () => this.gap_top();
@@ -5286,15 +6993,37 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_table());
         }
+        /**
+         *  ```
+         *  gap_top 0
+         *  ```
+         **/
         gap_top() {
             return 0;
         }
+        /**
+         *  ```
+         *  rows_visible /
+         *  ```
+         **/
         rows_visible() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Head $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= head_cells
+         *  ```
+         **/
         Head() {
             return ((obj) => {
                 obj.height = () => this.row_height();
@@ -5302,12 +7031,29 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  row_height 40
+         *  ```
+         **/
         row_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  head_cells /
+         *  ```
+         **/
         head_cells() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Row!id $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= cells!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.height = () => this.row_height();
@@ -5315,38 +7061,85 @@ var $;
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  cells!id /
+         *  ```
+         **/
         cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell!id $mol_view
+         *  ```
+         **/
         Cell(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  cell!id null
+         *  ```
+         **/
         cell(id) {
             return null;
         }
+        /**
+         *  ```
+         *  Cell_text!id $mol_grid_cell sub / <= cell_content_text!id
+         *  ```
+         **/
         Cell_text(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.cell_content_text(id));
                 return obj;
             })(new this.$.$mol_grid_cell());
         }
+        /**
+         *  ```
+         *  cell_content_text!id <= cell_content!id
+         *  ```
+         **/
         cell_content_text(id) {
             return this.cell_content(id);
         }
+        /**
+         *  ```
+         *  cell_content!id /
+         *  ```
+         **/
         cell_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell_number!id $mol_grid_number sub / <= cell_content_number!id
+         *  ```
+         **/
         Cell_number(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.cell_content_number(id));
                 return obj;
             })(new this.$.$mol_grid_number());
         }
+        /**
+         *  ```
+         *  cell_content_number!id <= cell_content!id
+         *  ```
+         **/
         cell_content_number(id) {
             return this.cell_content(id);
         }
+        /**
+         *  ```
+         *  Col_head!id $mol_float
+         *  	dom_name \th
+         *  	sub / <= col_head_content!id
+         *  ```
+         **/
         Col_head(id) {
             return ((obj) => {
                 obj.dom_name = () => "th";
@@ -5354,9 +7147,22 @@ var $;
                 return obj;
             })(new this.$.$mol_float());
         }
+        /**
+         *  ```
+         *  col_head_content!id /
+         *  ```
+         **/
         col_head_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Cell_branch!id $mol_check_expand
+         *  	level <= cell_level!id
+         *  	label <= cell_content!id
+         *  	expanded?val <=> cell_expanded!id?val
+         *  ```
+         **/
         Cell_branch(id) {
             return ((obj) => {
                 obj.level = () => this.cell_level(id);
@@ -5365,15 +7171,37 @@ var $;
                 return obj;
             })(new this.$.$mol_check_expand());
         }
+        /**
+         *  ```
+         *  cell_level!id 0
+         *  ```
+         **/
         cell_level(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  cell_expanded!id?val false
+         *  ```
+         **/
         cell_expanded(id, val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Cell_content!id / <= Cell_dimmer!id
+         *  ```
+         **/
         Cell_content(id) {
             return [].concat(this.Cell_dimmer(id));
         }
+        /**
+         *  ```
+         *  Cell_dimmer!id $mol_dimmer
+         *  	needle <= needle
+         *  	haystack <= cell_value!id
+         *  ```
+         **/
         Cell_dimmer(id) {
             return ((obj) => {
                 obj.needle = () => this.needle();
@@ -5381,9 +7209,19 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle() {
             return "";
         }
+        /**
+         *  ```
+         *  cell_value!id \
+         *  ```
+         **/
         cell_value(id) {
             return "";
         }
@@ -5422,12 +7260,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_table extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \table
+         *  ```
+         **/
         dom_name() {
             return "table";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset() {
             return 0;
         }
@@ -5436,9 +7291,21 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_gap extends $.$mol_view {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "top": this.offset() }));
         }
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset() {
             return 0;
         }
@@ -5447,18 +7314,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_row extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \tr
+         *  ```
+         **/
         dom_name() {
             return "tr";
         }
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	height <= height
+         *  ```
+         **/
         style() {
             return (Object.assign(Object.assign({}, super.style()), { "height": this.height() }));
         }
+        /**
+         *  ```
+         *  height 40
+         *  ```
+         **/
         height() {
             return 40;
         }
+        /**
+         *  ```
+         *  sub <= cells
+         *  ```
+         **/
         sub() {
             return this.cells();
         }
+        /**
+         *  ```
+         *  cells /
+         *  ```
+         **/
         cells() {
             return [].concat();
         }
@@ -5467,6 +7361,11 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_grid_cell extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \td
+         *  ```
+         **/
         dom_name() {
             return "td";
         }
@@ -5673,12 +7572,30 @@ var $;
 var $;
 (function ($) {
     class $mol_image extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \img
+         *  ```
+         **/
         dom_name() {
             return "img";
         }
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	src <= uri
+         *  	alt <= title
+         *  ```
+         **/
         field() {
             return (Object.assign(Object.assign({}, super.field()), { "src": this.uri(), "alt": this.title() }));
         }
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri() {
             return "";
         }
@@ -5697,24 +7614,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_link_iconed extends $.$mol_link {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= content
+         *  ```
+         **/
         sub() {
             return [].concat(this.Icon(), this.content());
         }
+        /**
+         *  ```
+         *  Icon $mol_image uri <= icon
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 obj.uri = () => this.icon();
                 return obj;
             })(new this.$.$mol_image());
         }
+        /**
+         *  ```
+         *  icon \
+         *  ```
+         **/
         icon() {
             return "";
         }
+        /**
+         *  ```
+         *  content / <= title
+         *  ```
+         **/
         content() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  title <= uri
+         *  ```
+         **/
         title() {
             return this.uri();
         }
+        /**
+         *  ```
+         *  host \
+         *  ```
+         **/
         host() {
             return "";
         }
@@ -5886,24 +7835,56 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_text extends $.$mol_list {
+        /**
+         *  ```
+         *  uri_base \
+         *  ```
+         **/
         uri_base() {
             return "";
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
+        /**
+         *  ```
+         *  tokens /
+         *  ```
+         **/
         tokens() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Quote!id $mol_text text <= quote_text!id
+         *  ```
+         **/
         Quote(id) {
             return ((obj) => {
                 obj.text = () => this.quote_text(id);
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  quote_text!id \
+         *  ```
+         **/
         quote_text(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Row!id $mol_text_row
+         *  	sub <= block_content!id
+         *  	type <= block_type!id
+         *  ```
+         **/
         Row(id) {
             return ((obj) => {
                 obj.sub = () => this.block_content(id);
@@ -5911,27 +7892,59 @@ var $;
                 return obj;
             })(new this.$.$mol_text_row());
         }
+        /**
+         *  ```
+         *  block_content!id /
+         *  ```
+         **/
         block_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  block_type!id \
+         *  ```
+         **/
         block_type(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Span!id $mol_text_span
+         *  ```
+         **/
         Span(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_span());
         }
+        /**
+         *  ```
+         *  Link!id $mol_text_link
+         *  ```
+         **/
         Link(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_link());
         }
+        /**
+         *  ```
+         *  Image!id $mol_text_image
+         *  ```
+         **/
         Image(id) {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_text_image());
         }
+        /**
+         *  ```
+         *  Header!id $mol_text_header
+         *  	level <= header_level!id
+         *  	content <= header_content!id
+         *  ```
+         **/
         Header(id) {
             return ((obj) => {
                 obj.level = () => this.header_level(id);
@@ -5939,12 +7952,29 @@ var $;
                 return obj;
             })(new this.$.$mol_text_header());
         }
+        /**
+         *  ```
+         *  header_level!id 0
+         *  ```
+         **/
         header_level(id) {
             return 0;
         }
+        /**
+         *  ```
+         *  header_content!id /
+         *  ```
+         **/
         header_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table!id $mol_grid
+         *  	head_cells <= table_head_cells!id
+         *  	rows <= table_rows!id
+         *  ```
+         **/
         Table(id) {
             return ((obj) => {
                 obj.head_cells = () => this.table_head_cells(id);
@@ -5952,30 +7982,65 @@ var $;
                 return obj;
             })(new this.$.$mol_grid());
         }
+        /**
+         *  ```
+         *  table_head_cells!id /
+         *  ```
+         **/
         table_head_cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  table_rows!id /
+         *  ```
+         **/
         table_rows(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_row!id $mol_grid_row cells <= table_cells!id
+         *  ```
+         **/
         Table_row(id) {
             return ((obj) => {
                 obj.cells = () => this.table_cells(id);
                 return obj;
             })(new this.$.$mol_grid_row());
         }
+        /**
+         *  ```
+         *  table_cells!id /
+         *  ```
+         **/
         table_cells(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_cell!id $mol_grid_cell sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell(id) {
             return ((obj) => {
                 obj.sub = () => this.table_cell_content(id);
                 return obj;
             })(new this.$.$mol_grid_cell());
         }
+        /**
+         *  ```
+         *  table_cell_content!id /
+         *  ```
+         **/
         table_cell_content(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Table_cell_head!id $mol_float sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell_head(id) {
             return ((obj) => {
                 obj.sub = () => this.table_cell_content(id);
@@ -6017,12 +8082,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_row extends $.$mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height() {
             return 40;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type \
+         *  ```
+         **/
         type() {
             return "";
         }
@@ -6031,21 +8113,53 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_header extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \h
+         *  ```
+         **/
         dom_name() {
             return "h";
         }
+        /**
+         *  ```
+         *  minimal_height 50
+         *  ```
+         **/
         minimal_height() {
             return 50;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_header_level <= level?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_header_level": this.level() }));
         }
+        /**
+         *  ```
+         *  level?val 0
+         *  ```
+         **/
         level(val, force) {
             return (val !== void 0) ? val : 0;
         }
+        /**
+         *  ```
+         *  sub <= content
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content() {
             return [].concat();
         }
@@ -6057,18 +8171,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_span extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \span
+         *  ```
+         **/
         dom_name() {
             return "span";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub <= content?val
+         *  ```
+         **/
         sub() {
             return this.content();
         }
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
@@ -6083,18 +8224,45 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_link extends $.$mol_link_iconed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "mol_text_type": this.type() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  uri <= link?val
+         *  ```
+         **/
         uri() {
             return this.link();
         }
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val, force) {
             return (val !== void 0) ? val : [].concat();
         }
@@ -6112,21 +8280,55 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $mol_text_image extends $.$mol_view {
+        /**
+         *  ```
+         *  dom_name \object
+         *  ```
+         **/
         dom_name() {
             return "object";
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	allowfullscreen true
+         *  	mol_text_type <= type?val
+         *  	data <= link?val
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "allowfullscreen": true, "mol_text_type": this.type(), "data": this.link() }));
         }
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  sub / <= title?val
+         *  ```
+         **/
         sub() {
             return [].concat(this.title());
         }
+        /**
+         *  ```
+         *  title?val \
+         *  ```
+         **/
         title(val, force) {
             return (val !== void 0) ? val : "";
         }
@@ -6308,17 +8510,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $mol_textarea extends $.$mol_view {
+        /**
+         *  ```
+         *  event * keydown?event <=> press?event
+         *  ```
+         **/
         event() {
             return ({
                 "keydown": (event) => this.press(event),
             });
         }
+        /**
+         *  ```
+         *  press?event null
+         *  ```
+         **/
         press(event, force) {
             return (event !== void 0) ? event : null;
         }
+        /**
+         *  ```
+         *  sub /
+         *  	<= Edit
+         *  	<= View
+         *  ```
+         **/
         sub() {
             return [].concat(this.Edit(), this.View());
         }
+        /**
+         *  ```
+         *  Edit $mol_string
+         *  	dom_name \textarea
+         *  	value?val <=> value?val
+         *  	hint <= hint
+         *  	debounce 0
+         *  	enabled <= enabled
+         *  ```
+         **/
         Edit() {
             return ((obj) => {
                 obj.dom_name = () => "textarea";
@@ -6329,21 +8558,46 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint() {
             return "";
         }
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled() {
             return true;
         }
+        /**
+         *  ```
+         *  View $mol_text text <= text
+         *  ```
+         **/
         View() {
             return ((obj) => {
                 obj.text = () => this.text();
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text() {
             return "";
         }
@@ -6386,10 +8640,10 @@ var $;
             }
             press(event) {
                 switch (event.keyCode) {
-                    case 9:
+                    case $.$mol_keyboard_code.tab:
                         this.indent_inc();
                         break;
-                    case event.shiftKey && 9:
+                    case event.shiftKey && $.$mol_keyboard_code.tab:
                         this.indent_dec();
                         break;
                     default: return;
@@ -6711,15 +8965,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $hyoo_scout_suggest extends $.$mol_page {
+        /**
+         *  ```
+         *  title \Новая игра
+         *  ```
+         **/
         title() {
             return "Новая игра";
         }
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width() {
             return 400;
         }
+        /**
+         *  ```
+         *  tools / <= Close
+         *  ```
+         **/
         tools() {
             return [].concat(this.Close());
         }
+        /**
+         *  ```
+         *  Close $mol_link
+         *  	arg * suggest null
+         *  	sub / <= close_icon
+         *  ```
+         **/
         Close() {
             return ((obj) => {
                 obj.arg = () => ({
@@ -6729,17 +9005,44 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  close_icon $mol_icon_cross
+         *  ```
+         **/
         close_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  body / <= Form
+         *  ```
+         **/
         body() {
             return [].concat(this.Form());
         }
         submit_blocked() {
             return this.Form().submit_blocked();
         }
+        /**
+         *  ```
+         *  Form $mol_form
+         *  	form_fields /
+         *  		<= Name_field
+         *  		<= Icon_field
+         *  		<= Descr_field
+         *  		<= Reason_field
+         *  		<= Age_field
+         *  		<= Place_field
+         *  		<= Stuff_field
+         *  		<= Prep_field
+         *  		<= Duration_field
+         *  	submit_blocked => submit_blocked
+         *  	buttons / <= Submit
+         *  ```
+         **/
         Form() {
             return ((obj) => {
                 obj.form_fields = () => [].concat(this.Name_field(), this.Icon_field(), this.Descr_field(), this.Reason_field(), this.Age_field(), this.Place_field(), this.Stuff_field(), this.Prep_field(), this.Duration_field());
@@ -6747,6 +9050,14 @@ var $;
                 return obj;
             })(new this.$.$mol_form());
         }
+        /**
+         *  ```
+         *  Name_field $mol_form_field
+         *  	name \Название
+         *  	bid <= name_bid
+         *  	control <= Name
+         *  ```
+         **/
         Name_field() {
             return ((obj) => {
                 obj.name = () => "Название";
@@ -6755,9 +9066,21 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  name_bid \
+         *  ```
+         **/
         name_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Name $mol_string
+         *  	hint \Раз два три
+         *  	value?val <=> name?val
+         *  ```
+         **/
         Name() {
             return ((obj) => {
                 obj.hint = () => "Раз два три";
@@ -6765,9 +9088,22 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  name?val \
+         *  ```
+         **/
         name(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Icon_field $mol_form_field
+         *  	name \Эмодзи
+         *  	bid <= icon_bid
+         *  	control <= Icon
+         *  ```
+         **/
         Icon_field() {
             return ((obj) => {
                 obj.name = () => "Эмодзи";
@@ -6776,9 +9112,22 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  icon_bid \
+         *  ```
+         **/
         icon_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Icon $mol_string
+         *  	length_max 2
+         *  	hint \?
+         *  	value?val <=> icon?val
+         *  ```
+         **/
         Icon() {
             return ((obj) => {
                 obj.length_max = () => 2;
@@ -6787,9 +9136,22 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  icon?val \
+         *  ```
+         **/
         icon(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Descr_field $mol_form_field
+         *  	name \Описание
+         *  	bid <= descr_bid
+         *  	control <= Descr
+         *  ```
+         **/
         Descr_field() {
             return ((obj) => {
                 obj.name = () => "Описание";
@@ -6798,9 +9160,21 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  descr_bid \
+         *  ```
+         **/
         descr_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Descr $mol_textarea
+         *  	hint \Вместе считаем - вот и вся игра.
+         *  	value?val <=> descr?val
+         *  ```
+         **/
         Descr() {
             return ((obj) => {
                 obj.hint = () => "Вместе считаем - вот и вся игра.";
@@ -6808,9 +9182,22 @@ var $;
                 return obj;
             })(new this.$.$mol_textarea());
         }
+        /**
+         *  ```
+         *  descr?val \
+         *  ```
+         **/
         descr(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Reason_field $mol_form_field
+         *  	name \Цель
+         *  	bid <= reason_bid
+         *  	control <= Reason
+         *  ```
+         **/
         Reason_field() {
             return ((obj) => {
                 obj.name = () => "Цель";
@@ -6819,9 +9206,35 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  reason_bid \
+         *  ```
+         **/
         reason_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Reason $mol_switch
+         *  	value?val <=> reason?val
+         *  	options /
+         *  		\Внимание
+         *  		\Группировка
+         *  		\Доверие
+         *  		\Знакомство
+         *  		\Лидерство
+         *  		\Мышление
+         *  		\Обратная связь
+         *  		\Обсуждение
+         *  		\Развлечение
+         *  		\Разминка
+         *  		\Раскрепощение
+         *  		\Сплочение
+         *  		\Творчество
+         *  		\Усвоение
+         *  ```
+         **/
         Reason() {
             return ((obj) => {
                 obj.value = (val) => this.reason(val);
@@ -6829,9 +9242,21 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  reason?val \
+         *  ```
+         **/
         reason(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Age_field $mol_form_field
+         *  	name \Возраст
+         *  	control <= Age
+         *  ```
+         **/
         Age_field() {
             return ((obj) => {
                 obj.name = () => "Возраст";
@@ -6839,6 +9264,17 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  Age $mol_switch
+         *  	value?val <=> age?val
+         *  	options *
+         *  		low \Малыши
+         *  		mid \Среднячки
+         *  		high \Старшаки
+         *  		any \Любой
+         *  ```
+         **/
         Age() {
             return ((obj) => {
                 obj.value = (val) => this.age(val);
@@ -6851,9 +9287,21 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  age?val \any
+         *  ```
+         **/
         age(val, force) {
             return (val !== void 0) ? val : "any";
         }
+        /**
+         *  ```
+         *  Place_field $mol_form_field
+         *  	name \Место
+         *  	control <= Place
+         *  ```
+         **/
         Place_field() {
             return ((obj) => {
                 obj.name = () => "Место";
@@ -6861,6 +9309,17 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  Place $mol_switch
+         *  	value?val <=> place?val
+         *  	options *
+         *  		hall \Зал
+         *  		space \Просторное
+         *  		quiet \Тихое
+         *  		any \Любое
+         *  ```
+         **/
         Place() {
             return ((obj) => {
                 obj.value = (val) => this.place(val);
@@ -6873,9 +9332,21 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  place?val \any
+         *  ```
+         **/
         place(val, force) {
             return (val !== void 0) ? val : "any";
         }
+        /**
+         *  ```
+         *  Stuff_field $mol_form_field
+         *  	name \Реквизит
+         *  	control <= Stuff
+         *  ```
+         **/
         Stuff_field() {
             return ((obj) => {
                 obj.name = () => "Реквизит";
@@ -6883,6 +9354,13 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  Stuff $mol_string
+         *  	hint \Руки, Ноги, Голова
+         *  	value?val <=> stuff?val
+         *  ```
+         **/
         Stuff() {
             return ((obj) => {
                 obj.hint = () => "Руки, Ноги, Голова";
@@ -6890,9 +9368,22 @@ var $;
                 return obj;
             })(new this.$.$mol_string());
         }
+        /**
+         *  ```
+         *  stuff?val \
+         *  ```
+         **/
         stuff(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Prep_field $mol_form_field
+         *  	name \Подготовка
+         *  	bid <= prep_bid
+         *  	control <= Prep
+         *  ```
+         **/
         Prep_field() {
             return ((obj) => {
                 obj.name = () => "Подготовка";
@@ -6901,9 +9392,27 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  prep_bid \
+         *  ```
+         **/
         prep_bid() {
             return "";
         }
+        /**
+         *  ```
+         *  Prep $mol_switch
+         *  	value?val <=> prep?val
+         *  	options *
+         *  		0 \Нет
+         *  		1 \1 минута
+         *  		5 \5 минут
+         *  		10 \10 минут
+         *  		20 \20 минут
+         *  		40 \40 минут
+         *  ```
+         **/
         Prep() {
             return ((obj) => {
                 obj.value = (val) => this.prep(val);
@@ -6918,9 +9427,21 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  prep?val \0
+         *  ```
+         **/
         prep(val, force) {
             return (val !== void 0) ? val : "0";
         }
+        /**
+         *  ```
+         *  Duration_field $mol_form_field
+         *  	name \Длительность
+         *  	control <= Duration
+         *  ```
+         **/
         Duration_field() {
             return ((obj) => {
                 obj.name = () => "Длительность";
@@ -6928,6 +9449,19 @@ var $;
                 return obj;
             })(new this.$.$mol_form_field());
         }
+        /**
+         *  ```
+         *  Duration $mol_switch
+         *  	value?val <=> duration?val
+         *  	options *
+         *  		1 \1 минута
+         *  		5 \5 минут
+         *  		10 \10 минут
+         *  		20 \20 минут
+         *  		40 \40 минут
+         *  		60 \60 минут
+         *  ```
+         **/
         Duration() {
             return ((obj) => {
                 obj.value = (val) => this.duration(val);
@@ -6942,9 +9476,22 @@ var $;
                 return obj;
             })(new this.$.$mol_switch());
         }
+        /**
+         *  ```
+         *  duration?val \10
+         *  ```
+         **/
         duration(val, force) {
             return (val !== void 0) ? val : "10";
         }
+        /**
+         *  ```
+         *  Submit $mol_button_major
+         *  	sub / \Добавить игру
+         *  	event_click?val <=> submit?val
+         *  	disabled <= submit_blocked
+         *  ```
+         **/
         Submit() {
             return ((obj) => {
                 obj.sub = () => [].concat("Добавить игру");
@@ -6953,6 +9500,11 @@ var $;
                 return obj;
             })(new this.$.$mol_button_major());
         }
+        /**
+         *  ```
+         *  submit?val null
+         *  ```
+         **/
         submit(val, force) {
             return (val !== void 0) ? val : null;
         }
@@ -7146,12 +9698,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var $;
 (function ($) {
     class $hyoo_scout_gist extends $.$mol_object {
+        /**
+         *  ```
+         *  icon \
+         *  ```
+         **/
         icon() {
             return "";
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
+        /**
+         *  ```
+         *  tags *
+         *  	Возраст /
+         *  	Реквизит /
+         *  	Подготовка /
+         *  	Цель /
+         *  	Место /
+         *  	Длительность /
+         *  ```
+         **/
         tags() {
             return ({
                 "Возраст": [].concat(),
@@ -7162,6 +9735,11 @@ var $;
                 "Длительность": [].concat(),
             });
         }
+        /**
+         *  ```
+         *  content \
+         *  ```
+         **/
         content() {
             return "";
         }
@@ -7170,12 +9748,29 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $hyoo_scout_placeholder extends $.$mol_page {
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width() {
             return 400;
         }
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex null
+         *  ```
+         **/
         attr() {
             return (Object.assign(Object.assign({}, super.attr()), { "tabindex": null }));
         }
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title() {
             return "";
         }
@@ -7184,9 +9779,28 @@ var $;
 })($ || ($ = {}));
 (function ($) {
     class $hyoo_scout extends $.$mol_book {
+        /**
+         *  ```
+         *  pages /
+         *  	<= Filter
+         *  	<= Gists
+         *  	<= Suggest
+         *  ```
+         **/
         pages() {
             return [].concat(this.Filter(), this.Gists(), this.Suggest());
         }
+        /**
+         *  ```
+         *  Filter $mol_page
+         *  	title \Фильтры
+         *  	minimal_width 400
+         *  	event_top?val <=> event_front_up?val
+         *  	body /
+         *  		<= Filter_aspects
+         *  		<= Feedback
+         *  ```
+         **/
         Filter() {
             return ((obj) => {
                 obj.title = () => "Фильтры";
@@ -7196,15 +9810,32 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
+        /**
+         *  ```
+         *  Filter_aspects $mol_list rows <= filter_aspects
+         *  ```
+         **/
         Filter_aspects() {
             return ((obj) => {
                 obj.rows = () => this.filter_aspects();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  filter_aspects /
+         *  ```
+         **/
         filter_aspects() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Feedback $mol_link
+         *  	title \Ошибки? Предложения?
+         *  	uri \https://vk.com/scout_hyoo_ru
+         *  ```
+         **/
         Feedback() {
             return ((obj) => {
                 obj.title = () => "Ошибки? Предложения?";
@@ -7212,6 +9843,20 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Gists $mol_page
+         *  	title <= gists_title
+         *  	minimal_width 400
+         *  	event_top?val <=> event_front_up?val
+         *  	tools /
+         *  		<= Suggest_link
+         *  		<= Gists_favorite
+         *  	body /
+         *  		<= Gists_search
+         *  		<= Gists_list
+         *  ```
+         **/
         Gists() {
             return ((obj) => {
                 obj.title = () => this.gists_title();
@@ -7222,9 +9867,23 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
+        /**
+         *  ```
+         *  gists_title \Игротека вожатого
+         *  ```
+         **/
         gists_title() {
             return "Игротека вожатого";
         }
+        /**
+         *  ```
+         *  Suggest_link $mol_link
+         *  	arg *
+         *  		suggest \
+         *  		gist null
+         *  	sub / <= Suggest_icon
+         *  ```
+         **/
         Suggest_link() {
             return ((obj) => {
                 obj.arg = () => ({
@@ -7235,11 +9894,25 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Suggest_icon $mol_icon_plus
+         *  ```
+         **/
         Suggest_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_plus());
         }
+        /**
+         *  ```
+         *  Gists_favorite $mol_check_icon
+         *  	hint \Только избранное
+         *  	checked?val <=> gists_favorite?val
+         *  	Icon <= Gists_favorite_icon
+         *  	label <= gists_favorite_label
+         *  ```
+         **/
         Gists_favorite() {
             return ((obj) => {
                 obj.hint = () => "Только избранное";
@@ -7249,79 +9922,168 @@ var $;
                 return obj;
             })(new this.$.$mol_check_icon());
         }
+        /**
+         *  ```
+         *  gists_favorite?val false
+         *  ```
+         **/
         gists_favorite(val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Gists_favorite_icon $mol_icon_favorite
+         *  ```
+         **/
         Gists_favorite_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_favorite());
         }
+        /**
+         *  ```
+         *  gists_favorite_label / <= Gists_favorite_duration
+         *  ```
+         **/
         gists_favorite_label() {
             return [].concat(this.Gists_favorite_duration());
         }
+        /**
+         *  ```
+         *  Gists_favorite_duration $mol_view sub / <= gists_favorite_duration
+         *  ```
+         **/
         Gists_favorite_duration() {
             return ((obj) => {
                 obj.sub = () => [].concat(this.gists_favorite_duration());
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  gists_favorite_duration \
+         *  ```
+         **/
         gists_favorite_duration() {
             return "";
         }
+        /**
+         *  ```
+         *  Gists_search $mol_search query?val <=> gists_filter_query?val
+         *  ```
+         **/
         Gists_search() {
             return ((obj) => {
                 obj.query = (val) => this.gists_filter_query(val);
                 return obj;
             })(new this.$.$mol_search());
         }
+        /**
+         *  ```
+         *  gists_filter_query?val \
+         *  ```
+         **/
         gists_filter_query(val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Gists_list $mol_list rows <= gist_links
+         *  ```
+         **/
         Gists_list() {
             return ((obj) => {
                 obj.rows = () => this.gist_links();
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  gist_links /
+         *  ```
+         **/
         gist_links() {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Suggest $hyoo_scout_suggest event_top?val <=> event_front_up?val
+         *  ```
+         **/
         Suggest() {
             return ((obj) => {
                 obj.event_top = (val) => this.event_front_up(val);
                 return obj;
             })(new this.$.$hyoo_scout_suggest());
         }
+        /**
+         *  ```
+         *  Placeholder $hyoo_scout_placeholder
+         *  ```
+         **/
         Placeholder() {
             return ((obj) => {
                 return obj;
             })(new this.$.$hyoo_scout_placeholder());
         }
+        /**
+         *  ```
+         *  Filter_aspect!id $mol_list rows /
+         *  	<= Filter_aspect_title!id
+         *  	<= Filter_aspect_tags!id
+         *  ```
+         **/
         Filter_aspect(id) {
             return ((obj) => {
                 obj.rows = () => [].concat(this.Filter_aspect_title(id), this.Filter_aspect_tags(id));
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  Filter_aspect_title!id $mol_view sub / <= key!id
+         *  ```
+         **/
         Filter_aspect_title(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.key(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  key!id \
+         *  ```
+         **/
         key(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Filter_aspect_tags!id $mol_row sub <= filter_aspect_tags!id
+         *  ```
+         **/
         Filter_aspect_tags(id) {
             return ((obj) => {
                 obj.sub = () => this.filter_aspect_tags(id);
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  filter_aspect_tags!id /
+         *  ```
+         **/
         filter_aspect_tags(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Filter_tag!id $mol_check
+         *  	checked?val <=> filter_tag_checked!id?val
+         *  	label / <= Filter_tag_title!id
+         *  ```
+         **/
         Filter_tag(id) {
             return ((obj) => {
                 obj.checked = (val) => this.filter_tag_checked(id, val);
@@ -7329,9 +10091,21 @@ var $;
                 return obj;
             })(new this.$.$mol_check());
         }
+        /**
+         *  ```
+         *  filter_tag_checked!id?val true
+         *  ```
+         **/
         filter_tag_checked(id, val, force) {
             return (val !== void 0) ? val : true;
         }
+        /**
+         *  ```
+         *  Filter_tag_title!id $mol_view
+         *  	attr * hyoo_scout_tag_id <= tag_title!id
+         *  	sub / <= tag_title!id
+         *  ```
+         **/
         Filter_tag_title(id) {
             return ((obj) => {
                 obj.attr = () => ({
@@ -7341,9 +10115,23 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  tag_title!id \
+         *  ```
+         **/
         tag_title(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Gist_link!id $mol_link
+         *  	sub /
+         *  		<= Gist_link_icon!id
+         *  		<= Gist_link_title!id
+         *  	arg * gist <= key!id
+         *  ```
+         **/
         Gist_link(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Gist_link_icon(id), this.Gist_link_title(id));
@@ -7353,15 +10141,32 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Gist_link_icon!id $mol_view sub / <= gist_icon!id
+         *  ```
+         **/
         Gist_link_icon(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.gist_icon(id));
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  gist_icon!id \
+         *  ```
+         **/
         gist_icon(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Gist_link_title!id $mol_dimmer
+         *  	needle <= gists_filter_query
+         *  	haystack <= gist_title!id
+         *  ```
+         **/
         Gist_link_title(id) {
             return ((obj) => {
                 obj.needle = () => this.gists_filter_query();
@@ -7369,9 +10174,29 @@ var $;
                 return obj;
             })(new this.$.$mol_dimmer());
         }
+        /**
+         *  ```
+         *  gist_title!id \
+         *  ```
+         **/
         gist_title(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Gist!id $mol_page
+         *  	title <= gist_title!id
+         *  	minimal_width 400
+         *  	event_top?val <=> event_front_up?val
+         *  	tools /
+         *  		<= Gist_favorite!id
+         *  		<= Gist_close
+         *  	body /
+         *  		<= Gist_content!id
+         *  		<= Gist_aspects!id
+         *  		<= Gist_remarks!id
+         *  ```
+         **/
         Gist(id) {
             return ((obj) => {
                 obj.title = () => this.gist_title(id);
@@ -7382,6 +10207,13 @@ var $;
                 return obj;
             })(new this.$.$mol_page());
         }
+        /**
+         *  ```
+         *  Gist_favorite!id $mol_check_icon
+         *  	checked?val <=> gist_favorite!id?val
+         *  	Icon <= Gist_favorite_icon
+         *  ```
+         **/
         Gist_favorite(id) {
             return ((obj) => {
                 obj.checked = (val) => this.gist_favorite(id, val);
@@ -7389,14 +10221,31 @@ var $;
                 return obj;
             })(new this.$.$mol_check_icon());
         }
+        /**
+         *  ```
+         *  gist_favorite!id?val false
+         *  ```
+         **/
         gist_favorite(id, val, force) {
             return (val !== void 0) ? val : false;
         }
+        /**
+         *  ```
+         *  Gist_favorite_icon $mol_icon_favorite
+         *  ```
+         **/
         Gist_favorite_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_favorite());
         }
+        /**
+         *  ```
+         *  Gist_close $mol_link
+         *  	arg * gist null
+         *  	sub / <= Gist_close_icon
+         *  ```
+         **/
         Gist_close() {
             return ((obj) => {
                 obj.arg = () => ({
@@ -7406,29 +10255,61 @@ var $;
                 return obj;
             })(new this.$.$mol_link());
         }
+        /**
+         *  ```
+         *  Gist_close_icon $mol_icon_cross
+         *  ```
+         **/
         Gist_close_icon() {
             return ((obj) => {
                 return obj;
             })(new this.$.$mol_icon_cross());
         }
+        /**
+         *  ```
+         *  Gist_content!id $mol_text text <= gist_content!id
+         *  ```
+         **/
         Gist_content(id) {
             return ((obj) => {
                 obj.text = () => this.gist_content(id);
                 return obj;
             })(new this.$.$mol_text());
         }
+        /**
+         *  ```
+         *  gist_content!id \
+         *  ```
+         **/
         gist_content(id) {
             return "";
         }
+        /**
+         *  ```
+         *  Gist_aspects!id $mol_list rows <= gist_aspects!id
+         *  ```
+         **/
         Gist_aspects(id) {
             return ((obj) => {
                 obj.rows = () => this.gist_aspects(id);
                 return obj;
             })(new this.$.$mol_list());
         }
+        /**
+         *  ```
+         *  gist_aspects!id /
+         *  ```
+         **/
         gist_aspects(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Gist_remarks!id $mol_textarea
+         *  	hint \Личные заметки
+         *  	value?val <=> gist_remarks!id?val
+         *  ```
+         **/
         Gist_remarks(id) {
             return ((obj) => {
                 obj.hint = () => "Личные заметки";
@@ -7436,24 +10317,55 @@ var $;
                 return obj;
             })(new this.$.$mol_textarea());
         }
+        /**
+         *  ```
+         *  gist_remarks!id?val \
+         *  ```
+         **/
         gist_remarks(id, val, force) {
             return (val !== void 0) ? val : "";
         }
+        /**
+         *  ```
+         *  Gist_aspect!id $mol_row sub /
+         *  	<= Gist_aspect_title!id
+         *  	<= gist_aspect_tags!id
+         *  ```
+         **/
         Gist_aspect(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.Gist_aspect_title(id), this.gist_aspect_tags(id));
                 return obj;
             })(new this.$.$mol_row());
         }
+        /**
+         *  ```
+         *  Gist_aspect_title!id $mol_view sub /
+         *  	<= key!id
+         *  	\:
+         *  ```
+         **/
         Gist_aspect_title(id) {
             return ((obj) => {
                 obj.sub = () => [].concat(this.key(id), ": ");
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  gist_aspect_tags!id /
+         *  ```
+         **/
         gist_aspect_tags(id) {
             return [].concat();
         }
+        /**
+         *  ```
+         *  Gist_tag!id $mol_view
+         *  	attr * hyoo_scout_tag_id <= tag_title!id
+         *  	sub / <= tag_title!id
+         *  ```
+         **/
         Gist_tag(id) {
             return ((obj) => {
                 obj.attr = () => ({
@@ -7463,6 +10375,779 @@ var $;
                 return obj;
             })(new this.$.$mol_view());
         }
+        /**
+         *  ```
+         *  data /
+         *  	$hyoo_scout_gist
+         *  		icon \🌋
+         *  		title \Спичка о себе
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Тихое
+         *  		content \Каждый по очереди представляет, что держит в руках спичку (или использует реальную), и пока она горит, следует рассказать о себе как можно больше.
+         *  	$hyoo_scout_gist
+         *  		icon \👏
+         *  		title \Хор хлопочков
+         *  		tags *
+         *  			Длительность / \1 минута
+         *  			Цель / \Внимание
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Всем одновременно нужно повторить ритм хлопков вожатого. Если все выполнили правильно и дружно, можно поаплодировать друг другу.
+         *  	$hyoo_scout_gist
+         *  		icon \🍎
+         *  		title \Фруктовый салат
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждому назначается свой фрукт (овощ/интерес/имя). Ведущий называет один из фруктов и команду. Все с этим фруктом должны её выполнить и поменяться местами. А ведущий занимает освободившееся место. Кому места не досталось - становится ведущим.
+         *  	$hyoo_scout_gist
+         *  		icon \⚛️
+         *  		title \Притяжение-отталкивание
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый выбирает того, кто ему больше симпатичен и старается держаться максимально близко к нему, и одновременно того, кто менее симпатичен и старается держаться подальше от него. Несколько раз цели должны меняться. В том числе и на противоположные.
+         *  	$hyoo_scout_gist
+         *  		icon \🎤
+         *  		title \Вокальное приветствие
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все встают в круг. Каждый по очереди делает шаг, пропевает своё имя и показывает любое движение. Все остальные повторяют за ним.
+         *  	$hyoo_scout_gist
+         *  		icon \💑
+         *  		title \Стенка на стенку
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Обратная связь
+         *  				\Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все встают в две шеренги, разбившись на пары. За минуту надо обсудить проведённое ранее вместе время. В конце нужно показать число пальцев:
+         *  			\
+         *  			\ - Если хотя бы один показал 1 палец, то оба отворачиваются друг от друга.
+         *  			\ - Если хотя бы один показал 2 пальца, то идёт рукопожатие.
+         *  			\ - Если оба показали 3 пальца, то обнимашки.
+         *  	$hyoo_scout_gist
+         *  		icon \🖐️
+         *  		title \Интернациональное приветствие
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Раскрепощение
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все приветствуют всех на разных языках:
+         *  			\
+         *  			\ - Россия: **пожимают руки** - Здравствуй, меня зовут *имя*.
+         *  			\ - Япония: **кланяются** - Коничива, меня зовут *имя*.
+         *  			\ - США: **дают пять** - Хай! Меня зовут *имя*.
+         *  			\ - Франция: **щека к щеке** - Бонжур, меня зовут *имя*.
+         *  			\ - Италия: **обнимаются** - Бонжорно, меня зовут *имя*.
+         *  			\
+         *  			\ В конце можно назвать совсем другую страну (например, Индия) и предложить ребятам самим определиться как поприветствовать друг друга. Это добавит веселья и выявит лидеров.
+         *  	$hyoo_scout_gist
+         *  		icon \🤗
+         *  		title \Интернациональное прощание
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Раскрепощение
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все прощаются со всеми на разных языках:
+         *  			\
+         *  			\ - Россия: **пожимают руки** - До свидания, *имя*!
+         *  			\ - Япония: **кланяются** - Сайонара, *имя*!
+         *  			\ - США: **дают пять** - Бай-Бай, *имя*!
+         *  			\ - Франция: **щека к щеке** - Оревуар, *имя*!
+         *  			\ - Италия: **обнимаются** - Аривидерчи, *имя*!
+         *  			\
+         *  			\ В конце можно назвать совсем другую страну (например, Индия) и предложить ребятам самим определиться как прощаться. Это добавит веселья и выявит лидеров.
+         *  	$hyoo_scout_gist
+         *  		icon \♻️
+         *  		title \Круги интересов
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Особый
+         *  			Подготовка / \10 минут
+         *  			Место / \Просторное
+         *  		content \Заранее подготовить карточки с несколькими признаками (цвет, форма, буква и тп). Каждый призак должен иметь 3-7 вариантов. Ведущий называет один из признаков, а ребята собираются вместе с теми, у кого то же значение признака. В группе им надо найти любой факт о них, который бы их объединял. Называть признаки лучше от самого вариативного к менее, чтобы группы были сначала маленькими, а потом большими.
+         *  	$hyoo_scout_gist
+         *  		icon \🖼️
+         *  		title \Совместный портрет
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Творчество
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Карандаши
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \Все делятся на не большие группы. Каждой группе предлагается нарисовать самую важную часть тела человека определённой профессии (например, вожатого) и приписывают почему именно эта часть тела. Потом группы меняются листами и рисуют вторую по важности часть тела. И так далее, пока рисунки не сделают полный круг. После чего представители от групп рассказывают всем о портрете который у них в итоге получился.
+         *  	$hyoo_scout_gist
+         *  		icon \💬
+         *  		title \Случаи из жизни
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все делятся на средние группы. Всем выдаётся для обсуждения какой-либо жизненный случай. Спустя несколько минут каждая группа должна оценить ситуацию, выработать правильное решение и аргументированно рассказать его остальным.
+         *  	$hyoo_scout_gist
+         *  		icon \❓
+         *  		title \Почему так?
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  				\Скотч
+         *  				\Стикеры
+         *  			Подготовка / \20 минут
+         *  			Место / \Просторное
+         *  		content \В разных местах приклеиваются различные суждения. Каждый пришет на стикере почему суждение верно и приклеивает его рядом. Потом все разбиваются на средние группы. Каждая группа выбирает одно из суждений. Берёт его стикеры. И через несколько минут резюмирует для всех.
+         *  	$hyoo_scout_gist
+         *  		icon \🌡️
+         *  		title \Настроеметр
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Лист бумаги делится на 4 части: отлично, хорошо, так себе, плохо. Каждый анонимно пишет в соответствующей части что ему понравилось или не понравилось.
+         *  	$hyoo_scout_gist
+         *  		icon \🔃
+         *  		title \Базар
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Знакомство
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  				\Мешочек
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый пишет на 4 листочках своё имя и фамилию печатными буквами. Каждый листочек складывается дважды и кладётся в мешочек. Каждому выдаётся по 4 случайных листочка. Далее ребята могут меняться друг с другом листочками, только так, чтобы в результате каждого обмена они получали листочек со своим именем. Задача - собрать все листочки со своим именем. Ребята должны догадаться, что листочками можно меняться по кругу одновременно.
+         *  	$hyoo_scout_gist
+         *  		icon \🙋‍
+         *  		title \Минутка на лидера
+         *  		tags *
+         *  			Длительность / \1 минута
+         *  			Цель / \Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\- *Сделайте шаг вперёд те, кто сможет сейчас мне помочь.*
+         *  			\
+         *  			\Важно аргументированно выбрать одного из среагировавших лидеров и дать ему какое-либо задание.
+         *  	$hyoo_scout_gist
+         *  		icon \🌱
+         *  		title \Ветви дерева
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Группировка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Выбираются ребята по необходимому числу групп, которые становятся *корнями дерева*. Каждый из них по очереди выбирает себе в команду одного человека, который станет *веткой дерева*. Потом ветви дерева выбирают себе продолжение и тд. Ребята, не выбранные ни в какую команду (*листики*), должны получить привелегии в качестве компенсации. Например:
+         *  			\
+         *  			\ - Право самому выбрать команду.
+         *  			\ - Быть помощником ведущего.
+         *  	$hyoo_scout_gist
+         *  		icon \🗃️
+         *  		title \Своя игра
+         *  		tags *
+         *  			Длительность / \40 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все делятся на средние группы. Ведущий объявляет несколько тем. Команды по очереди выбирают одну из тем, а ведущий зачитывает вопрос. Та команда, что выбирала тему, имеет преимущество в ответе на вопрос. И если отвечает исчерпывающе получает 2 очка, а если не полностью - 1 очко. Каждой команде, которой удастся потом сделать существенное дополнение, присуждается по очку.
+         *  	$hyoo_scout_gist
+         *  		icon \🏃
+         *  		title \Платочек
+         *  		tags *
+         *  			Длительность /
+         *  				\10 минут
+         *  				\20 минут
+         *  			Цель /
+         *  				\Разминка
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Платочек
+         *  				\Удобная обувь
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все выстраиваются в 2 шеренги поровну. Рассчитываются по порядку, запоминая своё число. Встают в случайном порядке так, чтобы не было двух одинаковых чисел подряд. Ведущий встаёт скраю шеренг между ними и держит платочек в вытянутой руке. Когда он называет число, ребята с соответствующими номерами должны добежать и выхватить платочек раньше соперника, после чего добежать до своего места не запятнаным противником. Если удалось - его команда получает очко. Иначе очко достаётся другой команде. Можно провести несколько схваток, позволив участникам поменять порядок.
+         *  	$hyoo_scout_gist
+         *  		icon \🔢
+         *  		title \Коллективный счёт
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все встают в круг. Задача пересчитаться так, чтобы каждый сказал ровно одно число. Если двое говорят одновременно - счёт начинается сначала. Важно донести, что нужно не надеяться на удачу, а постараться **почувствовать** друг друга.
+         *  			\
+         *  			\ - Уровень **1**: можно совместно договориться о стратегии.
+         *  			\ - Уровень **2**: нельзя рассчитываться по какой-либо стратегии.
+         *  			\ - Уровень **3**: без стратегии, с закрытыми глазами, в случайном месте комнаты.
+         *  	$hyoo_scout_gist
+         *  		icon \🔀
+         *  		title \Построения
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Сплочение
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Задача всем выстроиться по заданному ведущим принципу.
+         *  			\
+         *  			\Явный лидер покажет себя в заданиях, где **можно коммуницировать**:
+         *  			\
+         *  			\ - По росту.
+         *  			\ - По цвету волос.
+         *  			\ - По размеру ботинок.
+         *  			\
+         *  			\ Неявный лидер покажет себя в заданиях с ограниченными коммуникациями, где **нельзя говорить**:
+         *  			\
+         *  			\ - В круг.
+         *  			\ - В равносторонний квадрат.
+         *  			\ - В равносторонний треугольник.
+         *  			\ - Звездой.
+         *  			\
+         *  			\ Скрытый лидер покажет себя в заданиях с **запретом любых коммуникаций**:
+         *  			\
+         *  			\ - Буквой А
+         *  			\ - Буквой М
+         *  			\ - Буквой Я
+         *  			\ - Буквой Щ
+         *  	$hyoo_scout_gist
+         *  		icon \🤝
+         *  		title \Спортивное приветствие
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все встают в 2 шеренги. Обе шененги проходят вдоль друг друга и каждый человек из одной шеренги здоровается за руку с каждым из другой, называя его по имени.
+         *  	$hyoo_scout_gist
+         *  		icon \🤼
+         *  		title \Спортивное прощание
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все встают в 2 шеренги. Обе шененги проходят вдоль друг друга и каждый человек из одной шеренги прощается обнимаясь с каждым из другой, называя его по имени.
+         *  	$hyoo_scout_gist
+         *  		icon \🌀
+         *  		title \Циклон
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все случайно перемещаются по пространству. Когда ведущий называет число нужно быстро образовать группы с таким числом людей. Кто не смог образовать такую группы - выбывает.
+         *  	$hyoo_scout_gist
+         *  		icon \🔃
+         *  		title \Шиворот на выворот
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все случайно перемещаются по пространству. Когда ведущий называет действие (пыжок, хлопок и тп) - все должны его выполнить. Можно предложить кому-то придумать несуществующий глагод. А кому-то показать это действие, как он его себе представляет. Далее ведущий меняет местами глаголы и выполняемое действие. Например, когда говорит *хлопок* надо прыгать, а когда *прыжок* - хлопать.
+         *  	$hyoo_scout_gist
+         *  		icon \🏠
+         *  		title \Дом, милый дом
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель /
+         *  				\Раскрепощение
+         *  				\Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый находит местечко, где ему уютнее всего - называем его «домом». Глазами он находит человека, которого он хочет привести в свой домик. По команде всем нужно приложить максимум усилий, чтобы этот человек оказался именно в его домике.
+         *  	$hyoo_scout_gist
+         *  		icon \🔄
+         *  		title \Фантазеры - Скептики - Реалисты
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Творчество
+         *  				\Сплочение
+         *  				\Обсуждение
+         *  			Возраст /
+         *  				\Среднячки
+         *  				\Старшаки
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все разбиваются на средние группы. Сначала все фантазёры и записывают мероприятия в которых хотели бы поучаствовать. Потом листы передаются по кругу и теперь все критики, вычёркивающие те мероприятия, что им не понравятся. Снова передают по кругу и на этот раз все реалисты, обводящие те варианты из оставшихся, что кажутся им более интересными. Листы опять передаются по кругу и теперь каждая команда должна выбрать одно мероприятие и представить его остальным командам так, чтобы все тоже его захотели.
+         *  			\
+         *  			\![](https://vk.com/video_ext.php?oid=-76966755&id=456239212&hash=fc5b24ac237ce085&hd=2)
+         *  	$hyoo_scout_gist
+         *  		icon \📜
+         *  		title \Расписание
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Усвоение
+         *  				\Обсуждение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \10 минут
+         *  			Место / \Просторное
+         *  		content \Все делятся на 2 шеренги. Членам одной выдаются листы с временными промежутками, а членам другой - с автивностями. Задача встать друг на против друга в правильной последовательности. В конце ведущий оглашает правильное расписание, переставляя ребят.
+         *  	$hyoo_scout_gist
+         *  		icon \✈️
+         *  		title \Ковёр-самолёт
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Плед
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \Все встают на плед. Задача перевернуть плед так, чтобы никто не ступил ногой за его пределы. Усложнённый вариант - нельзя опираться на пол ничем. Экстремальный вариант - с закрытыми глазами.
+         *  	$hyoo_scout_gist
+         *  		icon \🚧
+         *  		title \Покрывало
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Плед
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все делятся на 2 группы и располагаются по обе сторооны от натянутого покрывала. Перед покрывалом встают по одному каждый раз разному участнику из каждой команды. Когда покрывало опускается они должны как можно быстрее назвать имя того, кого видят. Кто замешкался - переходит в противоположную команду. Задача - петащить всех на свою сторону.
+         *  	$hyoo_scout_gist
+         *  		icon \🗺️
+         *  		title \Бип
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Лидерство
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \На земле любым способом рисуется сетка от 4х4 - это карта. Каждый по очереди должен начать с одного конца и *доехать* до другого перешагивая на соседнюю клетку. Ведущий задумывает правила передвижения (невидимые границы, с какой ноги ступать, ходить только боком и тп) и если игрок нарушает правила, то говорит **бип** и новый игрок начинает сначала. Задача игроков - понять принцип так, чтобы любой смог дойти от начала до конца.
+         *  	$hyoo_scout_gist
+         *  		icon \🖇️
+         *  		title \Связи
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый сцепляется с кем-то за руку и здоровается/прощается, называя имя партнёра. Расцепляться с партнёром нельзя, пока тот не сцепится второй рукой с кем-то ещё. Задача - пообщаться со всеми.
+         *  	$hyoo_scout_gist
+         *  		icon \💞
+         *  		title \Сердца
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Группировка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \5 минут
+         *  			Место / \Просторное
+         *  		content \Бумажные сердца нарезаются несколько частей и каждому выдаётся случайная часть. Задача - найти свою пару.
+         *  	$hyoo_scout_gist
+         *  		icon \👯
+         *  		title \Я люблю саванну
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все встают в круг. Каждый кладёт обе руки на плечи соседа справа. Все идут по кругу хором произнося одни и те же слова. Например:
+         *  			\
+         *  			\- *Я люблю Саванну! Я очень люблю Саванну! Крокодил, обезьяна, бегемот.. Я очень люблю Саванну!*
+         *  			\
+         *  			\Закончив фразу каждый делает шаг внутрь круга и всё повторяется. И так до максимального уплотнения кольца. Потом всем нужно сесть на колени соседа сзади и в таком положении снова идти и произносить фразу. Потом так же лечь на соседа. И в конце всем нужно раздвинуть ноги, чтобы все опустились на землю.
+         *  	$hyoo_scout_gist
+         *  		icon \🛸
+         *  		title \Левитация
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Стол
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \
+         *  			\Один ложится спиной на стол и закрывает глаза. Остальные обступают его вокруг и по сигналу одновременно поднимают его ладонями (не пальцами!). Вожатый при этом должен придерживать голову на всякий случай. А кто-то должен стоять у двери и никого не пускать, чтобы ребята не отвлеклись и не уронили.
+         *  	$hyoo_scout_gist
+         *  		icon \🐐
+         *  		title \Козья тропа
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все встают в ряд на краю бордюра, лавочки или выставленных рядом стульев. Один с одного конца до другого должен дойти вставая ногами между ног остальных ребят. Ребята будут вынуждены придерживать идущего, иначе он упадёт. И так, пока каждый не пройдёт по этой узкой тропе.
+         *  	$hyoo_scout_gist
+         *  		icon \🗼
+         *  		title \Уровень сплочения
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит / \Особый
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Выдаётся 5 картинок, симполизирующих уровень сплочения. Предлагается каждому высказать своё мнение по этому вопросу, посредством приклеивания стикера или подписью одного из них. Изображения:
+         *  			\
+         *  			\- **Рассыпчатый песок** - каждый сам по себе.
+         *  			\- **Кусок глины** - все стараются держатся вместе, но обстоятельства мнут как попало.
+         *  			\- **Камень** - друг за друга горой.
+         *  			\- **Стальная конструкция** - слаженная работа и взаимопомощь.
+         *  			\- **Космический аппарат** - единые цели и мечты.
+         *  	$hyoo_scout_gist
+         *  		icon \🔮
+         *  		title \Эффект Барнума
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Мышление
+         *  			Возраст / \Старшаки
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Проводится как бы психологическое тестирование или говорите, что долго наблюдали за каждым и пришли к некоторым выводам. Каждому выдаётся описание его *индивидуального* психологического портрета. Всем должно быть выдано одно и то же описание, где больше положительных качеств, чем отрицательных:
+         *  			\
+         *  			\*Вы очень нуждаетесь в том, чтобы другие люди любили и восхищались вами. Вы довольно самокритичны. У вас есть много скрытых возможностей, которые вы так и не использовали себе во благо. Хотя у вас есть некоторые личные слабости, вы в общем способны их нивелировать. Дисциплинированный и уверенный с виду, на самом деле вы склонны волноваться и чувствовать неуверенность. Временами вас охватывают серьёзные сомнения, приняли ли вы правильное решение или сделали ли правильный поступок. Вы предпочитаете некоторое разнообразие, рамки и ограничения вызывают у вас недовольство. Также вы гордитесь тем, что мыслите независимо; вы не принимаете чужих утверждений на веру без достаточных доказательств. Вы поняли, что быть слишком откровенным с другими людьми — не слишком мудро. Иногда вы экстравертны, приветливы и общительны, иногда же — интровертны, осторожны и сдержанны. Некоторые из ваших стремлений довольно нереалистичны. Одна из ваших главных жизненных целей — стабильность.*
+         *  			\
+         *  			\Прочитав, каждый должен тут же дать оценку насколько он согласен с этим описанием по 5 бальной шкале. Собирается статистика и провозглашается какой ведущий проницательный. Потом предлагается всем поменяться описаниями и прочитать.
+         *  			\
+         *  			\Это упражнение поможет отучить доверять астрологам, гадалкам и тому подобным шарлатанам.
+         *  	$hyoo_scout_gist
+         *  		icon \🤥
+         *  		title \Парадокс Лжеца
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Мышление
+         *  				\Обсуждение
+         *  			Возраст / \Старшаки
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все делятся на группы. Каждой выдаётся один вопрос и предлагается через несколько минут дать ответ на него, рассказав всем, почему они так решили. Примеры вопросов:
+         *  			\
+         *  			\ - Данное утвержение ложно, правда ли это?
+         *  			\ - Что будет, если Пиноккио скажет: «Сейчас у меня удлинится нос»?
+         *  			\ - Брадобрей города N бреет всех жителей этого города, кто не бреет себя сам и только их. Бреет ли он сам себя?
+         *  			\ - Может ли всемогущий бог создать камень, который он сам не сможет поднять?
+         *  			\
+         *  			\Подвох в том, что вопросы содержат логическое противоречие. Что иллюстрирует тот факт, что выражение может быть не только истинным или ложным, но и попросту бредом.
+         *  	$hyoo_scout_gist
+         *  		icon \😳
+         *  		title \Чувственные знакомства
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Задача каждого поприветствовать каждого. На каждом этапе добавляется по одному типу взаимодействия:
+         *  			\
+         *  			\1. **Визуальный.** Нужно внимательно посмотреть в глаза и молча передать мысль партнёру.
+         *  			\2. **Вербальный.** Добавить приветствие голосом.
+         *  			\3. **Тактильный.** Добавить какое либо касание.
+         *  			\4. **Обонятельный.** Понюхать партнёра и постараться самому не испортить воздух в этот момент.
+         *  	$hyoo_scout_gist
+         *  		icon \🔫
+         *  		title \Киллер
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Развлечение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все встают в круг и закрывают глаза. Ведущий незаметно касается одного - тот становится киллером. Киллер незаметно подмигивает одним глазом одному из присутствующих. Кому подмигнули - выбывает. Задача киллера - убить как можно больше людей. Задача остальных - догадаться кто киллер и поднять руку. Если угадывает - киллер пойман. Если нет - выбывает.
+         *  	$hyoo_scout_gist
+         *  		icon \🐸
+         *  		title \Лягушка
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Развлечение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Один берёт на себя роль цапли и отходит, так чтобы не видеть остальных. Остальные встают в круг и закрывают глаза. Ведущий незаметно касается одного - тот становится лягушкой. Остальные - комариками. Цапля возвращается и встаёт в центр. Её задача найти и съесть лягушку до того, как она съест всех комариков. Но у неё на это есть лишь одна/две/три попытки. Лягушка незаметно для цапли может показывать язык. Кто увидел высунутый язык - считается съеденным и приседает. Задача лягушки - съесть всех комариков и убежать.
+         *  	$hyoo_scout_gist
+         *  		icon \🚪
+         *  		title \Бункер
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст /
+         *  				\Среднячки
+         *  				\Старшаки
+         *  			Реквизит / \Нет
+         *  			Подготовка / \5 минут
+         *  			Место / \Любое
+         *  		content \
+         *  			\Каждому выдаётся роль и рассказывается общая легенда: произошла ядерная война и нам удалось спрятаться в бункере. Однако, запасов воздуха/еды/воды не хватит на всех до момента, когда можно будет выйти на поверхность. Поэтому надо принять решение, кто покинет бункер сейчас, чтобы остальные выжили и восстановили цивилизацию. Если за 15 минут решение не будет принято - умирают все. Если ребята быстро справятся, то можно дополнять сюжет, вынуждая избавляться от большего числа людей. После игры можно устроить совместный просмотр фильма "Философы" по мотивам этой игры.
+         *  			\
+         *  			\Роли:
+         *  			\
+         *  			\- Школьница, 15 лет. Умная и милая девушка, пребывающая сейчас в шоке. Постоянно в слезах и молчит. Симпатизирует 16-ти летнему юношу, также оказавшемуся в бункере.
+         *  			\- Юноша, 16 лет. Отлично развит физически, но абсолютно не заинтересован в учебе. Также испытывает симпатию к школьнице.
+         *  			\- Молодой человек, 25 лет. Спортсмен, увлекается альпинизмом. Часто конфликтует с окружающими и в свое время был отчислен из службы МЧС за драку.
+         *  			\- Мужчина, 48 лет. Профессор-физик. Весьма образованный, разбирающийся в электронике и строительстве. Имеет проблемы с сердцем.
+         *  			\- Студентка, 19 лет. Обучается в университете физкультуры, специальность легкая атлетика. Несмотря на привлекательность и общительность, кроме достижений в спорте похвастаться ей не чем. Ждет ребенка.
+         *  			\- Девушка, 21 год. Студентка медицинского университета, не блещущая знаниями. Тяжело сказать, выйдет ли из нее высококлассный специалист. Имеет несколько хобби: шитье, вязание.
+         *  			\- Мужчина, 32 года. Знания, полученные во время службы в ракетных войсках, позволяют ему выжить практически в любой ситуации. Имеет превосходную физическую подготовку, увлекается восточными единоборствами. Имеет лишь один недостаток – слабость к алкоголю.
+         *  			\- Тренер по физической культуре , 26 лет. В прошлом учительница, а также инструктор в области туризма. Говорит на трех иностранных языках.
+         *  			\- Академик, чьи работы неоднократно публиковались, 58 лет. Знаток в области гуманитарных наук.
+         *  			\- Женщина , 43 года. Ученый в сфере сельскохозяйственных наук. Способна вырастить урожай даже в самых неблагоприятных условиях. Любит готовить.
+         *  			\
+         *  			\![](https://www.youtube.com/embed/csUm65Lwx_M)
+         *  	$hyoo_scout_gist
+         *  		icon \🎶
+         *  		title \Поющие молекулы
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все ходят перемешиваясь, напевая всем известную песню. Когда ведущий говорит стоп - все здороваются. Этапы:
+         *  			\
+         *  			\- Ступнями
+         *  			\- Коленями
+         *  			\- Попами
+         *  			\- Руками
+         *  			\- Локтями
+         *  			\- Плечами
+         *  			\- Обнимашки
+         *  	$hyoo_scout_gist
+         *  		icon \⭕
+         *  		title \Вжух-Бэнг-Пау
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все встают в круг и передают друг другу эстафету, используя одно из особых движений со звуком, которые вводятся в игру по одному.
+         *  			\
+         *  			\- **Вжух!** - кидая воображаемый энергетический шар. От сосеа к соседу в одном направлении.
+         *  			\- **Бэнг!** - шар отражается и начинается двигаться в обратном направлении.
+         *  			\- **Пау!** - стреляя в любого человека в круге.
+         *  			\- **Бумеранг!** - кидая в любого человека бумеранг, а тот человек должен уклониться от него в стиле Матрицы.
+         *  			\- **Дайте мне бит!** - соседи издают ритмичные звуки, под которые ты танцуешь.
+         *  	$hyoo_scout_gist
+         *  		icon \💌
+         *  		title \Письмо другу
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Каждый пишет на бумажке "сообщение лучшему другу" о своих впечатлениях, при этом не подписывая своё послание.
+         *  	$hyoo_scout_gist
+         *  		icon \🎠
+         *  		title \Карусель
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все делятся на две группы поровну и встают в два концентрических круга лицом к лицу. Производят друг с другом определённые действия, внешний круг проворачивается на одного человека и всё повторяется. Так до полного оборота. Варианты действий:
+         *  			\
+         *  			\ - Каждый говорит партнёру чем тот хорош.
+         *  			\ - Один говорит что между ними общего, а другой - чем отличаются.
+         *  	$hyoo_scout_gist
+         *  		icon \🥓
+         *  		title \Горелки
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все встают в ряд по парам, а ведущий впереди спиной к остальным. Как только ведущий поворачивается, первая пара должна расцепиться и бежать сцепляться в конец. Задача ведущего поймать кого-то и встать с ним в конце. Кто остался без пары - становится ведущим.
+         *  	$hyoo_scout_gist
+         *  		icon \☎
+         *  		title \Телеграф
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все делятся на две команды и встают друг за гругом в две шеренги. Ведущий каждому последнему тихо говорит одно и то же слово. Начиная с последних, необходимо написать на спине впереди стоящего все буквы слова по очереди. Первому же нужно будет собрать из букв слово и сказать его раньше соперников. Победившей команде присуждается очко, а первый её участник переходит в конец. И всё повторяется.
+         *  	$hyoo_scout_gist
+         *  		icon \🏗
+         *  		title \Полный Скрам
+         *  		tags *
+         *  			Длительность / \40 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Старшаки
+         *  			Реквизит /
+         *  				\Скотч
+         *  				\Бумага
+         *  				\Соломинки
+         *  				\Стаканчики
+         *  				\Яйца
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \
+         *  			\Методисту: Сфера IT настолько быстро развивается, что зачастую нет времени на длительное и детальное проектирование, как, например, в строительстве. Мощь IT в том, что цена ошибки меньше, чем цена разработки, поэтому в IT так популярны гибкие методологии, позволяющие быстро получать не идеальный результат, проверять его в бою, и тут же учитывать полученную на практике информацию для дальнейшего развития. С помощью простой командной задачи мы в ролевой форме познакомим ребят с разработкой по Скраму (популярной гибкой методологией разработки), познакомим с основными ролями и покажем значимость каждой из них, научим их самоорганизации и самоанализу.
+         *  			\
+         *  			\Ведущему: Ребят нужно разбить на группы по 3-6 человек и выдать каждой группе реквизит: 5 листов бумаги, рулон скотча, 5 соломинок, 5 стаканчиков. Игра (проект) проводится в несколько этапов (спринтов). На каждом спринте - новая задача и новый критерий её оценки, а так же дополнительные 2 листа бумаги, 2 соломинки и 2 стаканчика. Необходимо сразу чётко обозначить, что на время спринта есть ограничения, которые строго соблюдаются. Договорились или нет - таймер никого не ждёт. Если задача принята - команде даётся очко. Если команда выполнила задачу лучше всех, то ещё одно очко дополнительно. Кроме явных критериев приёмки, есть критерии и неявные, про которые ничего ребятам не говорим, пока не спросят (приучаем ребят "вытягивать" требования из -заказчика, который зачастую сам не знает, чего хочет, пока не получит не то, что надо). Если спринт проваливают все, то он повторяется. Если кто-то его выполнил, то всем вызаются новые задачи (явно не говорим, что старые задачи уже не актуальны).
+         *  			\
+         *  			\Спринт состоит из:
+         *  			\
+         *  			\* Планирование - 1 минута, чтобы договориться, что и как будут делать, распределить обязанности. Во время планирования трогать ничего нельзя.
+         *  			\* Реализация - 5 минут для совместного выполнения задачи. Как только время заканчивается все убирают руки и встают. Если кто-то что-то придерживает ещё - спринт считается заваленным.
+         *  			\* Демо - тут ребята презентуют Владельзу Продукта (один из ведущих) проделанную работу, а тот проверяет достигнутые цели. Нет ограничения по времени.
+         *  			\* Ретроспектива - 2 минуты ребята обсуждают что они сделали хорошо, что стоит исправить на следующей итерации (и назначают ответственных), и меняются ролями, если в этом есть необходимость.
+         *  			\
+         *  			\На первой итерации ведущие помогают ребятам с планированием и ретроспективой в роли скрам-мастеров. На остальных итерациях - всё сами. Скрам мастер может уточнять у ведущих в процессе работы, если что-то не понял.
+         *  			\
+         *  			\Возможные роли для ребят:
+         *  			\
+         *  			\1. Скрам мастер - проводит планирование и ретроспективу, контролирует, чтобы принятые на ретроспективе договорённости выполнялись, общается (и только он) с владельцем продукта.
+         *  			\2. Дизайнер - контролирует внешний вид, чтобы всё смотрелось органично и так, чтобы понравилось владельцу продукта.
+         *  			\3. Архитектор - проектирует какие необходимо внести изменения, чтобы проект выполнял поставленные задачи.
+         *  			\4. Разработчик - собственно делает всё своими руками.
+         *  			\5. QA - проверяет, соответствие того ,что сделано, критериям приёмки задачи.
+         *  			\
+         *  			\Возможные задачи по спринтам:
+         *  			\
+         *  			\1. Постройте мне наиболее высокое сооружение. Озвучивается критерий причёмки: не менее 30см высотой. Не озвучивается критерий приёмки: дизайн должен быть симметричным. Кто выше всех - получает очко.
+         *  			\
+         *  			\2. Как всё классно, я бы хотел там жить на самом верху. Добавьте мне туда как можно более просторный пентхаус. Озвучивается критерий: высота не должна быть меньше, чем была. Не озвучивается критерий: размер оцениваем по максимальному габариту в горизонтальной плоскости, где можно поставить маленькую игрушку и она не упадёт и не развалит дом. У кого пентхаус больше - получает очко.
+         *  			\
+         *  			\3. Хочу чтобы это был не просто дом, а памятник мне любимому. Озвучивается критерий: должна быть голова, туловище, руки, ноги. Не озвучивается критерий: должна быть какая-то деталь, которая делает здание похожим именно на Владельца Продукта, но ни на кого больше в зале.
+         *  			\
+         *  			\4. Я тут подумал, а ведь страшно на такой высоте жить-то будет в таком хлипком доме. Надо и о безопасности подумать. Сделайте так, чтобы я (показывая яйцо раскрашенное под человечика) мог усидеть на самом верху и не разбиться (явный критерий). Неявный критерий: если яйцо упадёт, но не разобьётся, то тоже принимается. Чьё яйцо в итоге окажется выше всех - получает доп очко.
+         *  			\
+         *  			\Методические замечания:
+         *  			\
+         *  			\* Шпионить можно, особо об этом не говорим и не поощряем.
+         *  			\* Вредить соседям нельзя - все набранные очки сбрасываются.
+         *  			\* Конструкция должна быть устойчивой. Даже если упала от дуновения ветерка - оцениваем то, что с ней после этого стало.
+         *  			\* За 30 и 15 секунд до истечения времени - сообщаем, что время истекает.
+         *  ```
+         **/
         data() {
             return [].concat(((obj) => {
                 obj.icon = () => "🌋";
@@ -8087,6 +11772,19 @@ var $;
                     "Место": [].concat("Любое"),
                 });
                 obj.content = () => "Все делятся на две команды и встают друг за гругом в две шеренги. Ведущий каждому последнему тихо говорит одно и то же слово. Начиная с последних, необходимо написать на спине впереди стоящего все буквы слова по очереди. Первому же нужно будет собрать из букв слово и сказать его раньше соперников. Победившей команде присуждается очко, а первый её участник переходит в конец. И всё повторяется.";
+                return obj;
+            })(new this.$.$hyoo_scout_gist()), ((obj) => {
+                obj.icon = () => "🏗";
+                obj.title = () => "Полный Скрам";
+                obj.tags = () => ({
+                    "Длительность": [].concat("40 минут"),
+                    "Цель": [].concat("Сплочение"),
+                    "Возраст": [].concat("Старшаки"),
+                    "Реквизит": [].concat("Скотч", "Бумага", "Соломинки", "Стаканчики", "Яйца"),
+                    "Подготовка": [].concat("Нет"),
+                    "Место": [].concat("Зал"),
+                });
+                obj.content = () => "Методисту: Сфера IT настолько быстро развивается, что зачастую нет времени на длительное и детальное проектирование, как, например, в строительстве. Мощь IT в том, что цена ошибки меньше, чем цена разработки, поэтому в IT так популярны гибкие методологии, позволяющие быстро получать не идеальный результат, проверять его в бою, и тут же учитывать полученную на практике информацию для дальнейшего развития. С помощью простой командной задачи мы в ролевой форме познакомим ребят с разработкой по Скраму (популярной гибкой методологией разработки), познакомим с основными ролями и покажем значимость каждой из них, научим их самоорганизации и самоанализу.\n\nВедущему: Ребят нужно разбить на группы по 3-6 человек и выдать каждой группе реквизит: 5 листов бумаги, рулон скотча, 5 соломинок, 5 стаканчиков. Игра (проект) проводится в несколько этапов (спринтов). На каждом спринте - новая задача и новый критерий её оценки, а так же дополнительные 2 листа бумаги, 2 соломинки и 2 стаканчика. Необходимо сразу чётко обозначить, что на время спринта есть ограничения, которые строго соблюдаются. Договорились или нет - таймер никого не ждёт. Если задача принята - команде даётся очко. Если команда выполнила задачу лучше всех, то ещё одно очко дополнительно. Кроме явных критериев приёмки, есть критерии и неявные, про которые ничего ребятам не говорим, пока не спросят (приучаем ребят \"вытягивать\" требования из -заказчика, который зачастую сам не знает, чего хочет, пока не получит не то, что надо). Если спринт проваливают все, то он повторяется. Если кто-то его выполнил, то всем вызаются новые задачи (явно не говорим, что старые задачи уже не актуальны).\n\nСпринт состоит из:\n\n* Планирование - 1 минута, чтобы договориться, что и как будут делать, распределить обязанности. Во время планирования трогать ничего нельзя.\n* Реализация - 5 минут для совместного выполнения задачи. Как только время заканчивается все убирают руки и встают. Если кто-то что-то придерживает ещё - спринт считается заваленным.\n* Демо - тут ребята презентуют Владельзу Продукта (один из ведущих) проделанную работу, а тот проверяет достигнутые цели. Нет ограничения по времени.\n* Ретроспектива - 2 минуты ребята обсуждают что они сделали хорошо, что стоит исправить на следующей итерации (и назначают ответственных), и меняются ролями, если в этом есть необходимость.\n\nНа первой итерации ведущие помогают ребятам с планированием и ретроспективой в роли скрам-мастеров. На остальных итерациях - всё сами. Скрам мастер может уточнять у ведущих в процессе работы, если что-то не понял.\n\nВозможные роли для ребят:\n\n1. Скрам мастер - проводит планирование и ретроспективу, контролирует, чтобы принятые на ретроспективе договорённости выполнялись, общается (и только он) с владельцем продукта.\n2. Дизайнер - контролирует внешний вид, чтобы всё смотрелось органично и так, чтобы понравилось владельцу продукта.\n3. Архитектор - проектирует какие необходимо внести изменения, чтобы проект выполнял поставленные задачи.\n4. Разработчик - собственно делает всё своими руками.\n5. QA - проверяет, соответствие того ,что сделано, критериям приёмки задачи.\n\nВозможные задачи по спринтам:\n\n1. Постройте мне наиболее высокое сооружение. Озвучивается критерий причёмки: не менее 30см высотой. Не озвучивается критерий приёмки: дизайн должен быть симметричным. Кто выше всех - получает очко.\n\n2. Как всё классно, я бы хотел там жить на самом верху. Добавьте мне туда как можно более просторный пентхаус. Озвучивается критерий: высота не должна быть меньше, чем была. Не озвучивается критерий: размер оцениваем по максимальному габариту в горизонтальной плоскости, где можно поставить маленькую игрушку и она не упадёт и не развалит дом. У кого пентхаус больше - получает очко.\n\n3. Хочу чтобы это был не просто дом, а памятник мне любимому. Озвучивается критерий: должна быть голова, туловище, руки, ноги. Не озвучивается критерий: должна быть какая-то деталь, которая делает здание похожим именно на Владельца Продукта, но ни на кого больше в зале.\n\n4. Я тут подумал, а ведь страшно на такой высоте жить-то будет в таком хлипком доме. Надо и о безопасности подумать. Сделайте так, чтобы я (показывая яйцо раскрашенное под человечика) мог усидеть на самом верху и не разбиться (явный критерий). Неявный критерий: если яйцо упадёт, но не разобьётся, то тоже принимается. Чьё яйцо в итоге окажется выше всех - получает доп очко.\n\nМетодические замечания:\n\n* Шпионить можно, особо об этом не говорим и не поощряем.\n* Вредить соседям нельзя - все набранные очки сбрасываются.\n* Конструкция должна быть устойчивой. Даже если упала от дуновения ветерка - оцениваем то, что с ней после этого стало.\n* За 30 и 15 секунд до истечения времени - сообщаем, что время истекает.";
                 return obj;
             })(new this.$.$hyoo_scout_gist()));
         }

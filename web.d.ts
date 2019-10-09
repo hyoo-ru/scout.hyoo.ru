@@ -316,7 +316,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    const enum $mol_keyboard_code {
+    enum $mol_keyboard_code {
         backspace = 8,
         tab = 9,
         enter = 13,
@@ -421,25 +421,93 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_button extends $mol_view {
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled(): boolean;
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  click?event null
+         *  ```
+         **/
         click(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> event_activate?event
+         *  	keypress?event <=> event_key_press?event
+         *  ```
+         **/
         event(): {
             "click": (event?: any) => any;
             "keypress": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  event_activate?event null
+         *  ```
+         **/
         event_activate(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	disabled <= disabled
+         *  	role \button
+         *  	tabindex <= tab_index
+         *  	title <= hint
+         *  ```
+         **/
         attr(): {
             "disabled": boolean;
             "role": string;
             "tabindex": number;
             "title": string;
         };
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled(): boolean;
+        /**
+         *  ```
+         *  tab_index 0
+         *  ```
+         **/
         tab_index(): number;
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint(): string;
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub(): any[];
     }
 }
@@ -459,6 +527,13 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_button_major extends $mol_button_typed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_theme \$mol_theme_accent
+         *  ```
+         **/
         attr(): {
             "mol_theme": string;
             "disabled": boolean;
@@ -475,6 +550,15 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_check extends $mol_button_minor {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_check_checked <= checked?val
+         *  	aria-checked <= checked?val
+         *  	role \checkbox
+         *  ```
+         **/
         attr(): {
             "mol_check_checked": any;
             "aria-checked": any;
@@ -483,11 +567,43 @@ declare namespace $ {
             "tabindex": number;
             "title": string;
         };
+        /**
+         *  ```
+         *  checked?val false
+         *  ```
+         **/
         checked(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= label
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Icon null
+         *  ```
+         **/
         Icon(): any;
+        /**
+         *  ```
+         *  label / <= Title
+         *  ```
+         **/
         label(): any[];
+        /**
+         *  ```
+         *  Title $mol_view sub / <= title
+         *  ```
+         **/
         Title(): $mol_view;
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title(): string;
     }
 }
@@ -500,24 +616,91 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_scroll extends $mol_view {
+        /**
+         *  ```
+         *  minimal_height 0
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  moving_hor?val false
+         *  ```
+         **/
         moving_hor(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  moving_vert?val false
+         *  ```
+         **/
         moving_vert(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	scrollTop <= scroll_top?val
+         *  	scrollLeft <= scroll_left?val
+         *  	scrollBottom <= scroll_bottom?val
+         *  	scrollRight <= scroll_right?val
+         *  ```
+         **/
         field(): {
             "scrollTop": any;
             "scrollLeft": any;
             "scrollBottom": any;
             "scrollRight": any;
         };
+        /**
+         *  ```
+         *  scroll_top?val 0
+         *  ```
+         **/
         scroll_top(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  scroll_left?val 0
+         *  ```
+         **/
         scroll_left(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  scroll_bottom?val 0
+         *  ```
+         **/
         scroll_bottom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  scroll_right?val 0
+         *  ```
+         **/
         scroll_right(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_async *
+         *  	^
+         *  	scroll?event <=> event_scroll?event
+         *  ```
+         **/
         event_async(): {
             "scroll": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  event_scroll?event null
+         *  ```
+         **/
         event_scroll(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Strut $mol_view style * transform <= strut_transform
+         *  ```
+         **/
         Strut(): $mol_view;
+        /**
+         *  ```
+         *  strut_transform \
+         *  ```
+         **/
         strut_transform(): string;
     }
 }
@@ -558,17 +741,90 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_page extends $mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Head
+         *  	<= Body
+         *  	<= Foot
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Head $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= head
+         *  ```
+         **/
         Head(): $mol_view;
+        /**
+         *  ```
+         *  head /
+         *  	<= Title
+         *  	<= Tools
+         *  ```
+         **/
         head(): any[];
+        /**
+         *  ```
+         *  Title $mol_button
+         *  	sub / <= title
+         *  	event_click?val <=> event_top?val
+         *  ```
+         **/
         Title(): $mol_button;
+        /**
+         *  ```
+         *  event_top?val null
+         *  ```
+         **/
         event_top(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Tools $mol_view sub <= tools
+         *  ```
+         **/
         Tools(): $mol_view;
+        /**
+         *  ```
+         *  tools /
+         *  ```
+         **/
         tools(): any[];
+        /**
+         *  ```
+         *  Body $mol_scroll
+         *  	scroll_top?val <=> body_scroll_top?val
+         *  	sub <= body
+         *  ```
+         **/
         Body(): $mol_scroll;
+        /**
+         *  ```
+         *  body_scroll_top?val 0
+         *  ```
+         **/
         body_scroll_top(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  body /
+         *  ```
+         **/
         body(): any[];
+        /**
+         *  ```
+         *  Foot $mol_view
+         *  	attr * mol_theme \$mol_theme_base
+         *  	sub <= foot
+         *  ```
+         **/
         Foot(): $mol_view;
+        /**
+         *  ```
+         *  foot /
+         *  ```
+         **/
         foot(): any[];
     }
 }
@@ -581,9 +837,29 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_plugin extends $mol_object {
+        /**
+         *  ```
+         *  dom_node null
+         *  ```
+         **/
         dom_node(): any;
+        /**
+         *  ```
+         *  attr_static *
+         *  ```
+         **/
         attr_static(): {};
+        /**
+         *  ```
+         *  event *
+         *  ```
+         **/
         event(): {};
+        /**
+         *  ```
+         *  event_async *
+         *  ```
+         **/
         event_async(): {};
     }
 }
@@ -603,12 +879,47 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_meter extends $mol_plugin {
+        /**
+         *  ```
+         *  zoom 1
+         *  ```
+         **/
         zoom(): number;
+        /**
+         *  ```
+         *  width?val 0
+         *  ```
+         **/
         width(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  height?val 0
+         *  ```
+         **/
         height(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  left?val 0
+         *  ```
+         **/
         left(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  right?val 0
+         *  ```
+         **/
         right(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  bottom?val 0
+         *  ```
+         **/
         bottom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  top?val 0
+         *  ```
+         **/
         top(val?: any, force?: $mol_atom_force): any;
     }
 }
@@ -636,26 +947,146 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_touch extends $mol_plugin {
+        /**
+         *  ```
+         *  start_zoom?val 0
+         *  ```
+         **/
         start_zoom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  start_distance?val 0
+         *  ```
+         **/
         start_distance(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  zoom?val 1
+         *  ```
+         **/
         zoom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  start_pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         start_pan(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  pan?val /
+         *  	0
+         *  	0
+         *  ```
+         **/
         pan(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  pos?val /
+         *  	NaN
+         *  	NaN
+         *  ```
+         **/
         pos(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  start_pos?val null
+         *  ```
+         **/
         start_pos(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_precision 16
+         *  ```
+         **/
         swipe_precision(): number;
+        /**
+         *  ```
+         *  swipe_right?val null
+         *  ```
+         **/
         swipe_right(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_bottom?val null
+         *  ```
+         **/
         swipe_bottom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_left?val null
+         *  ```
+         **/
         swipe_left(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_top?val null
+         *  ```
+         **/
         swipe_top(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_from_right?val null
+         *  ```
+         **/
         swipe_from_right(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_from_bottom?val null
+         *  ```
+         **/
         swipe_from_bottom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_from_left?val null
+         *  ```
+         **/
         swipe_from_left(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_from_top?val null
+         *  ```
+         **/
         swipe_from_top(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_to_right?val null
+         *  ```
+         **/
         swipe_to_right(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_to_bottom?val null
+         *  ```
+         **/
         swipe_to_bottom(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_to_left?val null
+         *  ```
+         **/
         swipe_to_left(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  swipe_to_top?val null
+         *  ```
+         **/
         swipe_to_top(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	touchstart?event <=> event_start?event
+         *  	touchmove?event <=> event_move?event
+         *  	touchend?event <=> event_end?event
+         *  	mousedown?event <=> event_start?event
+         *  	mousemove?event <=> event_move?event
+         *  	mouseup?event <=> event_end?event
+         *  	mouseleave?event <=> event_leave?event
+         *  	wheel?event <=> event_wheel?event
+         *  ```
+         **/
         event(): {
             "touchstart": (event?: any) => any;
             "touchmove": (event?: any) => any;
@@ -666,10 +1097,35 @@ declare namespace $ {
             "mouseleave": (event?: any) => any;
             "wheel": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  event_start?event null
+         *  ```
+         **/
         event_start(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_move?event null
+         *  ```
+         **/
         event_move(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_end?event null
+         *  ```
+         **/
         event_end(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_leave?event null
+         *  ```
+         **/
         event_leave(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_wheel?event null
+         *  ```
+         **/
         event_wheel(event?: any, force?: $mol_atom_force): any;
     }
 }
@@ -691,6 +1147,11 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_ghost extends $mol_view {
+        /**
+         *  ```
+         *  Sub $mol_view
+         *  ```
+         **/
         Sub(): $mol_view;
     }
 }
@@ -705,24 +1166,102 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_book extends $mol_view {
+        /**
+         *  ```
+         *  sub <= pages_wrapped
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  pages_wrapped /
+         *  ```
+         **/
         pages_wrapped(): any[];
+        /**
+         *  ```
+         *  pages /
+         *  ```
+         **/
         pages(): any[];
+        /**
+         *  ```
+         *  plugins /
+         *  	<= Meter
+         *  	<= Touch
+         *  ```
+         **/
         plugins(): any[];
         width(): any;
+        /**
+         *  ```
+         *  Meter $mol_meter width => width
+         *  ```
+         **/
         Meter(): $mol_meter;
+        /**
+         *  ```
+         *  Touch $mol_touch
+         *  	swipe_from_left?val <=> event_front_up?val
+         *  	swipe_to_left?val <=> event_front_down?val
+         *  ```
+         **/
         Touch(): $mol_touch;
+        /**
+         *  ```
+         *  event_front_up?val null
+         *  ```
+         **/
         event_front_up(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_front_down?val null
+         *  ```
+         **/
         event_front_down(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Page!index $mol_book_page
+         *  	Sub <= page!index
+         *  	visible <= page_visible!index
+         *  ```
+         **/
         Page(index: any): $mol_book_page;
+        /**
+         *  ```
+         *  page!index null
+         *  ```
+         **/
         page(index: any): any;
+        /**
+         *  ```
+         *  page_visible!index true
+         *  ```
+         **/
         page_visible(index: any): boolean;
+        /**
+         *  ```
+         *  Placeholder $mol_book_placeholder title <= title
+         *  ```
+         **/
         Placeholder(): $mol_book_placeholder;
     }
 }
 declare namespace $ {
     class $mol_book_placeholder extends $mol_view {
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width(): number;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex null
+         *  ```
+         **/
         attr(): {
             "tabindex": any;
         };
@@ -730,11 +1269,25 @@ declare namespace $ {
 }
 declare namespace $ {
     class $mol_book_page extends $mol_ghost {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex 0
+         *  	mol_book_page_focused <= focused
+         *  	mol_book_page_visible <= visible
+         *  ```
+         **/
         attr(): {
             "tabindex": number;
             "mol_book_page_focused": boolean;
             "mol_book_page_visible": boolean;
         };
+        /**
+         *  ```
+         *  visible true
+         *  ```
+         **/
         visible(): boolean;
     }
 }
@@ -755,8 +1308,23 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_list extends $mol_view {
+        /**
+         *  ```
+         *  sub <= rows
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows(): any[];
+        /**
+         *  ```
+         *  Empty null
+         *  ```
+         **/
         Empty(): any;
     }
 }
@@ -806,8 +1374,29 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_link extends $mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  dom_name \a
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	href <= uri
+         *  	title <= hint
+         *  	target <= target
+         *  	download <= file_name
+         *  	mol_link_current <= current
+         *  ```
+         **/
         attr(): {
             "href": string;
             "title": string;
@@ -815,17 +1404,69 @@ declare namespace $ {
             "download": string;
             "mol_link_current": boolean;
         };
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri(): string;
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint(): string;
+        /**
+         *  ```
+         *  target \_self
+         *  ```
+         **/
         target(): string;
+        /**
+         *  ```
+         *  file_name \
+         *  ```
+         **/
         file_name(): string;
+        /**
+         *  ```
+         *  current false
+         *  ```
+         **/
         current(): boolean;
+        /**
+         *  ```
+         *  sub / <= title
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  arg *
+         *  ```
+         **/
         arg(): {};
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	click?event <=> click?event
+         *  ```
+         **/
         event(): {
             "click": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  click?event <=> event_click?event
+         *  ```
+         **/
         click(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_click?event null
+         *  ```
+         **/
         event_click(event?: any, force?: $mol_atom_force): any;
     }
 }
@@ -849,10 +1490,35 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_svg extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  dom_name_space \http://www.w3.org/2000/svg
+         *  ```
+         **/
         dom_name_space(): string;
+        /**
+         *  ```
+         *  text_width?text 0
+         *  ```
+         **/
         text_width(text?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  font_size 16
+         *  ```
+         **/
         font_size(): number;
+        /**
+         *  ```
+         *  font_family \
+         *  ```
+         **/
         font_family(): string;
     }
 }
@@ -868,39 +1534,114 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_svg_root extends $mol_svg {
+        /**
+         *  ```
+         *  dom_name \svg
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	viewBox <= view_box
+         *  	preserveAspectRatio <= aspect
+         *  ```
+         **/
         attr(): {
             "viewBox": string;
             "preserveAspectRatio": string;
         };
+        /**
+         *  ```
+         *  view_box \0 0 100 100
+         *  ```
+         **/
         view_box(): string;
+        /**
+         *  ```
+         *  aspect \xMidYMid
+         *  ```
+         **/
         aspect(): string;
     }
 }
 
 declare namespace $ {
     class $mol_svg_path extends $mol_svg {
+        /**
+         *  ```
+         *  dom_name \path
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	d <= geometry
+         *  ```
+         **/
         attr(): {
             "d": string;
         };
+        /**
+         *  ```
+         *  geometry \
+         *  ```
+         **/
         geometry(): string;
     }
 }
 
 declare namespace $ {
     class $mol_icon extends $mol_svg_root {
+        /**
+         *  ```
+         *  view_box \0 0 24 24
+         *  ```
+         **/
         view_box(): string;
+        /**
+         *  ```
+         *  minimal_width 16
+         *  ```
+         **/
         minimal_width(): number;
+        /**
+         *  ```
+         *  minimal_height 16
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  sub / <= Path
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Path $mol_svg_path geometry <= path
+         *  ```
+         **/
         Path(): $mol_svg_path;
+        /**
+         *  ```
+         *  path \
+         *  ```
+         **/
         path(): string;
     }
 }
 
 declare namespace $ {
     class $mol_icon_plus extends $mol_icon {
+        /**
+         *  ```
+         *  path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+         *  ```
+         **/
         path(): string;
     }
 }
@@ -912,6 +1653,11 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_icon_favorite extends $mol_icon {
+        /**
+         *  ```
+         *  path \M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z
+         *  ```
+         **/
         path(): string;
     }
 }
@@ -923,37 +1669,136 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_pop extends $mol_view {
+        /**
+         *  ```
+         *  event * keydown?event <=> keydown?event
+         *  ```
+         **/
         event(): {
             "keydown": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  keydown?event null
+         *  ```
+         **/
         keydown(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  showed?val false
+         *  ```
+         **/
         showed(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  plugins / <= Meter
+         *  ```
+         **/
         plugins(): any[];
         top(): any;
         bottom(): any;
         left(): any;
         right(): any;
+        /**
+         *  ```
+         *  Meter $mol_meter
+         *  	top => top
+         *  	bottom => bottom
+         *  	left => left
+         *  	right => right
+         *  ```
+         **/
         Meter(): $mol_meter;
+        /**
+         *  ```
+         *  sub /
+         *  	<= Anchor
+         *  	<= Bubble
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Anchor null
+         *  ```
+         **/
         Anchor(): any;
+        /**
+         *  ```
+         *  Bubble $mol_pop_bubble
+         *  	align <= align
+         *  	content <= bubble_content
+         *  	height_max <= height_max
+         *  ```
+         **/
         Bubble(): $mol_pop_bubble;
+        /**
+         *  ```
+         *  align \bottom_center
+         *  ```
+         **/
         align(): string;
+        /**
+         *  ```
+         *  bubble_content /
+         *  ```
+         **/
         bubble_content(): any[];
+        /**
+         *  ```
+         *  height_max 9999
+         *  ```
+         **/
         height_max(): number;
     }
 }
 declare namespace $ {
     class $mol_pop_bubble extends $mol_scroll {
+        /**
+         *  ```
+         *  sub <= content
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content(): any[];
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	maxHeight <= height_max
+         *  ```
+         **/
         style(): {
             "maxHeight": number;
         };
+        /**
+         *  ```
+         *  height_max 9999
+         *  ```
+         **/
         height_max(): number;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_pop_align <= align
+         *  	tabindex 0
+         *  ```
+         **/
         attr(): {
             "mol_pop_align": string;
             "tabindex": number;
         };
+        /**
+         *  ```
+         *  align \
+         *  ```
+         **/
         align(): string;
     }
 }
@@ -969,11 +1814,41 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_dimmer extends $mol_view {
+        /**
+         *  ```
+         *  haystack \
+         *  ```
+         **/
         haystack(): string;
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle(): string;
+        /**
+         *  ```
+         *  sub <= parts
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  parts /
+         *  ```
+         **/
         parts(): any[];
+        /**
+         *  ```
+         *  Low!id $mol_view sub / <= string!id
+         *  ```
+         **/
         Low(id: any): $mol_view;
+        /**
+         *  ```
+         *  string!id \
+         *  ```
+         **/
         string(id: any): string;
     }
 }
@@ -1080,21 +1955,93 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_nav extends $mol_plugin {
+        /**
+         *  ```
+         *  cycle?val false
+         *  ```
+         **/
         cycle(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  mod_ctrl false
+         *  ```
+         **/
         mod_ctrl(): boolean;
+        /**
+         *  ```
+         *  mod_shift false
+         *  ```
+         **/
         mod_shift(): boolean;
+        /**
+         *  ```
+         *  mod_alt false
+         *  ```
+         **/
         mod_alt(): boolean;
+        /**
+         *  ```
+         *  keys_x?val /
+         *  ```
+         **/
         keys_x(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  keys_y?val /
+         *  ```
+         **/
         keys_y(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  current_x?val \
+         *  ```
+         **/
         current_x(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  current_y?val \
+         *  ```
+         **/
         current_y(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_up?event null
+         *  ```
+         **/
         event_up(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_down?event null
+         *  ```
+         **/
         event_down(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_left?event null
+         *  ```
+         **/
         event_left(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_right?event null
+         *  ```
+         **/
         event_right(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	keydown?event <=> event_key?event
+         *  ```
+         **/
         event(): {
             "keydown": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  event_key?event null
+         *  ```
+         **/
         event_key(event?: any, force?: $mol_atom_force): any;
     }
 }
@@ -1113,11 +2060,48 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_string extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \input
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled(): boolean;
+        /**
+         *  ```
+         *  debounce 0
+         *  ```
+         **/
         debounce(): number;
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  autocomplete false
+         *  ```
+         **/
         autocomplete(): boolean;
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	disabled <= disabled
+         *  	value <= value_changed?val
+         *  	placeholder <= hint
+         *  	type <= type?val
+         *  	spellcheck <= spellcheck
+         *  	autocomplete <= autocomplete_native
+         *  ```
+         **/
         field(): {
             "disabled": boolean;
             "value": any;
@@ -1126,22 +2110,87 @@ declare namespace $ {
             "spellcheck": boolean;
             "autocomplete": string;
         };
+        /**
+         *  ```
+         *  disabled false
+         *  ```
+         **/
         disabled(): boolean;
+        /**
+         *  ```
+         *  value_changed?val <=> value?val
+         *  ```
+         **/
         value_changed(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint(): string;
+        /**
+         *  ```
+         *  type?val \text
+         *  ```
+         **/
         type(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  spellcheck false
+         *  ```
+         **/
         spellcheck(): boolean;
+        /**
+         *  ```
+         *  autocomplete_native \
+         *  ```
+         **/
         autocomplete_native(): string;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	maxlength <= length_max
+         *  ```
+         **/
         attr(): {
             "maxlength": number;
         };
+        /**
+         *  ```
+         *  length_max Infinity
+         *  ```
+         **/
         length_max(): number;
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	input?event <=> event_change?event
+         *  	keydown?event <=> event_key_press?event
+         *  ```
+         **/
         event(): {
             "input": (event?: any) => any;
             "keydown": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  event_change?event null
+         *  ```
+         **/
         event_change(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  event_key_press?event null
+         *  ```
+         **/
         event_key_press(event?: any, force?: $mol_atom_force): any;
     }
 }
@@ -1158,6 +2207,11 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_icon_chevron extends $mol_icon {
+        /**
+         *  ```
+         *  path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
+         *  ```
+         **/
         path(): string;
     }
 }
@@ -1168,38 +2222,223 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_select extends $mol_pop {
+        /**
+         *  ```
+         *  dictionary *
+         *  ```
+         **/
         dictionary(): {};
+        /**
+         *  ```
+         *  options /
+         *  ```
+         **/
         options(): any[];
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  Option_row!id $mol_button_minor
+         *  	event_click?event <=> event_select!id?event
+         *  	sub <= option_content!id
+         *  ```
+         **/
         Option_row(id: any): $mol_button_minor;
+        /**
+         *  ```
+         *  event_select!id?event null
+         *  ```
+         **/
         event_select(id: any, event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  option_content!id / <= Option_label!id
+         *  ```
+         **/
         option_content(id: any): any[];
+        /**
+         *  ```
+         *  Option_label!id $mol_dimmer
+         *  	minimal_height 40
+         *  	haystack <= option_label!id
+         *  	needle <= filter_pattern?val
+         *  ```
+         **/
         Option_label(id: any): $mol_dimmer;
+        /**
+         *  ```
+         *  option_label!id \
+         *  ```
+         **/
         option_label(id: any): string;
+        /**
+         *  ```
+         *  filter_pattern?val \
+         *  ```
+         **/
         filter_pattern(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  No_options $mol_view sub / <= no_options_message
+         *  ```
+         **/
         No_options(): $mol_view;
+        /**
+         *  ```
+         *  no_options_message @ \No options
+         *  ```
+         **/
         no_options_message(): string;
+        /**
+         *  ```
+         *  plugins / <= Nav
+         *  ```
+         **/
         plugins(): any[];
+        /**
+         *  ```
+         *  Nav $mol_nav
+         *  	keys_y <= nav_components
+         *  	current_y?component <=> option_focused?component
+         *  	cycle?val <=> nav_cycle?val
+         *  ```
+         **/
         Nav(): $mol_nav;
+        /**
+         *  ```
+         *  nav_components /
+         *  	<= Filter
+         *  	<= option_rows
+         *  ```
+         **/
         nav_components(): any[];
+        /**
+         *  ```
+         *  option_focused?component null
+         *  ```
+         **/
         option_focused(component?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  nav_cycle?val true
+         *  ```
+         **/
         nav_cycle(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  showed?val <=> options_showed?val
+         *  ```
+         **/
         showed(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  options_showed?val false
+         *  ```
+         **/
         options_showed(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Anchor <= Trigger
+         *  ```
+         **/
         Anchor(): $mol_button_minor;
+        /**
+         *  ```
+         *  Trigger $mol_button_minor
+         *  	click?event <=> open?event
+         *  	sub <= trigger_content
+         *  ```
+         **/
         Trigger(): $mol_button_minor;
+        /**
+         *  ```
+         *  open?event null
+         *  ```
+         **/
         open(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  trigger_content /
+         *  	<= option_content_current
+         *  	<= Filter
+         *  	<= Trigger_icon
+         *  ```
+         **/
         trigger_content(): any[];
+        /**
+         *  ```
+         *  option_content_current /
+         *  ```
+         **/
         option_content_current(): any[];
+        /**
+         *  ```
+         *  Filter $mol_string
+         *  	value?val <=> filter_pattern?val
+         *  	hint <= filter_hint
+         *  	debounce <= debounce
+         *  ```
+         **/
         Filter(): $mol_string;
+        /**
+         *  ```
+         *  filter_hint <= hint
+         *  ```
+         **/
         filter_hint(): string;
+        /**
+         *  ```
+         *  hint @ \Search..
+         *  ```
+         **/
         hint(): string;
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce(): number;
+        /**
+         *  ```
+         *  Trigger_icon $mol_icon_chevron
+         *  ```
+         **/
         Trigger_icon(): $mol_icon_chevron;
+        /**
+         *  ```
+         *  bubble_content / <= Menu
+         *  ```
+         **/
         bubble_content(): any[];
+        /**
+         *  ```
+         *  Menu $mol_list rows <= menu_content
+         *  ```
+         **/
         Menu(): $mol_list;
+        /**
+         *  ```
+         *  menu_content /
+         *  	<= Filter
+         *  	<= option_rows
+         *  ```
+         **/
         menu_content(): any[];
+        /**
+         *  ```
+         *  option_rows /
+         *  ```
+         **/
         option_rows(): any[];
     }
 }
@@ -1224,22 +2463,94 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_icon_cross extends $mol_icon {
+        /**
+         *  ```
+         *  path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+         *  ```
+         **/
         path(): string;
     }
 }
 
 declare namespace $ {
     class $mol_search extends $mol_bar {
+        /**
+         *  ```
+         *  query?val \
+         *  ```
+         **/
         query(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub /
+         *  	<= Suggest
+         *  	<= Clear
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Suggest $mol_select
+         *  	value?val <=> suggest_selected?val
+         *  	filter_pattern?val <=> suggest_selected?val
+         *  	hint <= hint
+         *  	filter_pattern?val <=> query?val
+         *  	options_showed <= suggests_showed
+         *  	options <= suggests
+         *  	Trigger_icon null
+         *  	debounce <= debounce
+         *  ```
+         **/
         Suggest(): $mol_select;
+        /**
+         *  ```
+         *  suggest_selected?val \
+         *  ```
+         **/
         suggest_selected(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  hint @ \Search...
+         *  ```
+         **/
         hint(): string;
+        /**
+         *  ```
+         *  suggests_showed false
+         *  ```
+         **/
         suggests_showed(): boolean;
+        /**
+         *  ```
+         *  suggests /
+         *  ```
+         **/
         suggests(): any[];
+        /**
+         *  ```
+         *  debounce 200
+         *  ```
+         **/
         debounce(): number;
+        /**
+         *  ```
+         *  Clear $mol_button_minor
+         *  	sub / <= Clear_icon
+         *  	event_click?val <=> event_clear?val
+         *  ```
+         **/
         Clear(): $mol_button_minor;
+        /**
+         *  ```
+         *  Clear_icon $mol_icon_cross
+         *  ```
+         **/
         Clear_icon(): $mol_icon_cross;
+        /**
+         *  ```
+         *  event_clear?val null
+         *  ```
+         **/
         event_clear(val?: any, force?: $mol_atom_force): any;
     }
 }
@@ -1255,15 +2566,68 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_switch extends $mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  Option!id $mol_check
+         *  	checked?val <=> option_checked!id?val
+         *  	title <= option_title!id
+         *  	enabled <= option_enabled!id
+         *  ```
+         **/
         Option(id: any): $mol_check;
+        /**
+         *  ```
+         *  option_checked!id?val false
+         *  ```
+         **/
         option_checked(id: any, val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  option_title!id \
+         *  ```
+         **/
         option_title(id: any): string;
+        /**
+         *  ```
+         *  option_enabled!id <= enabled
+         *  ```
+         **/
         option_enabled(id: any): boolean;
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled(): boolean;
+        /**
+         *  ```
+         *  value?val null
+         *  ```
+         **/
         value(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  options *
+         *  ```
+         **/
         options(): {};
+        /**
+         *  ```
+         *  sub <= items
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  items /
+         *  ```
+         **/
         items(): any[];
     }
 }
@@ -1299,16 +2663,65 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_form extends $mol_view {
+        /**
+         *  ```
+         *  submit_blocked false
+         *  ```
+         **/
         submit_blocked(): boolean;
+        /**
+         *  ```
+         *  event *
+         *  	^
+         *  	keydown?event <=> keydown?event
+         *  ```
+         **/
         event(): {
             "keydown": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  keydown?event null
+         *  ```
+         **/
         keydown(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  submit?event null
+         *  ```
+         **/
         submit(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub /
+         *  	<= Bar_fields
+         *  	<= Bar_buttons
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Bar_fields $mol_view sub <= form_fields
+         *  ```
+         **/
         Bar_fields(): $mol_view;
+        /**
+         *  ```
+         *  form_fields /
+         *  ```
+         **/
         form_fields(): any[];
+        /**
+         *  ```
+         *  Bar_buttons $mol_row sub <= buttons
+         *  ```
+         **/
         Bar_buttons(): $mol_row;
+        /**
+         *  ```
+         *  buttons /
+         *  ```
+         **/
         buttons(): any[];
     }
 }
@@ -1322,21 +2735,80 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_labeler extends $mol_view {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Title
+         *  	<= Content
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Title $mol_view sub <= label
+         *  ```
+         **/
         Title(): $mol_view;
+        /**
+         *  ```
+         *  label / <= title
+         *  ```
+         **/
         label(): any[];
+        /**
+         *  ```
+         *  Content $mol_view sub / <= content
+         *  ```
+         **/
         Content(): $mol_view;
+        /**
+         *  ```
+         *  content null
+         *  ```
+         **/
         content(): any;
     }
 }
 
 declare namespace $ {
     class $mol_form_field extends $mol_labeler {
+        /**
+         *  ```
+         *  label /
+         *  	<= name
+         *  	<= Bid
+         *  ```
+         **/
         label(): any[];
+        /**
+         *  ```
+         *  name \
+         *  ```
+         **/
         name(): string;
+        /**
+         *  ```
+         *  Bid $mol_view sub / <= bid
+         *  ```
+         **/
         Bid(): $mol_view;
+        /**
+         *  ```
+         *  bid \
+         *  ```
+         **/
         bid(): string;
+        /**
+         *  ```
+         *  Content <= control
+         *  ```
+         **/
         Content(): any;
+        /**
+         *  ```
+         *  control null
+         *  ```
+         **/
         control(): any;
     }
 }
@@ -1348,28 +2820,85 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_icon_tick extends $mol_icon {
+        /**
+         *  ```
+         *  path \M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z
+         *  ```
+         **/
         path(): string;
     }
 }
 
 declare namespace $ {
     class $mol_check_box extends $mol_check {
+        /**
+         *  ```
+         *  Icon $mol_icon_tick
+         *  ```
+         **/
         Icon(): $mol_icon_tick;
     }
 }
 
 declare namespace $ {
     class $mol_check_expand extends $mol_check {
+        /**
+         *  ```
+         *  minimal_height 32
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  Icon $mol_icon_chevron
+         *  ```
+         **/
         Icon(): $mol_icon_chevron;
+        /**
+         *  ```
+         *  level 0
+         *  ```
+         **/
         level(): number;
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	paddingLeft <= level_style
+         *  ```
+         **/
         style(): {
             "paddingLeft": string;
         };
+        /**
+         *  ```
+         *  level_style \0px
+         *  ```
+         **/
         level_style(): string;
+        /**
+         *  ```
+         *  checked?val <=> expanded?val
+         *  ```
+         **/
         checked(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  expanded?val false
+         *  ```
+         **/
         expanded(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  enabled <= expandable
+         *  ```
+         **/
         enabled(): boolean;
+        /**
+         *  ```
+         *  expandable false
+         *  ```
+         **/
         expandable(): boolean;
     }
 }
@@ -1383,71 +2912,310 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_grid extends $mol_scroll {
+        /**
+         *  ```
+         *  row_ids /
+         *  ```
+         **/
         row_ids(): any[];
+        /**
+         *  ```
+         *  row_id!index null
+         *  ```
+         **/
         row_id(index: any): any;
+        /**
+         *  ```
+         *  col_ids /
+         *  ```
+         **/
         col_ids(): any[];
+        /**
+         *  ```
+         *  records *
+         *  ```
+         **/
         records(): {};
+        /**
+         *  ```
+         *  record!id null
+         *  ```
+         **/
         record(id: any): any;
+        /**
+         *  ```
+         *  hierarchy null
+         *  ```
+         **/
         hierarchy(): any;
+        /**
+         *  ```
+         *  hierarchy_col \
+         *  ```
+         **/
         hierarchy_col(): string;
+        /**
+         *  ```
+         *  sub / <= Table
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Table $mol_grid_table
+         *  	offset <= gap_top
+         *  	sub / <= rows_visible
+         *  ```
+         **/
         Table(): $$.$mol_grid_table;
+        /**
+         *  ```
+         *  gap_top 0
+         *  ```
+         **/
         gap_top(): number;
+        /**
+         *  ```
+         *  rows_visible /
+         *  ```
+         **/
         rows_visible(): any[];
+        /**
+         *  ```
+         *  rows /
+         *  ```
+         **/
         rows(): any[];
+        /**
+         *  ```
+         *  Head $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= head_cells
+         *  ```
+         **/
         Head(): $mol_grid_row;
+        /**
+         *  ```
+         *  row_height 40
+         *  ```
+         **/
         row_height(): number;
+        /**
+         *  ```
+         *  head_cells /
+         *  ```
+         **/
         head_cells(): any[];
+        /**
+         *  ```
+         *  Row!id $mol_grid_row
+         *  	height <= row_height
+         *  	cells <= cells!id
+         *  ```
+         **/
         Row(id: any): $mol_grid_row;
+        /**
+         *  ```
+         *  cells!id /
+         *  ```
+         **/
         cells(id: any): any[];
+        /**
+         *  ```
+         *  Cell!id $mol_view
+         *  ```
+         **/
         Cell(id: any): $mol_view;
+        /**
+         *  ```
+         *  cell!id null
+         *  ```
+         **/
         cell(id: any): any;
+        /**
+         *  ```
+         *  Cell_text!id $mol_grid_cell sub / <= cell_content_text!id
+         *  ```
+         **/
         Cell_text(id: any): $mol_grid_cell;
+        /**
+         *  ```
+         *  cell_content_text!id <= cell_content!id
+         *  ```
+         **/
         cell_content_text(id: any): any[];
+        /**
+         *  ```
+         *  cell_content!id /
+         *  ```
+         **/
         cell_content(id: any): any[];
+        /**
+         *  ```
+         *  Cell_number!id $mol_grid_number sub / <= cell_content_number!id
+         *  ```
+         **/
         Cell_number(id: any): $mol_grid_number;
+        /**
+         *  ```
+         *  cell_content_number!id <= cell_content!id
+         *  ```
+         **/
         cell_content_number(id: any): any[];
+        /**
+         *  ```
+         *  Col_head!id $mol_float
+         *  	dom_name \th
+         *  	sub / <= col_head_content!id
+         *  ```
+         **/
         Col_head(id: any): $mol_float;
+        /**
+         *  ```
+         *  col_head_content!id /
+         *  ```
+         **/
         col_head_content(id: any): any[];
+        /**
+         *  ```
+         *  Cell_branch!id $mol_check_expand
+         *  	level <= cell_level!id
+         *  	label <= cell_content!id
+         *  	expanded?val <=> cell_expanded!id?val
+         *  ```
+         **/
         Cell_branch(id: any): $$.$mol_check_expand;
+        /**
+         *  ```
+         *  cell_level!id 0
+         *  ```
+         **/
         cell_level(id: any): number;
+        /**
+         *  ```
+         *  cell_expanded!id?val false
+         *  ```
+         **/
         cell_expanded(id: any, val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Cell_content!id / <= Cell_dimmer!id
+         *  ```
+         **/
         Cell_content(id: any): any[];
+        /**
+         *  ```
+         *  Cell_dimmer!id $mol_dimmer
+         *  	needle <= needle
+         *  	haystack <= cell_value!id
+         *  ```
+         **/
         Cell_dimmer(id: any): $mol_dimmer;
+        /**
+         *  ```
+         *  needle \
+         *  ```
+         **/
         needle(): string;
+        /**
+         *  ```
+         *  cell_value!id \
+         *  ```
+         **/
         cell_value(id: any): string;
     }
 }
 declare namespace $ {
     class $mol_grid_table extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \table
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style(): {
             "top": number;
         };
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset(): number;
     }
 }
 declare namespace $ {
     class $mol_grid_gap extends $mol_view {
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	top <= offset
+         *  ```
+         **/
         style(): {
             "top": number;
         };
+        /**
+         *  ```
+         *  offset 0
+         *  ```
+         **/
         offset(): number;
     }
 }
 declare namespace $ {
     class $mol_grid_row extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \tr
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  style *
+         *  	^
+         *  	height <= height
+         *  ```
+         **/
         style(): {
             "height": number;
         };
+        /**
+         *  ```
+         *  height 40
+         *  ```
+         **/
         height(): number;
+        /**
+         *  ```
+         *  sub <= cells
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  cells /
+         *  ```
+         **/
         cells(): any[];
     }
 }
 declare namespace $ {
     class $mol_grid_cell extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \td
+         *  ```
+         **/
         dom_name(): string;
     }
 }
@@ -1513,22 +3281,72 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_image extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \img
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  field *
+         *  	^
+         *  	src <= uri
+         *  	alt <= title
+         *  ```
+         **/
         field(): {
             "src": string;
             "alt": string;
         };
+        /**
+         *  ```
+         *  uri \
+         *  ```
+         **/
         uri(): string;
     }
 }
 
 declare namespace $ {
     class $mol_link_iconed extends $mol_link {
+        /**
+         *  ```
+         *  sub /
+         *  	<= Icon
+         *  	<= content
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Icon $mol_image uri <= icon
+         *  ```
+         **/
         Icon(): $mol_image;
+        /**
+         *  ```
+         *  icon \
+         *  ```
+         **/
         icon(): string;
+        /**
+         *  ```
+         *  content / <= title
+         *  ```
+         **/
         content(): any[];
+        /**
+         *  ```
+         *  title <= uri
+         *  ```
+         **/
         title(): string;
+        /**
+         *  ```
+         *  host \
+         *  ```
+         **/
         host(): string;
     }
 }
@@ -1581,89 +3399,348 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_text extends $mol_list {
+        /**
+         *  ```
+         *  uri_base \
+         *  ```
+         **/
         uri_base(): string;
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text(): string;
+        /**
+         *  ```
+         *  tokens /
+         *  ```
+         **/
         tokens(): any[];
+        /**
+         *  ```
+         *  Quote!id $mol_text text <= quote_text!id
+         *  ```
+         **/
         Quote(id: any): $mol_text;
+        /**
+         *  ```
+         *  quote_text!id \
+         *  ```
+         **/
         quote_text(id: any): string;
+        /**
+         *  ```
+         *  Row!id $mol_text_row
+         *  	sub <= block_content!id
+         *  	type <= block_type!id
+         *  ```
+         **/
         Row(id: any): $mol_text_row;
+        /**
+         *  ```
+         *  block_content!id /
+         *  ```
+         **/
         block_content(id: any): any[];
+        /**
+         *  ```
+         *  block_type!id \
+         *  ```
+         **/
         block_type(id: any): string;
+        /**
+         *  ```
+         *  Span!id $mol_text_span
+         *  ```
+         **/
         Span(id: any): $mol_text_span;
+        /**
+         *  ```
+         *  Link!id $mol_text_link
+         *  ```
+         **/
         Link(id: any): $mol_text_link;
+        /**
+         *  ```
+         *  Image!id $mol_text_image
+         *  ```
+         **/
         Image(id: any): $mol_text_image;
+        /**
+         *  ```
+         *  Header!id $mol_text_header
+         *  	level <= header_level!id
+         *  	content <= header_content!id
+         *  ```
+         **/
         Header(id: any): $mol_text_header;
+        /**
+         *  ```
+         *  header_level!id 0
+         *  ```
+         **/
         header_level(id: any): number;
+        /**
+         *  ```
+         *  header_content!id /
+         *  ```
+         **/
         header_content(id: any): any[];
+        /**
+         *  ```
+         *  Table!id $mol_grid
+         *  	head_cells <= table_head_cells!id
+         *  	rows <= table_rows!id
+         *  ```
+         **/
         Table(id: any): $mol_grid;
+        /**
+         *  ```
+         *  table_head_cells!id /
+         *  ```
+         **/
         table_head_cells(id: any): any[];
+        /**
+         *  ```
+         *  table_rows!id /
+         *  ```
+         **/
         table_rows(id: any): any[];
+        /**
+         *  ```
+         *  Table_row!id $mol_grid_row cells <= table_cells!id
+         *  ```
+         **/
         Table_row(id: any): $mol_grid_row;
+        /**
+         *  ```
+         *  table_cells!id /
+         *  ```
+         **/
         table_cells(id: any): any[];
+        /**
+         *  ```
+         *  Table_cell!id $mol_grid_cell sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell(id: any): $mol_grid_cell;
+        /**
+         *  ```
+         *  table_cell_content!id /
+         *  ```
+         **/
         table_cell_content(id: any): any[];
+        /**
+         *  ```
+         *  Table_cell_head!id $mol_float sub <= table_cell_content!id
+         *  ```
+         **/
         Table_cell_head(id: any): $mol_float;
     }
 }
 declare namespace $ {
     class $mol_text_row extends $mol_view {
+        /**
+         *  ```
+         *  minimal_height 40
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type
+         *  ```
+         **/
         attr(): {
             "mol_text_type": string;
         };
+        /**
+         *  ```
+         *  type \
+         *  ```
+         **/
         type(): string;
     }
 }
 declare namespace $ {
     class $mol_text_header extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \h
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  minimal_height 50
+         *  ```
+         **/
         minimal_height(): number;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_header_level <= level?val
+         *  ```
+         **/
         attr(): {
             "mol_text_header_level": any;
         };
+        /**
+         *  ```
+         *  level?val 0
+         *  ```
+         **/
         level(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub <= content
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  content /
+         *  ```
+         **/
         content(): any[];
     }
 }
 declare namespace $ {
     class $mol_text_span extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \span
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr(): {
             "mol_text_type": any;
         };
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub <= content?val
+         *  ```
+         **/
         sub(): any;
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val?: any, force?: $mol_atom_force): any;
     }
 }
 declare namespace $ {
     class $mol_text_link extends $mol_link_iconed {
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	mol_text_type <= type?val
+         *  ```
+         **/
         attr(): {
             "mol_text_type": any;
             "href": string;
             "title": string;
             "target": string;
             "download": string;
-            "mol_link_current": boolean;
+            "mol_link_current": boolean; /**
+             *  ```
+             *  Row!id $mol_text_row
+             *  	sub <= block_content!id
+             *  	type <= block_type!id
+             *  ```
+             **/
         };
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  uri <= link?val
+         *  ```
+         **/
         uri(): any;
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  content?val /
+         *  ```
+         **/
         content(val?: any, force?: $mol_atom_force): any;
     }
 }
 declare namespace $ {
     class $mol_text_image extends $mol_view {
+        /**
+         *  ```
+         *  dom_name \object
+         *  ```
+         **/
         dom_name(): string;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	allowfullscreen true
+         *  	mol_text_type <= type?val
+         *  	data <= link?val
+         *  ```
+         **/
         attr(): {
             "allowfullscreen": boolean;
             "mol_text_type": any;
             "data": any;
         };
+        /**
+         *  ```
+         *  type?val \
+         *  ```
+         **/
         type(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  link?val \
+         *  ```
+         **/
         link(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub / <= title?val
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  title?val \
+         *  ```
+         **/
         title(val?: any, force?: $mol_atom_force): any;
     }
 }
@@ -1698,16 +3775,68 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_textarea extends $mol_view {
+        /**
+         *  ```
+         *  event * keydown?event <=> press?event
+         *  ```
+         **/
         event(): {
             "keydown": (event?: any) => any;
         };
+        /**
+         *  ```
+         *  press?event null
+         *  ```
+         **/
         press(event?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  sub /
+         *  	<= Edit
+         *  	<= View
+         *  ```
+         **/
         sub(): any[];
+        /**
+         *  ```
+         *  Edit $mol_string
+         *  	dom_name \textarea
+         *  	value?val <=> value?val
+         *  	hint <= hint
+         *  	debounce 0
+         *  	enabled <= enabled
+         *  ```
+         **/
         Edit(): $mol_string;
+        /**
+         *  ```
+         *  value?val \
+         *  ```
+         **/
         value(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  hint \
+         *  ```
+         **/
         hint(): string;
+        /**
+         *  ```
+         *  enabled true
+         *  ```
+         **/
         enabled(): boolean;
+        /**
+         *  ```
+         *  View $mol_text text <= text
+         *  ```
+         **/
         View(): $mol_text;
+        /**
+         *  ```
+         *  text \
+         *  ```
+         **/
         text(): string;
     }
 }
@@ -1773,47 +3902,345 @@ declare namespace $ {
 
 declare namespace $ {
     class $hyoo_scout_suggest extends $mol_page {
+        /**
+         *  ```
+         *  title \Новая игра
+         *  ```
+         **/
         title(): string;
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width(): number;
+        /**
+         *  ```
+         *  tools / <= Close
+         *  ```
+         **/
         tools(): any[];
+        /**
+         *  ```
+         *  Close $mol_link
+         *  	arg * suggest null
+         *  	sub / <= close_icon
+         *  ```
+         **/
         Close(): $mol_link;
+        /**
+         *  ```
+         *  close_icon $mol_icon_cross
+         *  ```
+         **/
         close_icon(): $mol_icon_cross;
+        /**
+         *  ```
+         *  body / <= Form
+         *  ```
+         **/
         body(): any[];
         submit_blocked(): boolean;
+        /**
+         *  ```
+         *  Form $mol_form
+         *  	form_fields /
+         *  		<= Name_field
+         *  		<= Icon_field
+         *  		<= Descr_field
+         *  		<= Reason_field
+         *  		<= Age_field
+         *  		<= Place_field
+         *  		<= Stuff_field
+         *  		<= Prep_field
+         *  		<= Duration_field
+         *  	submit_blocked => submit_blocked
+         *  	buttons / <= Submit
+         *  ```
+         **/
         Form(): $mol_form;
+        /**
+         *  ```
+         *  Name_field $mol_form_field
+         *  	name \Название
+         *  	bid <= name_bid
+         *  	control <= Name
+         *  ```
+         **/
         Name_field(): $mol_form_field;
+        /**
+         *  ```
+         *  name_bid \
+         *  ```
+         **/
         name_bid(): string;
+        /**
+         *  ```
+         *  Name $mol_string
+         *  	hint \Раз два три
+         *  	value?val <=> name?val
+         *  ```
+         **/
         Name(): $mol_string;
+        /**
+         *  ```
+         *  name?val \
+         *  ```
+         **/
         name(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Icon_field $mol_form_field
+         *  	name \Эмодзи
+         *  	bid <= icon_bid
+         *  	control <= Icon
+         *  ```
+         **/
         Icon_field(): $mol_form_field;
+        /**
+         *  ```
+         *  icon_bid \
+         *  ```
+         **/
         icon_bid(): string;
+        /**
+         *  ```
+         *  Icon $mol_string
+         *  	length_max 2
+         *  	hint \?
+         *  	value?val <=> icon?val
+         *  ```
+         **/
         Icon(): $mol_string;
+        /**
+         *  ```
+         *  icon?val \
+         *  ```
+         **/
         icon(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Descr_field $mol_form_field
+         *  	name \Описание
+         *  	bid <= descr_bid
+         *  	control <= Descr
+         *  ```
+         **/
         Descr_field(): $mol_form_field;
+        /**
+         *  ```
+         *  descr_bid \
+         *  ```
+         **/
         descr_bid(): string;
+        /**
+         *  ```
+         *  Descr $mol_textarea
+         *  	hint \Вместе считаем - вот и вся игра.
+         *  	value?val <=> descr?val
+         *  ```
+         **/
         Descr(): $mol_textarea;
+        /**
+         *  ```
+         *  descr?val \
+         *  ```
+         **/
         descr(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Reason_field $mol_form_field
+         *  	name \Цель
+         *  	bid <= reason_bid
+         *  	control <= Reason
+         *  ```
+         **/
         Reason_field(): $mol_form_field;
+        /**
+         *  ```
+         *  reason_bid \
+         *  ```
+         **/
         reason_bid(): string;
+        /**
+         *  ```
+         *  Reason $mol_switch
+         *  	value?val <=> reason?val
+         *  	options /
+         *  		\Внимание
+         *  		\Группировка
+         *  		\Доверие
+         *  		\Знакомство
+         *  		\Лидерство
+         *  		\Мышление
+         *  		\Обратная связь
+         *  		\Обсуждение
+         *  		\Развлечение
+         *  		\Разминка
+         *  		\Раскрепощение
+         *  		\Сплочение
+         *  		\Творчество
+         *  		\Усвоение
+         *  ```
+         **/
         Reason(): $mol_switch;
+        /**
+         *  ```
+         *  reason?val \
+         *  ```
+         **/
         reason(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Age_field $mol_form_field
+         *  	name \Возраст
+         *  	control <= Age
+         *  ```
+         **/
         Age_field(): $mol_form_field;
+        /**
+         *  ```
+         *  Age $mol_switch
+         *  	value?val <=> age?val
+         *  	options *
+         *  		low \Малыши
+         *  		mid \Среднячки
+         *  		high \Старшаки
+         *  		any \Любой
+         *  ```
+         **/
         Age(): $mol_switch;
+        /**
+         *  ```
+         *  age?val \any
+         *  ```
+         **/
         age(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Place_field $mol_form_field
+         *  	name \Место
+         *  	control <= Place
+         *  ```
+         **/
         Place_field(): $mol_form_field;
+        /**
+         *  ```
+         *  Place $mol_switch
+         *  	value?val <=> place?val
+         *  	options *
+         *  		hall \Зал
+         *  		space \Просторное
+         *  		quiet \Тихое
+         *  		any \Любое
+         *  ```
+         **/
         Place(): $mol_switch;
+        /**
+         *  ```
+         *  place?val \any
+         *  ```
+         **/
         place(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Stuff_field $mol_form_field
+         *  	name \Реквизит
+         *  	control <= Stuff
+         *  ```
+         **/
         Stuff_field(): $mol_form_field;
+        /**
+         *  ```
+         *  Stuff $mol_string
+         *  	hint \Руки, Ноги, Голова
+         *  	value?val <=> stuff?val
+         *  ```
+         **/
         Stuff(): $mol_string;
+        /**
+         *  ```
+         *  stuff?val \
+         *  ```
+         **/
         stuff(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Prep_field $mol_form_field
+         *  	name \Подготовка
+         *  	bid <= prep_bid
+         *  	control <= Prep
+         *  ```
+         **/
         Prep_field(): $mol_form_field;
+        /**
+         *  ```
+         *  prep_bid \
+         *  ```
+         **/
         prep_bid(): string;
+        /**
+         *  ```
+         *  Prep $mol_switch
+         *  	value?val <=> prep?val
+         *  	options *
+         *  		0 \Нет
+         *  		1 \1 минута
+         *  		5 \5 минут
+         *  		10 \10 минут
+         *  		20 \20 минут
+         *  		40 \40 минут
+         *  ```
+         **/
         Prep(): $mol_switch;
+        /**
+         *  ```
+         *  prep?val \0
+         *  ```
+         **/
         prep(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Duration_field $mol_form_field
+         *  	name \Длительность
+         *  	control <= Duration
+         *  ```
+         **/
         Duration_field(): $mol_form_field;
+        /**
+         *  ```
+         *  Duration $mol_switch
+         *  	value?val <=> duration?val
+         *  	options *
+         *  		1 \1 минута
+         *  		5 \5 минут
+         *  		10 \10 минут
+         *  		20 \20 минут
+         *  		40 \40 минут
+         *  		60 \60 минут
+         *  ```
+         **/
         Duration(): $mol_switch;
+        /**
+         *  ```
+         *  duration?val \10
+         *  ```
+         **/
         duration(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Submit $mol_button_major
+         *  	sub / \Добавить игру
+         *  	event_click?val <=> submit?val
+         *  	disabled <= submit_blocked
+         *  ```
+         **/
         Submit(): $mol_button_major;
+        /**
+         *  ```
+         *  submit?val null
+         *  ```
+         **/
         submit(val?: any, force?: $mol_atom_force): any;
     }
 }
@@ -1834,8 +4261,29 @@ declare namespace $ {
 
 declare namespace $ {
     class $hyoo_scout_gist extends $mol_object {
+        /**
+         *  ```
+         *  icon \
+         *  ```
+         **/
         icon(): string;
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title(): string;
+        /**
+         *  ```
+         *  tags *
+         *  	Возраст /
+         *  	Реквизит /
+         *  	Подготовка /
+         *  	Цель /
+         *  	Место /
+         *  	Длительность /
+         *  ```
+         **/
         tags(): {
             "Возраст": any[];
             "Реквизит": any[];
@@ -1844,71 +4292,1183 @@ declare namespace $ {
             "Место": any[];
             "Длительность": any[];
         };
+        /**
+         *  ```
+         *  content \
+         *  ```
+         **/
         content(): string;
     }
 }
 declare namespace $ {
     class $hyoo_scout_placeholder extends $mol_page {
+        /**
+         *  ```
+         *  minimal_width 400
+         *  ```
+         **/
         minimal_width(): number;
+        /**
+         *  ```
+         *  attr *
+         *  	^
+         *  	tabindex null
+         *  ```
+         **/
         attr(): {
             "tabindex": any;
         };
+        /**
+         *  ```
+         *  title \
+         *  ```
+         **/
         title(): string;
     }
 }
 declare namespace $ {
     class $hyoo_scout extends $mol_book {
+        /**
+         *  ```
+         *  pages /
+         *  	<= Filter
+         *  	<= Gists
+         *  	<= Suggest
+         *  ```
+         **/
         pages(): any[];
+        /**
+         *  ```
+         *  Filter $mol_page
+         *  	title \Фильтры
+         *  	minimal_width 400
+         *  	event_top?val <=> event_front_up?val
+         *  	body /
+         *  		<= Filter_aspects
+         *  		<= Feedback
+         *  ```
+         **/
         Filter(): $mol_page;
+        /**
+         *  ```
+         *  Filter_aspects $mol_list rows <= filter_aspects
+         *  ```
+         **/
         Filter_aspects(): $mol_list;
+        /**
+         *  ```
+         *  filter_aspects /
+         *  ```
+         **/
         filter_aspects(): any[];
+        /**
+         *  ```
+         *  Feedback $mol_link
+         *  	title \Ошибки? Предложения?
+         *  	uri \https://vk.com/scout_hyoo_ru
+         *  ```
+         **/
         Feedback(): $mol_link;
+        /**
+         *  ```
+         *  Gists $mol_page
+         *  	title <= gists_title
+         *  	minimal_width 400
+         *  	event_top?val <=> event_front_up?val
+         *  	tools /
+         *  		<= Suggest_link
+         *  		<= Gists_favorite
+         *  	body /
+         *  		<= Gists_search
+         *  		<= Gists_list
+         *  ```
+         **/
         Gists(): $mol_page;
+        /**
+         *  ```
+         *  gists_title \Игротека вожатого
+         *  ```
+         **/
         gists_title(): string;
+        /**
+         *  ```
+         *  Suggest_link $mol_link
+         *  	arg *
+         *  		suggest \
+         *  		gist null
+         *  	sub / <= Suggest_icon
+         *  ```
+         **/
         Suggest_link(): $mol_link;
+        /**
+         *  ```
+         *  Suggest_icon $mol_icon_plus
+         *  ```
+         **/
         Suggest_icon(): $mol_icon_plus;
+        /**
+         *  ```
+         *  Gists_favorite $mol_check_icon
+         *  	hint \Только избранное
+         *  	checked?val <=> gists_favorite?val
+         *  	Icon <= Gists_favorite_icon
+         *  	label <= gists_favorite_label
+         *  ```
+         **/
         Gists_favorite(): $mol_check_icon;
+        /**
+         *  ```
+         *  gists_favorite?val false
+         *  ```
+         **/
         gists_favorite(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Gists_favorite_icon $mol_icon_favorite
+         *  ```
+         **/
         Gists_favorite_icon(): $mol_icon_favorite;
+        /**
+         *  ```
+         *  gists_favorite_label / <= Gists_favorite_duration
+         *  ```
+         **/
         gists_favorite_label(): any[];
+        /**
+         *  ```
+         *  Gists_favorite_duration $mol_view sub / <= gists_favorite_duration
+         *  ```
+         **/
         Gists_favorite_duration(): $mol_view;
+        /**
+         *  ```
+         *  gists_favorite_duration \
+         *  ```
+         **/
         gists_favorite_duration(): string;
+        /**
+         *  ```
+         *  Gists_search $mol_search query?val <=> gists_filter_query?val
+         *  ```
+         **/
         Gists_search(): $mol_search;
+        /**
+         *  ```
+         *  gists_filter_query?val \
+         *  ```
+         **/
         gists_filter_query(val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Gists_list $mol_list rows <= gist_links
+         *  ```
+         **/
         Gists_list(): $mol_list;
+        /**
+         *  ```
+         *  gist_links /
+         *  ```
+         **/
         gist_links(): any[];
+        /**
+         *  ```
+         *  Suggest $hyoo_scout_suggest event_top?val <=> event_front_up?val
+         *  ```
+         **/
         Suggest(): $hyoo_scout_suggest;
+        /**
+         *  ```
+         *  Placeholder $hyoo_scout_placeholder
+         *  ```
+         **/
         Placeholder(): $hyoo_scout_placeholder;
+        /**
+         *  ```
+         *  Filter_aspect!id $mol_list rows /
+         *  	<= Filter_aspect_title!id
+         *  	<= Filter_aspect_tags!id
+         *  ```
+         **/
         Filter_aspect(id: any): $mol_list;
+        /**
+         *  ```
+         *  Filter_aspect_title!id $mol_view sub / <= key!id
+         *  ```
+         **/
         Filter_aspect_title(id: any): $mol_view;
+        /**
+         *  ```
+         *  key!id \
+         *  ```
+         **/
         key(id: any): string;
+        /**
+         *  ```
+         *  Filter_aspect_tags!id $mol_row sub <= filter_aspect_tags!id
+         *  ```
+         **/
         Filter_aspect_tags(id: any): $mol_row;
+        /**
+         *  ```
+         *  filter_aspect_tags!id /
+         *  ```
+         **/
         filter_aspect_tags(id: any): any[];
+        /**
+         *  ```
+         *  Filter_tag!id $mol_check
+         *  	checked?val <=> filter_tag_checked!id?val
+         *  	label / <= Filter_tag_title!id
+         *  ```
+         **/
         Filter_tag(id: any): $mol_check;
+        /**
+         *  ```
+         *  filter_tag_checked!id?val true
+         *  ```
+         **/
         filter_tag_checked(id: any, val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Filter_tag_title!id $mol_view
+         *  	attr * hyoo_scout_tag_id <= tag_title!id
+         *  	sub / <= tag_title!id
+         *  ```
+         **/
         Filter_tag_title(id: any): $mol_view;
+        /**
+         *  ```
+         *  tag_title!id \
+         *  ```
+         **/
         tag_title(id: any): string;
+        /**
+         *  ```
+         *  Gist_link!id $mol_link
+         *  	sub /
+         *  		<= Gist_link_icon!id
+         *  		<= Gist_link_title!id
+         *  	arg * gist <= key!id
+         *  ```
+         **/
         Gist_link(id: any): $mol_link;
+        /**
+         *  ```
+         *  Gist_link_icon!id $mol_view sub / <= gist_icon!id
+         *  ```
+         **/
         Gist_link_icon(id: any): $mol_view;
+        /**
+         *  ```
+         *  gist_icon!id \
+         *  ```
+         **/
         gist_icon(id: any): string;
+        /**
+         *  ```
+         *  Gist_link_title!id $mol_dimmer
+         *  	needle <= gists_filter_query
+         *  	haystack <= gist_title!id
+         *  ```
+         **/
         Gist_link_title(id: any): $mol_dimmer;
+        /**
+         *  ```
+         *  gist_title!id \
+         *  ```
+         **/
         gist_title(id: any): string;
+        /**
+         *  ```
+         *  Gist!id $mol_page
+         *  	title <= gist_title!id
+         *  	minimal_width 400
+         *  	event_top?val <=> event_front_up?val
+         *  	tools /
+         *  		<= Gist_favorite!id
+         *  		<= Gist_close
+         *  	body /
+         *  		<= Gist_content!id
+         *  		<= Gist_aspects!id
+         *  		<= Gist_remarks!id
+         *  ```
+         **/
         Gist(id: any): $mol_page;
+        /**
+         *  ```
+         *  Gist_favorite!id $mol_check_icon
+         *  	checked?val <=> gist_favorite!id?val
+         *  	Icon <= Gist_favorite_icon
+         *  ```
+         **/
         Gist_favorite(id: any): $mol_check_icon;
+        /**
+         *  ```
+         *  gist_favorite!id?val false
+         *  ```
+         **/
         gist_favorite(id: any, val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Gist_favorite_icon $mol_icon_favorite
+         *  ```
+         **/
         Gist_favorite_icon(): $mol_icon_favorite;
+        /**
+         *  ```
+         *  Gist_close $mol_link
+         *  	arg * gist null
+         *  	sub / <= Gist_close_icon
+         *  ```
+         **/
         Gist_close(): $mol_link;
+        /**
+         *  ```
+         *  Gist_close_icon $mol_icon_cross
+         *  ```
+         **/
         Gist_close_icon(): $mol_icon_cross;
+        /**
+         *  ```
+         *  Gist_content!id $mol_text text <= gist_content!id
+         *  ```
+         **/
         Gist_content(id: any): $mol_text;
+        /**
+         *  ```
+         *  gist_content!id \
+         *  ```
+         **/
         gist_content(id: any): string;
+        /**
+         *  ```
+         *  Gist_aspects!id $mol_list rows <= gist_aspects!id
+         *  ```
+         **/
         Gist_aspects(id: any): $mol_list;
+        /**
+         *  ```
+         *  gist_aspects!id /
+         *  ```
+         **/
         gist_aspects(id: any): any[];
+        /**
+         *  ```
+         *  Gist_remarks!id $mol_textarea
+         *  	hint \Личные заметки
+         *  	value?val <=> gist_remarks!id?val
+         *  ```
+         **/
         Gist_remarks(id: any): $mol_textarea;
+        /**
+         *  ```
+         *  gist_remarks!id?val \
+         *  ```
+         **/
         gist_remarks(id: any, val?: any, force?: $mol_atom_force): any;
+        /**
+         *  ```
+         *  Gist_aspect!id $mol_row sub /
+         *  	<= Gist_aspect_title!id
+         *  	<= gist_aspect_tags!id
+         *  ```
+         **/
         Gist_aspect(id: any): $mol_row;
+        /**
+         *  ```
+         *  Gist_aspect_title!id $mol_view sub /
+         *  	<= key!id
+         *  	\:
+         *  ```
+         **/
         Gist_aspect_title(id: any): $mol_view;
+        /**
+         *  ```
+         *  gist_aspect_tags!id /
+         *  ```
+         **/
         gist_aspect_tags(id: any): any[];
+        /**
+         *  ```
+         *  Gist_tag!id $mol_view
+         *  	attr * hyoo_scout_tag_id <= tag_title!id
+         *  	sub / <= tag_title!id
+         *  ```
+         **/
         Gist_tag(id: any): $mol_view;
+        /**
+         *  ```
+         *  data /
+         *  	$hyoo_scout_gist
+         *  		icon \🌋
+         *  		title \Спичка о себе
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Тихое
+         *  		content \Каждый по очереди представляет, что держит в руках спичку (или использует реальную), и пока она горит, следует рассказать о себе как можно больше.
+         *  	$hyoo_scout_gist
+         *  		icon \👏
+         *  		title \Хор хлопочков
+         *  		tags *
+         *  			Длительность / \1 минута
+         *  			Цель / \Внимание
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Всем одновременно нужно повторить ритм хлопков вожатого. Если все выполнили правильно и дружно, можно поаплодировать друг другу.
+         *  	$hyoo_scout_gist
+         *  		icon \🍎
+         *  		title \Фруктовый салат
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждому назначается свой фрукт (овощ/интерес/имя). Ведущий называет один из фруктов и команду. Все с этим фруктом должны её выполнить и поменяться местами. А ведущий занимает освободившееся место. Кому места не досталось - становится ведущим.
+         *  	$hyoo_scout_gist
+         *  		icon \⚛️
+         *  		title \Притяжение-отталкивание
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый выбирает того, кто ему больше симпатичен и старается держаться максимально близко к нему, и одновременно того, кто менее симпатичен и старается держаться подальше от него. Несколько раз цели должны меняться. В том числе и на противоположные.
+         *  	$hyoo_scout_gist
+         *  		icon \🎤
+         *  		title \Вокальное приветствие
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все встают в круг. Каждый по очереди делает шаг, пропевает своё имя и показывает любое движение. Все остальные повторяют за ним.
+         *  	$hyoo_scout_gist
+         *  		icon \💑
+         *  		title \Стенка на стенку
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Обратная связь
+         *  				\Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все встают в две шеренги, разбившись на пары. За минуту надо обсудить проведённое ранее вместе время. В конце нужно показать число пальцев:
+         *  			\
+         *  			\ - Если хотя бы один показал 1 палец, то оба отворачиваются друг от друга.
+         *  			\ - Если хотя бы один показал 2 пальца, то идёт рукопожатие.
+         *  			\ - Если оба показали 3 пальца, то обнимашки.
+         *  	$hyoo_scout_gist
+         *  		icon \🖐️
+         *  		title \Интернациональное приветствие
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Раскрепощение
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все приветствуют всех на разных языках:
+         *  			\
+         *  			\ - Россия: **пожимают руки** - Здравствуй, меня зовут *имя*.
+         *  			\ - Япония: **кланяются** - Коничива, меня зовут *имя*.
+         *  			\ - США: **дают пять** - Хай! Меня зовут *имя*.
+         *  			\ - Франция: **щека к щеке** - Бонжур, меня зовут *имя*.
+         *  			\ - Италия: **обнимаются** - Бонжорно, меня зовут *имя*.
+         *  			\
+         *  			\ В конце можно назвать совсем другую страну (например, Индия) и предложить ребятам самим определиться как поприветствовать друг друга. Это добавит веселья и выявит лидеров.
+         *  	$hyoo_scout_gist
+         *  		icon \🤗
+         *  		title \Интернациональное прощание
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Раскрепощение
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все прощаются со всеми на разных языках:
+         *  			\
+         *  			\ - Россия: **пожимают руки** - До свидания, *имя*!
+         *  			\ - Япония: **кланяются** - Сайонара, *имя*!
+         *  			\ - США: **дают пять** - Бай-Бай, *имя*!
+         *  			\ - Франция: **щека к щеке** - Оревуар, *имя*!
+         *  			\ - Италия: **обнимаются** - Аривидерчи, *имя*!
+         *  			\
+         *  			\ В конце можно назвать совсем другую страну (например, Индия) и предложить ребятам самим определиться как прощаться. Это добавит веселья и выявит лидеров.
+         *  	$hyoo_scout_gist
+         *  		icon \♻️
+         *  		title \Круги интересов
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Особый
+         *  			Подготовка / \10 минут
+         *  			Место / \Просторное
+         *  		content \Заранее подготовить карточки с несколькими признаками (цвет, форма, буква и тп). Каждый призак должен иметь 3-7 вариантов. Ведущий называет один из признаков, а ребята собираются вместе с теми, у кого то же значение признака. В группе им надо найти любой факт о них, который бы их объединял. Называть признаки лучше от самого вариативного к менее, чтобы группы были сначала маленькими, а потом большими.
+         *  	$hyoo_scout_gist
+         *  		icon \🖼️
+         *  		title \Совместный портрет
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Творчество
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Карандаши
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \Все делятся на не большие группы. Каждой группе предлагается нарисовать самую важную часть тела человека определённой профессии (например, вожатого) и приписывают почему именно эта часть тела. Потом группы меняются листами и рисуют вторую по важности часть тела. И так далее, пока рисунки не сделают полный круг. После чего представители от групп рассказывают всем о портрете который у них в итоге получился.
+         *  	$hyoo_scout_gist
+         *  		icon \💬
+         *  		title \Случаи из жизни
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все делятся на средние группы. Всем выдаётся для обсуждения какой-либо жизненный случай. Спустя несколько минут каждая группа должна оценить ситуацию, выработать правильное решение и аргументированно рассказать его остальным.
+         *  	$hyoo_scout_gist
+         *  		icon \❓
+         *  		title \Почему так?
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  				\Скотч
+         *  				\Стикеры
+         *  			Подготовка / \20 минут
+         *  			Место / \Просторное
+         *  		content \В разных местах приклеиваются различные суждения. Каждый пришет на стикере почему суждение верно и приклеивает его рядом. Потом все разбиваются на средние группы. Каждая группа выбирает одно из суждений. Берёт его стикеры. И через несколько минут резюмирует для всех.
+         *  	$hyoo_scout_gist
+         *  		icon \🌡️
+         *  		title \Настроеметр
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Лист бумаги делится на 4 части: отлично, хорошо, так себе, плохо. Каждый анонимно пишет в соответствующей части что ему понравилось или не понравилось.
+         *  	$hyoo_scout_gist
+         *  		icon \🔃
+         *  		title \Базар
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Знакомство
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  				\Мешочек
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый пишет на 4 листочках своё имя и фамилию печатными буквами. Каждый листочек складывается дважды и кладётся в мешочек. Каждому выдаётся по 4 случайных листочка. Далее ребята могут меняться друг с другом листочками, только так, чтобы в результате каждого обмена они получали листочек со своим именем. Задача - собрать все листочки со своим именем. Ребята должны догадаться, что листочками можно меняться по кругу одновременно.
+         *  	$hyoo_scout_gist
+         *  		icon \🙋‍
+         *  		title \Минутка на лидера
+         *  		tags *
+         *  			Длительность / \1 минута
+         *  			Цель / \Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\- *Сделайте шаг вперёд те, кто сможет сейчас мне помочь.*
+         *  			\
+         *  			\Важно аргументированно выбрать одного из среагировавших лидеров и дать ему какое-либо задание.
+         *  	$hyoo_scout_gist
+         *  		icon \🌱
+         *  		title \Ветви дерева
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Группировка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Выбираются ребята по необходимому числу групп, которые становятся *корнями дерева*. Каждый из них по очереди выбирает себе в команду одного человека, который станет *веткой дерева*. Потом ветви дерева выбирают себе продолжение и тд. Ребята, не выбранные ни в какую команду (*листики*), должны получить привелегии в качестве компенсации. Например:
+         *  			\
+         *  			\ - Право самому выбрать команду.
+         *  			\ - Быть помощником ведущего.
+         *  	$hyoo_scout_gist
+         *  		icon \🗃️
+         *  		title \Своя игра
+         *  		tags *
+         *  			Длительность / \40 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все делятся на средние группы. Ведущий объявляет несколько тем. Команды по очереди выбирают одну из тем, а ведущий зачитывает вопрос. Та команда, что выбирала тему, имеет преимущество в ответе на вопрос. И если отвечает исчерпывающе получает 2 очка, а если не полностью - 1 очко. Каждой команде, которой удастся потом сделать существенное дополнение, присуждается по очку.
+         *  	$hyoo_scout_gist
+         *  		icon \🏃
+         *  		title \Платочек
+         *  		tags *
+         *  			Длительность /
+         *  				\10 минут
+         *  				\20 минут
+         *  			Цель /
+         *  				\Разминка
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит /
+         *  				\Платочек
+         *  				\Удобная обувь
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все выстраиваются в 2 шеренги поровну. Рассчитываются по порядку, запоминая своё число. Встают в случайном порядке так, чтобы не было двух одинаковых чисел подряд. Ведущий встаёт скраю шеренг между ними и держит платочек в вытянутой руке. Когда он называет число, ребята с соответствующими номерами должны добежать и выхватить платочек раньше соперника, после чего добежать до своего места не запятнаным противником. Если удалось - его команда получает очко. Иначе очко достаётся другой команде. Можно провести несколько схваток, позволив участникам поменять порядок.
+         *  	$hyoo_scout_gist
+         *  		icon \🔢
+         *  		title \Коллективный счёт
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все встают в круг. Задача пересчитаться так, чтобы каждый сказал ровно одно число. Если двое говорят одновременно - счёт начинается сначала. Важно донести, что нужно не надеяться на удачу, а постараться **почувствовать** друг друга.
+         *  			\
+         *  			\ - Уровень **1**: можно совместно договориться о стратегии.
+         *  			\ - Уровень **2**: нельзя рассчитываться по какой-либо стратегии.
+         *  			\ - Уровень **3**: без стратегии, с закрытыми глазами, в случайном месте комнаты.
+         *  	$hyoo_scout_gist
+         *  		icon \🔀
+         *  		title \Построения
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Сплочение
+         *  				\Лидерство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Задача всем выстроиться по заданному ведущим принципу.
+         *  			\
+         *  			\Явный лидер покажет себя в заданиях, где **можно коммуницировать**:
+         *  			\
+         *  			\ - По росту.
+         *  			\ - По цвету волос.
+         *  			\ - По размеру ботинок.
+         *  			\
+         *  			\ Неявный лидер покажет себя в заданиях с ограниченными коммуникациями, где **нельзя говорить**:
+         *  			\
+         *  			\ - В круг.
+         *  			\ - В равносторонний квадрат.
+         *  			\ - В равносторонний треугольник.
+         *  			\ - Звездой.
+         *  			\
+         *  			\ Скрытый лидер покажет себя в заданиях с **запретом любых коммуникаций**:
+         *  			\
+         *  			\ - Буквой А
+         *  			\ - Буквой М
+         *  			\ - Буквой Я
+         *  			\ - Буквой Щ
+         *  	$hyoo_scout_gist
+         *  		icon \🤝
+         *  		title \Спортивное приветствие
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все встают в 2 шеренги. Обе шененги проходят вдоль друг друга и каждый человек из одной шеренги здоровается за руку с каждым из другой, называя его по имени.
+         *  	$hyoo_scout_gist
+         *  		icon \🤼
+         *  		title \Спортивное прощание
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все встают в 2 шеренги. Обе шененги проходят вдоль друг друга и каждый человек из одной шеренги прощается обнимаясь с каждым из другой, называя его по имени.
+         *  	$hyoo_scout_gist
+         *  		icon \🌀
+         *  		title \Циклон
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все случайно перемещаются по пространству. Когда ведущий называет число нужно быстро образовать группы с таким числом людей. Кто не смог образовать такую группы - выбывает.
+         *  	$hyoo_scout_gist
+         *  		icon \🔃
+         *  		title \Шиворот на выворот
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все случайно перемещаются по пространству. Когда ведущий называет действие (пыжок, хлопок и тп) - все должны его выполнить. Можно предложить кому-то придумать несуществующий глагод. А кому-то показать это действие, как он его себе представляет. Далее ведущий меняет местами глаголы и выполняемое действие. Например, когда говорит *хлопок* надо прыгать, а когда *прыжок* - хлопать.
+         *  	$hyoo_scout_gist
+         *  		icon \🏠
+         *  		title \Дом, милый дом
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель /
+         *  				\Раскрепощение
+         *  				\Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый находит местечко, где ему уютнее всего - называем его «домом». Глазами он находит человека, которого он хочет привести в свой домик. По команде всем нужно приложить максимум усилий, чтобы этот человек оказался именно в его домике.
+         *  	$hyoo_scout_gist
+         *  		icon \🔄
+         *  		title \Фантазеры - Скептики - Реалисты
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Творчество
+         *  				\Сплочение
+         *  				\Обсуждение
+         *  			Возраст /
+         *  				\Среднячки
+         *  				\Старшаки
+         *  			Реквизит /
+         *  				\Бумага
+         *  				\Ручки
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все разбиваются на средние группы. Сначала все фантазёры и записывают мероприятия в которых хотели бы поучаствовать. Потом листы передаются по кругу и теперь все критики, вычёркивающие те мероприятия, что им не понравятся. Снова передают по кругу и на этот раз все реалисты, обводящие те варианты из оставшихся, что кажутся им более интересными. Листы опять передаются по кругу и теперь каждая команда должна выбрать одно мероприятие и представить его остальным командам так, чтобы все тоже его захотели.
+         *  			\
+         *  			\![](https://vk.com/video_ext.php?oid=-76966755&id=456239212&hash=fc5b24ac237ce085&hd=2)
+         *  	$hyoo_scout_gist
+         *  		icon \📜
+         *  		title \Расписание
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Усвоение
+         *  				\Обсуждение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \10 минут
+         *  			Место / \Просторное
+         *  		content \Все делятся на 2 шеренги. Членам одной выдаются листы с временными промежутками, а членам другой - с автивностями. Задача встать друг на против друга в правильной последовательности. В конце ведущий оглашает правильное расписание, переставляя ребят.
+         *  	$hyoo_scout_gist
+         *  		icon \✈️
+         *  		title \Ковёр-самолёт
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Плед
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \Все встают на плед. Задача перевернуть плед так, чтобы никто не ступил ногой за его пределы. Усложнённый вариант - нельзя опираться на пол ничем. Экстремальный вариант - с закрытыми глазами.
+         *  	$hyoo_scout_gist
+         *  		icon \🚧
+         *  		title \Покрывало
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Плед
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Все делятся на 2 группы и располагаются по обе сторооны от натянутого покрывала. Перед покрывалом встают по одному каждый раз разному участнику из каждой команды. Когда покрывало опускается они должны как можно быстрее назвать имя того, кого видят. Кто замешкался - переходит в противоположную команду. Задача - петащить всех на свою сторону.
+         *  	$hyoo_scout_gist
+         *  		icon \🗺️
+         *  		title \Бип
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Лидерство
+         *  				\Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \На земле любым способом рисуется сетка от 4х4 - это карта. Каждый по очереди должен начать с одного конца и *доехать* до другого перешагивая на соседнюю клетку. Ведущий задумывает правила передвижения (невидимые границы, с какой ноги ступать, ходить только боком и тп) и если игрок нарушает правила, то говорит **бип** и новый игрок начинает сначала. Задача игроков - понять принцип так, чтобы любой смог дойти от начала до конца.
+         *  	$hyoo_scout_gist
+         *  		icon \🖇️
+         *  		title \Связи
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Знакомство
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \Каждый сцепляется с кем-то за руку и здоровается/прощается, называя имя партнёра. Расцепляться с партнёром нельзя, пока тот не сцепится второй рукой с кем-то ещё. Задача - пообщаться со всеми.
+         *  	$hyoo_scout_gist
+         *  		icon \💞
+         *  		title \Сердца
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Группировка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \5 минут
+         *  			Место / \Просторное
+         *  		content \Бумажные сердца нарезаются несколько частей и каждому выдаётся случайная часть. Задача - найти свою пару.
+         *  	$hyoo_scout_gist
+         *  		icon \👯
+         *  		title \Я люблю саванну
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все встают в круг. Каждый кладёт обе руки на плечи соседа справа. Все идут по кругу хором произнося одни и те же слова. Например:
+         *  			\
+         *  			\- *Я люблю Саванну! Я очень люблю Саванну! Крокодил, обезьяна, бегемот.. Я очень люблю Саванну!*
+         *  			\
+         *  			\Закончив фразу каждый делает шаг внутрь круга и всё повторяется. И так до максимального уплотнения кольца. Потом всем нужно сесть на колени соседа сзади и в таком положении снова идти и произносить фразу. Потом так же лечь на соседа. И в конце всем нужно раздвинуть ноги, чтобы все опустились на землю.
+         *  	$hyoo_scout_gist
+         *  		icon \🛸
+         *  		title \Левитация
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Стол
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \
+         *  			\Один ложится спиной на стол и закрывает глаза. Остальные обступают его вокруг и по сигналу одновременно поднимают его ладонями (не пальцами!). Вожатый при этом должен придерживать голову на всякий случай. А кто-то должен стоять у двери и никого не пускать, чтобы ребята не отвлеклись и не уронили.
+         *  	$hyoo_scout_gist
+         *  		icon \🐐
+         *  		title \Козья тропа
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Доверие
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Просторное
+         *  		content \
+         *  			\Все встают в ряд на краю бордюра, лавочки или выставленных рядом стульев. Один с одного конца до другого должен дойти вставая ногами между ног остальных ребят. Ребята будут вынуждены придерживать идущего, иначе он упадёт. И так, пока каждый не пройдёт по этой узкой тропе.
+         *  	$hyoo_scout_gist
+         *  		icon \🗼
+         *  		title \Уровень сплочения
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит / \Особый
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Выдаётся 5 картинок, симполизирующих уровень сплочения. Предлагается каждому высказать своё мнение по этому вопросу, посредством приклеивания стикера или подписью одного из них. Изображения:
+         *  			\
+         *  			\- **Рассыпчатый песок** - каждый сам по себе.
+         *  			\- **Кусок глины** - все стараются держатся вместе, но обстоятельства мнут как попало.
+         *  			\- **Камень** - друг за друга горой.
+         *  			\- **Стальная конструкция** - слаженная работа и взаимопомощь.
+         *  			\- **Космический аппарат** - единые цели и мечты.
+         *  	$hyoo_scout_gist
+         *  		icon \🔮
+         *  		title \Эффект Барнума
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Мышление
+         *  			Возраст / \Старшаки
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Проводится как бы психологическое тестирование или говорите, что долго наблюдали за каждым и пришли к некоторым выводам. Каждому выдаётся описание его *индивидуального* психологического портрета. Всем должно быть выдано одно и то же описание, где больше положительных качеств, чем отрицательных:
+         *  			\
+         *  			\*Вы очень нуждаетесь в том, чтобы другие люди любили и восхищались вами. Вы довольно самокритичны. У вас есть много скрытых возможностей, которые вы так и не использовали себе во благо. Хотя у вас есть некоторые личные слабости, вы в общем способны их нивелировать. Дисциплинированный и уверенный с виду, на самом деле вы склонны волноваться и чувствовать неуверенность. Временами вас охватывают серьёзные сомнения, приняли ли вы правильное решение или сделали ли правильный поступок. Вы предпочитаете некоторое разнообразие, рамки и ограничения вызывают у вас недовольство. Также вы гордитесь тем, что мыслите независимо; вы не принимаете чужих утверждений на веру без достаточных доказательств. Вы поняли, что быть слишком откровенным с другими людьми — не слишком мудро. Иногда вы экстравертны, приветливы и общительны, иногда же — интровертны, осторожны и сдержанны. Некоторые из ваших стремлений довольно нереалистичны. Одна из ваших главных жизненных целей — стабильность.*
+         *  			\
+         *  			\Прочитав, каждый должен тут же дать оценку насколько он согласен с этим описанием по 5 бальной шкале. Собирается статистика и провозглашается какой ведущий проницательный. Потом предлагается всем поменяться описаниями и прочитать.
+         *  			\
+         *  			\Это упражнение поможет отучить доверять астрологам, гадалкам и тому подобным шарлатанам.
+         *  	$hyoo_scout_gist
+         *  		icon \🤥
+         *  		title \Парадокс Лжеца
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель /
+         *  				\Мышление
+         *  				\Обсуждение
+         *  			Возраст / \Старшаки
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все делятся на группы. Каждой выдаётся один вопрос и предлагается через несколько минут дать ответ на него, рассказав всем, почему они так решили. Примеры вопросов:
+         *  			\
+         *  			\ - Данное утвержение ложно, правда ли это?
+         *  			\ - Что будет, если Пиноккио скажет: «Сейчас у меня удлинится нос»?
+         *  			\ - Брадобрей города N бреет всех жителей этого города, кто не бреет себя сам и только их. Бреет ли он сам себя?
+         *  			\ - Может ли всемогущий бог создать камень, который он сам не сможет поднять?
+         *  			\
+         *  			\Подвох в том, что вопросы содержат логическое противоречие. Что иллюстрирует тот факт, что выражение может быть не только истинным или ложным, но и попросту бредом.
+         *  	$hyoo_scout_gist
+         *  		icon \😳
+         *  		title \Чувственные знакомства
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Задача каждого поприветствовать каждого. На каждом этапе добавляется по одному типу взаимодействия:
+         *  			\
+         *  			\1. **Визуальный.** Нужно внимательно посмотреть в глаза и молча передать мысль партнёру.
+         *  			\2. **Вербальный.** Добавить приветствие голосом.
+         *  			\3. **Тактильный.** Добавить какое либо касание.
+         *  			\4. **Обонятельный.** Понюхать партнёра и постараться самому не испортить воздух в этот момент.
+         *  	$hyoo_scout_gist
+         *  		icon \🔫
+         *  		title \Киллер
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Развлечение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все встают в круг и закрывают глаза. Ведущий незаметно касается одного - тот становится киллером. Киллер незаметно подмигивает одним глазом одному из присутствующих. Кому подмигнули - выбывает. Задача киллера - убить как можно больше людей. Задача остальных - догадаться кто киллер и поднять руку. Если угадывает - киллер пойман. Если нет - выбывает.
+         *  	$hyoo_scout_gist
+         *  		icon \🐸
+         *  		title \Лягушка
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Развлечение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Один берёт на себя роль цапли и отходит, так чтобы не видеть остальных. Остальные встают в круг и закрывают глаза. Ведущий незаметно касается одного - тот становится лягушкой. Остальные - комариками. Цапля возвращается и встаёт в центр. Её задача найти и съесть лягушку до того, как она съест всех комариков. Но у неё на это есть лишь одна/две/три попытки. Лягушка незаметно для цапли может показывать язык. Кто увидел высунутый язык - считается съеденным и приседает. Задача лягушки - съесть всех комариков и убежать.
+         *  	$hyoo_scout_gist
+         *  		icon \🚪
+         *  		title \Бункер
+         *  		tags *
+         *  			Длительность / \20 минут
+         *  			Цель /
+         *  				\Обсуждение
+         *  				\Сплочение
+         *  			Возраст /
+         *  				\Среднячки
+         *  				\Старшаки
+         *  			Реквизит / \Нет
+         *  			Подготовка / \5 минут
+         *  			Место / \Любое
+         *  		content \
+         *  			\Каждому выдаётся роль и рассказывается общая легенда: произошла ядерная война и нам удалось спрятаться в бункере. Однако, запасов воздуха/еды/воды не хватит на всех до момента, когда можно будет выйти на поверхность. Поэтому надо принять решение, кто покинет бункер сейчас, чтобы остальные выжили и восстановили цивилизацию. Если за 15 минут решение не будет принято - умирают все. Если ребята быстро справятся, то можно дополнять сюжет, вынуждая избавляться от большего числа людей. После игры можно устроить совместный просмотр фильма "Философы" по мотивам этой игры.
+         *  			\
+         *  			\Роли:
+         *  			\
+         *  			\- Школьница, 15 лет. Умная и милая девушка, пребывающая сейчас в шоке. Постоянно в слезах и молчит. Симпатизирует 16-ти летнему юношу, также оказавшемуся в бункере.
+         *  			\- Юноша, 16 лет. Отлично развит физически, но абсолютно не заинтересован в учебе. Также испытывает симпатию к школьнице.
+         *  			\- Молодой человек, 25 лет. Спортсмен, увлекается альпинизмом. Часто конфликтует с окружающими и в свое время был отчислен из службы МЧС за драку.
+         *  			\- Мужчина, 48 лет. Профессор-физик. Весьма образованный, разбирающийся в электронике и строительстве. Имеет проблемы с сердцем.
+         *  			\- Студентка, 19 лет. Обучается в университете физкультуры, специальность легкая атлетика. Несмотря на привлекательность и общительность, кроме достижений в спорте похвастаться ей не чем. Ждет ребенка.
+         *  			\- Девушка, 21 год. Студентка медицинского университета, не блещущая знаниями. Тяжело сказать, выйдет ли из нее высококлассный специалист. Имеет несколько хобби: шитье, вязание.
+         *  			\- Мужчина, 32 года. Знания, полученные во время службы в ракетных войсках, позволяют ему выжить практически в любой ситуации. Имеет превосходную физическую подготовку, увлекается восточными единоборствами. Имеет лишь один недостаток – слабость к алкоголю.
+         *  			\- Тренер по физической культуре , 26 лет. В прошлом учительница, а также инструктор в области туризма. Говорит на трех иностранных языках.
+         *  			\- Академик, чьи работы неоднократно публиковались, 58 лет. Знаток в области гуманитарных наук.
+         *  			\- Женщина , 43 года. Ученый в сфере сельскохозяйственных наук. Способна вырастить урожай даже в самых неблагоприятных условиях. Любит готовить.
+         *  			\
+         *  			\![](https://www.youtube.com/embed/csUm65Lwx_M)
+         *  	$hyoo_scout_gist
+         *  		icon \🎶
+         *  		title \Поющие молекулы
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все ходят перемешиваясь, напевая всем известную песню. Когда ведущий говорит стоп - все здороваются. Этапы:
+         *  			\
+         *  			\- Ступнями
+         *  			\- Коленями
+         *  			\- Попами
+         *  			\- Руками
+         *  			\- Локтями
+         *  			\- Плечами
+         *  			\- Обнимашки
+         *  	$hyoo_scout_gist
+         *  		icon \⭕
+         *  		title \Вжух-Бэнг-Пау
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Раскрепощение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все встают в круг и передают друг другу эстафету, используя одно из особых движений со звуком, которые вводятся в игру по одному.
+         *  			\
+         *  			\- **Вжух!** - кидая воображаемый энергетический шар. От сосеа к соседу в одном направлении.
+         *  			\- **Бэнг!** - шар отражается и начинается двигаться в обратном направлении.
+         *  			\- **Пау!** - стреляя в любого человека в круге.
+         *  			\- **Бумеранг!** - кидая в любого человека бумеранг, а тот человек должен уклониться от него в стиле Матрицы.
+         *  			\- **Дайте мне бит!** - соседи издают ритмичные звуки, под которые ты танцуешь.
+         *  	$hyoo_scout_gist
+         *  		icon \💌
+         *  		title \Письмо другу
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Каждый пишет на бумажке "сообщение лучшему другу" о своих впечатлениях, при этом не подписывая своё послание.
+         *  	$hyoo_scout_gist
+         *  		icon \🎠
+         *  		title \Карусель
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Обратная связь
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \
+         *  			\Все делятся на две группы поровну и встают в два концентрических круга лицом к лицу. Производят друг с другом определённые действия, внешний круг проворачивается на одного человека и всё повторяется. Так до полного оборота. Варианты действий:
+         *  			\
+         *  			\ - Каждый говорит партнёру чем тот хорош.
+         *  			\ - Один говорит что между ними общего, а другой - чем отличаются.
+         *  	$hyoo_scout_gist
+         *  		icon \🥓
+         *  		title \Горелки
+         *  		tags *
+         *  			Длительность / \5 минут
+         *  			Цель / \Разминка
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все встают в ряд по парам, а ведущий впереди спиной к остальным. Как только ведущий поворачивается, первая пара должна расцепиться и бежать сцепляться в конец. Задача ведущего поймать кого-то и встать с ним в конце. Кто остался без пары - становится ведущим.
+         *  	$hyoo_scout_gist
+         *  		icon \☎
+         *  		title \Телеграф
+         *  		tags *
+         *  			Длительность / \10 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Любой
+         *  			Реквизит / \Нет
+         *  			Подготовка / \Нет
+         *  			Место / \Любое
+         *  		content \Все делятся на две команды и встают друг за гругом в две шеренги. Ведущий каждому последнему тихо говорит одно и то же слово. Начиная с последних, необходимо написать на спине впереди стоящего все буквы слова по очереди. Первому же нужно будет собрать из букв слово и сказать его раньше соперников. Победившей команде присуждается очко, а первый её участник переходит в конец. И всё повторяется.
+         *  	$hyoo_scout_gist
+         *  		icon \🏗
+         *  		title \Полный Скрам
+         *  		tags *
+         *  			Длительность / \40 минут
+         *  			Цель / \Сплочение
+         *  			Возраст / \Старшаки
+         *  			Реквизит /
+         *  				\Скотч
+         *  				\Бумага
+         *  				\Соломинки
+         *  				\Стаканчики
+         *  				\Яйца
+         *  			Подготовка / \Нет
+         *  			Место / \Зал
+         *  		content \
+         *  			\Методисту: Сфера IT настолько быстро развивается, что зачастую нет времени на длительное и детальное проектирование, как, например, в строительстве. Мощь IT в том, что цена ошибки меньше, чем цена разработки, поэтому в IT так популярны гибкие методологии, позволяющие быстро получать не идеальный результат, проверять его в бою, и тут же учитывать полученную на практике информацию для дальнейшего развития. С помощью простой командной задачи мы в ролевой форме познакомим ребят с разработкой по Скраму (популярной гибкой методологией разработки), познакомим с основными ролями и покажем значимость каждой из них, научим их самоорганизации и самоанализу.
+         *  			\
+         *  			\Ведущему: Ребят нужно разбить на группы по 3-6 человек и выдать каждой группе реквизит: 5 листов бумаги, рулон скотча, 5 соломинок, 5 стаканчиков. Игра (проект) проводится в несколько этапов (спринтов). На каждом спринте - новая задача и новый критерий её оценки, а так же дополнительные 2 листа бумаги, 2 соломинки и 2 стаканчика. Необходимо сразу чётко обозначить, что на время спринта есть ограничения, которые строго соблюдаются. Договорились или нет - таймер никого не ждёт. Если задача принята - команде даётся очко. Если команда выполнила задачу лучше всех, то ещё одно очко дополнительно. Кроме явных критериев приёмки, есть критерии и неявные, про которые ничего ребятам не говорим, пока не спросят (приучаем ребят "вытягивать" требования из -заказчика, который зачастую сам не знает, чего хочет, пока не получит не то, что надо). Если спринт проваливают все, то он повторяется. Если кто-то его выполнил, то всем вызаются новые задачи (явно не говорим, что старые задачи уже не актуальны).
+         *  			\
+         *  			\Спринт состоит из:
+         *  			\
+         *  			\* Планирование - 1 минута, чтобы договориться, что и как будут делать, распределить обязанности. Во время планирования трогать ничего нельзя.
+         *  			\* Реализация - 5 минут для совместного выполнения задачи. Как только время заканчивается все убирают руки и встают. Если кто-то что-то придерживает ещё - спринт считается заваленным.
+         *  			\* Демо - тут ребята презентуют Владельзу Продукта (один из ведущих) проделанную работу, а тот проверяет достигнутые цели. Нет ограничения по времени.
+         *  			\* Ретроспектива - 2 минуты ребята обсуждают что они сделали хорошо, что стоит исправить на следующей итерации (и назначают ответственных), и меняются ролями, если в этом есть необходимость.
+         *  			\
+         *  			\На первой итерации ведущие помогают ребятам с планированием и ретроспективой в роли скрам-мастеров. На остальных итерациях - всё сами. Скрам мастер может уточнять у ведущих в процессе работы, если что-то не понял.
+         *  			\
+         *  			\Возможные роли для ребят:
+         *  			\
+         *  			\1. Скрам мастер - проводит планирование и ретроспективу, контролирует, чтобы принятые на ретроспективе договорённости выполнялись, общается (и только он) с владельцем продукта.
+         *  			\2. Дизайнер - контролирует внешний вид, чтобы всё смотрелось органично и так, чтобы понравилось владельцу продукта.
+         *  			\3. Архитектор - проектирует какие необходимо внести изменения, чтобы проект выполнял поставленные задачи.
+         *  			\4. Разработчик - собственно делает всё своими руками.
+         *  			\5. QA - проверяет, соответствие того ,что сделано, критериям приёмки задачи.
+         *  			\
+         *  			\Возможные задачи по спринтам:
+         *  			\
+         *  			\1. Постройте мне наиболее высокое сооружение. Озвучивается критерий причёмки: не менее 30см высотой. Не озвучивается критерий приёмки: дизайн должен быть симметричным. Кто выше всех - получает очко.
+         *  			\
+         *  			\2. Как всё классно, я бы хотел там жить на самом верху. Добавьте мне туда как можно более просторный пентхаус. Озвучивается критерий: высота не должна быть меньше, чем была. Не озвучивается критерий: размер оцениваем по максимальному габариту в горизонтальной плоскости, где можно поставить маленькую игрушку и она не упадёт и не развалит дом. У кого пентхаус больше - получает очко.
+         *  			\
+         *  			\3. Хочу чтобы это был не просто дом, а памятник мне любимому. Озвучивается критерий: должна быть голова, туловище, руки, ноги. Не озвучивается критерий: должна быть какая-то деталь, которая делает здание похожим именно на Владельца Продукта, но ни на кого больше в зале.
+         *  			\
+         *  			\4. Я тут подумал, а ведь страшно на такой высоте жить-то будет в таком хлипком доме. Надо и о безопасности подумать. Сделайте так, чтобы я (показывая яйцо раскрашенное под человечика) мог усидеть на самом верху и не разбиться (явный критерий). Неявный критерий: если яйцо упадёт, но не разобьётся, то тоже принимается. Чьё яйцо в итоге окажется выше всех - получает доп очко.
+         *  			\
+         *  			\Методические замечания:
+         *  			\
+         *  			\* Шпионить можно, особо об этом не говорим и не поощряем.
+         *  			\* Вредить соседям нельзя - все набранные очки сбрасываются.
+         *  			\* Конструкция должна быть устойчивой. Даже если упала от дуновения ветерка - оцениваем то, что с ней после этого стало.
+         *  			\* За 30 и 15 секунд до истечения времени - сообщаем, что время истекает.
+         *  ```
+         **/
         data(): any[];
     }
 }
