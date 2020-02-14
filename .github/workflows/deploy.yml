@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v1
     
     - name: Build app
-      uses: hyoo-ru/mam_build@v1.0.1
+      uses: hyoo-ru/mam_build@master
       with:
         module: 'hyoo/scout'
     
