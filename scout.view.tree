@@ -6,6 +6,7 @@ $hyoo_scout_placeholder $mol_page
 	title \
 
 $hyoo_scout $mol_book
+	data /any
 	pages /
 		<= Filter $mol_page
 			title \Фильтры
@@ -86,6 +87,3 @@ $hyoo_scout $mol_book
 	Gist_tag!id $mol_view
 		attr * hyoo_scout_tag_id <= tag_title!id \
 		sub / <= tag_title!id \
-	
-	data /
-		-
