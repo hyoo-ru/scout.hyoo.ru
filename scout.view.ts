@@ -1,5 +1,27 @@
 namespace $.$$ {
+
+	export class $hyoo_scout_gist extends $mol_object {
+		icon = ''
+		title = ''
+		tags = {
+			Возраст: [] as string[],
+			Реквизит: [] as string[],
+			Подготовка: [] as string[],
+			Цель: [] as string[],
+			Место: [] as string[],
+			Длительность: [] as string[],
+		}
+		content! : string
+	}
+
 	export class $hyoo_scout extends $.$hyoo_scout {
+
+		@ $mol_mem
+		data() {
+			const text = $mol_fetch.text( 'hyoo/scout/_games.tree' )
+			const json = $mol_tree.fromString( text ).sub.map( tree => tree.clone({ type : '*' }).toJSON() )
+			return json as $hyoo_scout_gist[]
+		}
 
 		key( key : string ) {
 			return key
@@ -23,8 +45,8 @@ namespace $.$$ {
 		gists_favorite_duration() {
 			
 			const dur = this.data()
-			.filter( gist => this.gist_favorite( gist.title() ) )
-			.reduce( ( sum , gist )=> sum + parseInt( gist.tags()['Длительность'][0] ) , 0 )
+			.filter( gist => this.gist_favorite( gist.title ) )
+			.reduce( ( sum , gist )=> sum + parseInt( gist.tags['Длительность'][0] ) , 0 )
 			
 			return dur ? `${ dur } мин` : ''
 		}
@@ -40,13 +62,13 @@ namespace $.$$ {
 
 			if( this.gists_favorite() ) {
 
-				gists = gists.filter( gist => this.gist_favorite( gist.title() ) )
+				gists = gists.filter( gist => this.gist_favorite( gist.title ) )
 			
 			} else {
 			
 				gists = gists.filter( gist => {
 
-					const tags = gist.tags()
+					const tags = gist.tags
 					
 					aspect : for( const aspect in tags ) {
 
@@ -62,28 +84,28 @@ namespace $.$$ {
 				
 			}
 
-			const filtered = gists.filter( $mol_match_text( this.gists_filter_query() , gist => [ gist.title() , gist.content() ] ) )
+			const filtered = gists.filter( $mol_match_text( this.gists_filter_query() , gist => [ gist.title , gist.content ] ) )
 			
-			filtered.sort( $mol_compare_text( gist => gist.title() ) )
+			filtered.sort( $mol_compare_text( gist => gist.title ) )
 			
-			return filtered.map( gist => this.Gist_link( gist.title() ) )
+			return filtered.map( gist => this.Gist_link( gist.title ) )
 		}
 
 		@ $mol_mem_key
 		gist( id : string ) {
-			return this.data().find( gist => gist.title() === id ) as $hyoo_scout_gist
+			return this.data().find( gist => gist.title === id )
 		}
 
 		gist_icon( id : string ) {
-			return this.gist( id ).icon()
+			return this.gist( id )!.icon
 		}
 
 		gist_title( id : string ) {
-			return this.gist( id ).title()
+			return this.gist( id )!.title
 		}
 
 		gist_content( id : string ) {
-			return this.gist( id ).content()
+			return this.gist( id )!.content
 		}
 
 		tag_title( key : { aspect : string , tag : string } ) {
@@ -91,7 +113,7 @@ namespace $.$$ {
 		}
 
 		gist_aspects( id : string ) {
-			return Object.keys( this.gist( id ).tags() ).map( aspect => this.Gist_aspect( aspect ) )
+			return Object.keys( this.gist( id )!.tags ).map( aspect => this.Gist_aspect( aspect ) )
 		}
 
 		gist_remarks( id : string , next? : string ) {
@@ -99,19 +121,19 @@ namespace $.$$ {
 		}
 
 		gist_aspect_tags( aspect : string ) {
-			return this.gist_current().tags()[ aspect ].map( ( tag : string ) => this.Gist_tag({ aspect , tag }) )
+			return this.gist_current()!.tags[ aspect ].map( ( tag : string ) => this.Gist_tag({ aspect , tag }) )
 		}
 
-		gist_current( next? : $hyoo_scout_gist ) {
+		gist_current( next? : $hyoo_scout_gist | null ) {
 
-			const id = this.$.$mol_state_arg.value( 'gist' , next && next.title() )
+			const id = this.$.$mol_state_arg.value( 'gist' , next && next.title )
 			if( !id ) return null
 
 			return this.gist( id )
 		}
 
 		filter_aspects() {
-			return Object.keys( $hyoo_scout_gist.make({}).tags() )
+			return Object.keys( $hyoo_scout_gist.make({}).tags )
 			.filter( aspect => this.filter_aspect_tags( aspect ).length > 1 )
 			.map( aspect => this.Filter_aspect( aspect ) )
 		}
@@ -122,7 +144,7 @@ namespace $.$$ {
 			const values = new Set< string >()
 			
 			for( const gist of this.data() ) {
-				for( const value of gist.tags()[ aspect ] ) {
+				for( const value of gist.tags[ aspect ] ) {
 					values.add( value )
 				}
 			}
@@ -138,7 +160,7 @@ namespace $.$$ {
 				this.gist_current( null )
 				this.Gists().Body().scroll_top( 0 )
 			} )
-			next = this.$.$mol_state_local.value( `${ this }.filter_tag_checked(${ JSON.stringify( key ) })` , next )
+			next = this.$.$mol_state_local.value( `${ this }.filter_tag_checked(${ JSON.stringify( key ) })` , next ) ?? true
 			if( next == null ) next = super.filter_tag_checked( key )
 			return next
 		}
@@ -151,7 +173,7 @@ namespace $.$$ {
 			return [
 				this.Filter() ,
 				this.Gists() ,
-				... this.gist_current() ? [ this.Gist( this.gist_current().title() ) ] : [] ,
+				... this.gist_current() ? [ this.Gist( this.gist_current()!.title ) ] : [] ,
 				... this.suggest() ? [ this.Suggest() ] : [] ,
 			]
 		}

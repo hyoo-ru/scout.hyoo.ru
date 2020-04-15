@@ -105,7 +105,8 @@
 	padding: .25rem;
 }
 
-[hyoo_scout_gist_aspect] > * {
+[hyoo_scout_gist_aspect] > * ,
+[hyoo_scout_gist_aspect] > * > * {
 	margin: 0 .25rem;
 }
 

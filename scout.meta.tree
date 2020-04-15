@@ -5,5 +5,6 @@ deploy \/hyoo/scout/logo/logo_128.png
 deploy \/hyoo/scout/logo/logo_192.png
 deploy \/hyoo/scout/logo/logo_512.png
 deploy \/hyoo/scout/manifest.json
+deploy \/hyoo/scout/_games.tree
 
 include \/mol/offline/install
