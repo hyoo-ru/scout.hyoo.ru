@@ -1,106 +1,3 @@
-$hyoo_scout_placeholder $mol_page
-	minimal_width 400
-	attr *
-		^
-		tabindex null
-	title \
-
-$hyoo_scout $mol_book
-	data /any
-	pages /
-		<= Filter $mol_page
-			title \Фильтры
-			minimal_width 400
-			event_top?val <=> event_front_up?val
-			body /
-				<= Filter_aspects $mol_list rows <= filter_aspects /
-				<= Feedback $mol_link
-					title \Ошибки? Предложения?
-					uri \https://vk.com/scout_hyoo_ru
-		<= Gists $mol_page
-			title <= gists_title \Игротека вожатого
-			minimal_width 400
-			event_top?val <=> event_front_up?val
-			tools /
-				<= Suggest_link $mol_link
-					arg *
-						suggest \
-						gist null
-					sub /
-						<= Suggest_icon $mol_icon_plus
-				<= Gists_favorite $mol_check_icon
-					hint \Только избранное
-					checked?val <=> gists_favorite?val false
-					Icon <= Gists_favorite_icon $mol_icon_favorite
-					label <= gists_favorite_label /
-						<= Gists_favorite_duration $mol_view
-							sub / <= gists_favorite_duration \
-			body /
-				<= Gists_search $mol_search
-					query?val <=> gists_filter_query?val \
-				<= Gists_list $mol_list rows <= gist_links /
-		<= Suggest $hyoo_scout_suggest
-			event_top?val <=> event_front_up?val
-	Placeholder $hyoo_scout_placeholder
-	
-	Filter_aspect!id $mol_list rows /
-		<= Filter_aspect_title!id $mol_view sub / <= key!id \
-		<= Filter_aspect_tags!id $mol_row sub <= filter_aspect_tags!id /
-	Filter_tag!id $mol_check
-		checked?val <=> filter_tag_checked!id?val true
-		label /
-			<= Filter_tag_title!id $mol_view
-				attr * hyoo_scout_tag_id <= tag_title!id \
-				sub / <= tag_title!id \
-	
-	Gist_link!id $mol_link
-		sub /
-			<= Gist_link_icon!id $mol_view sub / <= gist_icon!id \
-			<= Gist_link_title!id $mol_dimmer
-				needle <= gists_filter_query
-				haystack <= gist_title!id \
-		arg * gist <= key!id \
-	
-	Gist!id $mol_page
-		title <= gist_title!id \
-		minimal_width 400
-		event_top?val <=> event_front_up?val
-		tools /
-			<= Gist_favorite!id $mol_check_icon
-				checked?val <=> gist_favorite!id?val false
-				Icon <= Gist_favorite_icon $mol_icon_favorite
-			<= Gist_close $mol_link
-				arg * gist null
-				sub / <= Gist_close_icon $mol_icon_cross
-		body /
-			<= Gist_content!id $mol_text text <= gist_content!id \
-			<= Gist_aspects!id $mol_list rows <= gist_aspects!id /
-			<= Gist_remarks!id $mol_textarea
-				hint \Личные заметки
-				value?val <=> gist_remarks!id?val \
-	
-	Gist_aspect!id $mol_row sub /
-		<= Gist_aspect_title!id $mol_view sub /
-			<= key!id \
-			\: 
-		<= Gist_aspect_tags!id $mol_view sub <= gist_aspect_tags!id /
-	Gist_tag!id $mol_view
-		attr * hyoo_scout_tag_id <= tag_title!id \
-		sub / <= tag_title!id \
-
-$mol_check $mol_button_minor
-	attr *
-		^
-		mol_check_checked <= checked?val false
-		aria-checked <= checked?val false
-		role \checkbox
-	sub /
-		<= Icon null
-		<= label /
-			<= Title $mol_view
-				sub /
-					<= title \
-
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
@@ -119,14 +16,16 @@ $mol_button $mol_view
 	sub /$mol_view_content
 		<= title
 
-$mol_button_typed $mol_button
-
-$mol_button_major $mol_button_typed
-	attr *
+$mol_scroll $mol_view
+	minimal_height 0
+	_event_scroll_timer?val null
+	field *
 		^
-		mol_theme \$mol_theme_accent
-
-$mol_button_minor $mol_button_typed
+		scrollTop <= scroll_top?val 0
+		scrollLeft <= scroll_left?val 0
+	event *
+		^
+		scroll?event <=> event_scroll?event null
 
 $mol_page $mol_view
 	sub /
@@ -143,49 +42,6 @@ $mol_page $mol_view
 			sub <= body /$mol_view_content
 		<= Foot $mol_view
 			sub <= foot /$mol_view
-
-$mol_scroll $mol_view
-	minimal_height 0
-	_event_scroll_timer?val null
-	field *
-		^
-		scrollTop <= scroll_top?val 0
-		scrollLeft <= scroll_left?val 0
-	event *
-		^
-		scroll?event <=> event_scroll?event null
-
-$mol_book $mol_view
-	sub <= pages_wrapped /$mol_view
-	minimal_width 0
-	pages /$mol_view
-	plugins /$mol_plugin
-		<= Meter $mol_meter
-			width => width
-		<= Touch $mol_touch
-			swipe_from_left?val <=> event_front_up?val null
-			swipe_to_left?val <=> event_front_down?val null
-	Page!index $mol_book_page
-		Sub <= page!index null
-		visible <= page_visible!index true
-	Placeholder $mol_book_placeholder
-		title <= title
-
-$mol_book_placeholder $mol_view
-	minimal_width 400
-	attr *
-		^
-		tabindex null
-
-$mol_book_page $mol_ghost
-	attr_static *
-		^
-		tabindex 0
-		mol_book_page_visible true
-	attr *
-		^
-		mol_book_page_focused <= focused
-		mol_book_page_visible <= visible true
 
 $mol_meter $mol_plugin
 	zoom 1
@@ -249,6 +105,38 @@ $mol_touch $mol_plugin
 $mol_ghost $mol_view
 	Sub $mol_view
 
+$mol_book $mol_view
+	sub <= pages_wrapped /$mol_view
+	minimal_width 0
+	pages /$mol_view
+	plugins /$mol_plugin
+		<= Meter $mol_meter
+			width => width
+		<= Touch $mol_touch
+			swipe_from_left?val <=> event_front_up?val null
+			swipe_to_left?val <=> event_front_down?val null
+	Page!index $mol_book_page
+		Sub <= page!index null
+		visible <= page_visible!index true
+	Placeholder $mol_book_placeholder
+		title <= title
+
+$mol_book_placeholder $mol_view
+	minimal_width 400
+	attr *
+		^
+		tabindex null
+
+$mol_book_page $mol_ghost
+	attr_static *
+		^
+		tabindex 0
+		mol_book_page_visible true
+	attr *
+		^
+		mol_book_page_focused <= focused
+		mol_book_page_visible <= visible true
+
 $mol_list $mol_view
 	render_visible_only true
 	render_over 0
@@ -276,14 +164,6 @@ $mol_link $mol_view
 		^
 		click?event <=> click?event <=> event_click?event null
 
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
-	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
-
 $mol_svg $mol_view
 	dom_name \svg
 	dom_name_space \http://www.w3.org/2000/svg
@@ -305,65 +185,38 @@ $mol_svg_path $mol_svg
 		d <= geometry \
 
 
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
+
 $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
+
+$mol_button_typed $mol_button
+
+$mol_button_minor $mol_button_typed
+
+$mol_check $mol_button_minor
+	attr *
+		^
+		mol_check_checked <= checked?val false
+		aria-checked <= checked?val false
+		role \checkbox
+	sub /
+		<= Icon null
+		<= label /
+			<= Title $mol_view
+				sub /
+					<= title \
 
 $mol_check_icon $mol_check
 
 $mol_icon_favorite $mol_icon path \M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z
 
-$mol_search $mol_bar
-	query?val \
-	sub /
-		<= Suggest $mol_select
-			value?val <=> suggest_selected?val \
-			filter_pattern?val <=> suggest_selected?val \
-			hint <= hint @ \Search...
-			filter_pattern?val <=> query?val
-			options_showed <= suggests_showed false
-			options <= suggests /string
-			Trigger_icon null
-			debounce <= debounce 200
-		<= Clear $mol_button_minor
-			sub /
-				<= Clear_icon $mol_icon_cross
-			event_click?val <=> event_clear?val null
-
 $mol_bar $mol_view
-
-$mol_select $mol_pop
-	dictionary *
-	options /string
-	value?val \
-	minimal_height 40
-	Option_row!id $mol_button_minor
-		event_click?event <=> event_select!id?event null
-		sub <= option_content!id /
-			<= Option_label!id $mol_dimmer
-				minimal_height 40
-				haystack <= option_label!id \
-				needle <= filter_pattern?val \
-	No_options $mol_view
-		sub /
-			<= no_options_message @ \No options
-	plugins /
-		^
-		<= Nav $mol_nav
-			keys_y <= nav_components /$mol_view
-			current_y?component <=> option_focused?component null
-			cycle?val <=> nav_cycle?val true
-	showed?val <=> options_showed?val false
-	Anchor <= Trigger $mol_button_minor
-		click?event <=> open?event null
-		sub <= trigger_content /$mol_view_content
-	bubble_content /
-		<= Menu $mol_list
-			rows <= menu_content /$mol_view
-	option_content_current /$mol_view_content
-	Filter $mol_string
-		value?val <=> filter_pattern?val \
-		hint <= filter_hint <= hint @ \Search..
-		debounce <= debounce 200
-	Trigger_icon $mol_icon_chevron
 
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
@@ -444,7 +297,263 @@ $mol_string $mol_view
 
 $mol_icon_chevron $mol_icon path \M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z
 
+$mol_select $mol_pop
+	dictionary *
+	options /string
+	value?val \
+	minimal_height 40
+	Option_row!id $mol_button_minor
+		event_click?event <=> event_select!id?event null
+		sub <= option_content!id /
+			<= Option_label!id $mol_dimmer
+				minimal_height 40
+				haystack <= option_label!id \
+				needle <= filter_pattern?val \
+	No_options $mol_view
+		sub /
+			<= no_options_message @ \No options
+	plugins /
+		^
+		<= Nav $mol_nav
+			keys_y <= nav_components /$mol_view
+			current_y?component <=> option_focused?component null
+			cycle?val <=> nav_cycle?val true
+	showed?val <=> options_showed?val false
+	Anchor <= Trigger $mol_button_minor
+		click?event <=> open?event null
+		sub <= trigger_content /$mol_view_content
+	bubble_content /
+		<= Menu $mol_list
+			rows <= menu_content /$mol_view
+	option_content_current /$mol_view_content
+	Filter $mol_string
+		value?val <=> filter_pattern?val \
+		hint <= filter_hint <= hint @ \Search..
+		debounce <= debounce 200
+	Trigger_icon $mol_icon_chevron
+
 $mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+
+$mol_search $mol_bar
+	query?val \
+	sub /
+		<= Suggest $mol_select
+			value?val <=> suggest_selected?val \
+			filter_pattern?val <=> suggest_selected?val \
+			hint <= hint @ \Search...
+			filter_pattern?val <=> query?val
+			options_showed <= suggests_showed false
+			options <= suggests /string
+			Trigger_icon null
+			debounce <= debounce 200
+		<= Clear $mol_button_minor
+			sub /
+				<= Clear_icon $mol_icon_cross
+			event_click?val <=> event_clear?val null
+
+$mol_labeler $mol_list
+	rows /
+		<= Title $mol_view
+			minimal_height 21
+			sub <= label /$mol_view_content
+				<= title
+		<= Content $mol_view
+			minimal_height 24
+			sub <= content /
+
+$mol_form_field $mol_labeler
+	label /
+		<= name \
+		<= Bid $mol_view
+			sub / <= bid \
+	Content <= control null
+
+$mol_row $mol_view
+
+$mol_form $mol_view
+	submit_blocked false
+	event *
+		^
+		keydown?event <=> keydown?event null
+	submit?event null
+	sub /
+		<= Bar_fields $mol_view
+			sub <= form_fields /$mol_form_field
+		<= Bar_buttons $mol_row
+			sub <= buttons /$mol_view
+
+$mol_float $mol_view
+
+$mol_check_expand $mol_check
+	minimal_height 40
+	Icon $mol_icon_chevron
+	level 0
+	style *
+		^
+		paddingLeft <= level_style \0px
+	checked?val <=> expanded?val false
+	enabled <= expandable false
+
+$mol_grid $mol_scroll
+	row_height 40
+	row_ids /string[]
+	row_id!index null
+	col_ids /
+	records *
+	record!id null
+	hierarchy null
+	hierarchy_col \
+	-
+	sub /
+		<= Head
+		<= Table $mol_grid_table
+			sub <= rows /$mol_view
+	Head $mol_grid_row
+		cells <= head_cells /$mol_view
+	Row!id $mol_grid_row
+		minimal_height <= row_height
+		cells <= cells!id /$mol_view
+	-
+	Cell!id $mol_view
+	cell!id null
+	Cell_text!id $mol_grid_cell
+		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
+	Cell_number!id $mol_grid_number
+		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
+	Col_head!id $mol_float
+		dom_name \th
+		sub <= col_head_content!id /$mol_view_content
+	Cell_branch!id $mol_check_expand
+		level <= cell_level!id 0
+		label <= cell_content!id /$mol_view_content
+		expanded?val <=> cell_expanded!id?val false
+	Cell_content!id /
+		<= Cell_dimmer!id $mol_dimmer
+			needle <= needle \
+			haystack <= cell_value!id \
+
+$mol_grid_table $mol_list
+	dom_name \table
+
+$mol_grid_row $mol_view
+	dom_name \tr
+	sub <= cells /$mol_view
+
+$mol_grid_cell $mol_view
+	dom_name \td
+	minimal_height 40
+
+$mol_grid_number $mol_grid_cell
+
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
+
+$mol_image $mol_view
+	dom_name \img
+	field *
+		^
+		src <= uri \
+		alt <= title
+
+$mol_link_iconed $mol_link
+	sub /
+		<= Icon $mol_image
+			uri <= icon \
+			title \
+	content /
+		<= title <= uri
+	host \
+
+$mol_text $mol_list
+	uri_base \
+	text \
+	tokens /
+	Quote!id $mol_text
+		text <= quote_text!id \
+	Row!id $mol_text_row
+		sub <= block_content!id /
+		type <= block_type!id \
+	Span!id $mol_text_span
+	Link!id $mol_text_link
+	Image!id $mol_text_image
+	Header!id $mol_text_header
+		level <= header_level!id 0
+		content <= header_content!id /
+	Table!id $mol_grid
+		head_cells <= table_head_cells!id /
+		rows <= table_rows!id /
+	Table_row!id $mol_grid_row
+		cells <= table_cells!id /
+	Table_cell!id $mol_grid_cell
+		sub <= table_cell_content!id /
+	Table_cell_head!id $mol_float
+		sub <= table_cell_content!id /
+
+$mol_text_row $mol_paragraph
+	attr *
+		^
+		mol_text_type <= type \
+
+$mol_text_header $mol_paragraph
+	dom_name \h
+	attr *
+		^
+		mol_text_header_level <= level?val 0
+	sub <= content /
+
+$mol_text_span $mol_paragraph
+	dom_name \span
+	attr *
+		^
+		mol_text_type <= type?val \
+	sub <= content?val /
+
+$mol_text_link $mol_link_iconed
+	attr *
+		^
+		mol_text_type <= type?val \
+	uri <= link?val \
+	content <= content?val /
+
+$mol_text_image $mol_view
+	dom_name \object
+	attr *
+		^
+		allowfullscreen true
+		mol_text_type <= type?val \
+		data <= link?val \
+	sub /
+		<= title?val \
+
+$mol_textarea $mol_view
+	event *
+		keydown?event <=> press?event null
+	sub /
+		<= Edit $mol_string
+			dom_name \textarea
+			value?val <=> value?val \
+			hint <= hint \
+			debounce 0
+			enabled <= enabled true
+		<= View $mol_text
+			text <= text \
+
+$mol_switch $mol_view
+	minimal_height 40
+	Option!id $mol_check
+		checked?val <=> option_checked!id?val false
+		label <= option_label!id / <= option_title!id \
+		enabled <= option_enabled!id <= enabled true
+	value?val null
+	options *
+	keys /string
+	sub <= items /$mol_check
+
+$mol_button_major $mol_button_typed
+	attr *
+		^
+		mol_theme \$mol_theme_accent
 
 $hyoo_scout_suggest $mol_page
 	title \Новая игра
@@ -558,201 +667,92 @@ $hyoo_scout_suggest $mol_page
 					disabled <= submit_blocked
 
 
-$mol_switch $mol_view
-	minimal_height 40
-	Option!id $mol_check
-		checked?val <=> option_checked!id?val false
-		label <= option_label!id / <= option_title!id \
-		enabled <= option_enabled!id <= enabled true
-	value?val null
-	options *
-	keys /string
-	sub <= items /$mol_check
-
-$mol_form $mol_view
-	submit_blocked false
-	event *
-		^
-		keydown?event <=> keydown?event null
-	submit?event null
-	sub /
-		<= Bar_fields $mol_view
-			sub <= form_fields /$mol_form_field
-		<= Bar_buttons $mol_row
-			sub <= buttons /$mol_view
-
-$mol_form_field $mol_labeler
-	label /
-		<= name \
-		<= Bid $mol_view
-			sub / <= bid \
-	Content <= control null
-
-$mol_labeler $mol_list
-	rows /
-		<= Title $mol_view
-			minimal_height 21
-			sub <= label /$mol_view_content
-				<= title
-		<= Content $mol_view
-			minimal_height 24
-			sub <= content /
-
-$mol_row $mol_view
-
-$mol_textarea $mol_view
-	event *
-		keydown?event <=> press?event null
-	sub /
-		<= Edit $mol_string
-			dom_name \textarea
-			value?val <=> value?val \
-			hint <= hint \
-			debounce 0
-			enabled <= enabled true
-		<= View $mol_text
-			text <= text \
-
-$mol_text $mol_list
-	uri_base \
-	text \
-	tokens /
-	Quote!id $mol_text
-		text <= quote_text!id \
-	Row!id $mol_text_row
-		sub <= block_content!id /
-		type <= block_type!id \
-	Span!id $mol_text_span
-	Link!id $mol_text_link
-	Image!id $mol_text_image
-	Header!id $mol_text_header
-		level <= header_level!id 0
-		content <= header_content!id /
-	Table!id $mol_grid
-		head_cells <= table_head_cells!id /
-		rows <= table_rows!id /
-	Table_row!id $mol_grid_row
-		cells <= table_cells!id /
-	Table_cell!id $mol_grid_cell
-		sub <= table_cell_content!id /
-	Table_cell_head!id $mol_float
-		sub <= table_cell_content!id /
-
-$mol_text_row $mol_paragraph
+$hyoo_scout_placeholder $mol_page
+	minimal_width 400
 	attr *
 		^
-		mol_text_type <= type \
+		tabindex null
+	title \
 
-$mol_text_header $mol_paragraph
-	dom_name \h
-	attr *
-		^
-		mol_text_header_level <= level?val 0
-	sub <= content /
-
-$mol_text_span $mol_paragraph
-	dom_name \span
-	attr *
-		^
-		mol_text_type <= type?val \
-	sub <= content?val /
-
-$mol_text_link $mol_link_iconed
-	attr *
-		^
-		mol_text_type <= type?val \
-	uri <= link?val \
-	content <= content?val /
-
-$mol_text_image $mol_view
-	dom_name \object
-	attr *
-		^
-		allowfullscreen true
-		mol_text_type <= type?val \
-		data <= link?val \
-	sub /
-		<= title?val \
-
-$mol_grid $mol_scroll
-	row_height 40
-	row_ids /string[]
-	row_id!index null
-	col_ids /
-	records *
-	record!id null
-	hierarchy null
-	hierarchy_col \
-	-
-	sub /
-		<= Head
-		<= Table $mol_grid_table
-			sub <= rows /$mol_view
-	Head $mol_grid_row
-		cells <= head_cells /$mol_view
-	Row!id $mol_grid_row
-		minimal_height <= row_height
-		cells <= cells!id /$mol_view
-	-
-	Cell!id $mol_view
-	cell!id null
-	Cell_text!id $mol_grid_cell
-		sub <= cell_content_text!id <= cell_content!id /$mol_view_content
-	Cell_number!id $mol_grid_number
-		sub <= cell_content_number!id <= cell_content!id /$mol_view_content
-	Col_head!id $mol_float
-		dom_name \th
-		sub <= col_head_content!id /$mol_view_content
-	Cell_branch!id $mol_check_expand
-		level <= cell_level!id 0
-		label <= cell_content!id /$mol_view_content
-		expanded?val <=> cell_expanded!id?val false
-	Cell_content!id /
-		<= Cell_dimmer!id $mol_dimmer
-			needle <= needle \
-			haystack <= cell_value!id \
-
-$mol_grid_table $mol_list
-	dom_name \table
-
-$mol_grid_row $mol_view
-	dom_name \tr
-	sub <= cells /$mol_view
-
-$mol_grid_cell $mol_view
-	dom_name \td
-	minimal_height 40
-
-$mol_grid_number $mol_grid_cell
-
-$mol_float $mol_view
-
-$mol_check_expand $mol_check
-	minimal_height 40
-	Icon $mol_icon_chevron
-	level 0
-	style *
-		^
-		paddingLeft <= level_style \0px
-	checked?val <=> expanded?val false
-	enabled <= expandable false
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 8
-
-$mol_link_iconed $mol_link
-	sub /
-		<= Icon $mol_image
-			uri <= icon \
-			title \
-	content /
-		<= title <= uri
-	host \
-
-$mol_image $mol_view
-	dom_name \img
-	field *
-		^
-		src <= uri \
-		alt <= title
+$hyoo_scout $mol_book
+	data /any
+	pages /
+		<= Filter $mol_page
+			title \Фильтры
+			minimal_width 400
+			event_top?val <=> event_front_up?val
+			body /
+				<= Filter_aspects $mol_list rows <= filter_aspects /
+				<= Feedback $mol_link
+					title \Ошибки? Предложения?
+					uri \https://vk.com/scout_hyoo_ru
+		<= Gists $mol_page
+			title <= gists_title \Игротека вожатого
+			minimal_width 400
+			event_top?val <=> event_front_up?val
+			tools /
+				<= Suggest_link $mol_link
+					arg *
+						suggest \
+						gist null
+					sub /
+						<= Suggest_icon $mol_icon_plus
+				<= Gists_favorite $mol_check_icon
+					hint \Только избранное
+					checked?val <=> gists_favorite?val false
+					Icon <= Gists_favorite_icon $mol_icon_favorite
+					label <= gists_favorite_label /
+						<= Gists_favorite_duration $mol_view
+							sub / <= gists_favorite_duration \
+			body /
+				<= Gists_search $mol_search
+					query?val <=> gists_filter_query?val \
+				<= Gists_list $mol_list rows <= gist_links /
+		<= Suggest $hyoo_scout_suggest
+			event_top?val <=> event_front_up?val
+	Placeholder $hyoo_scout_placeholder
+	
+	Filter_aspect!id $mol_list rows /
+		<= Filter_aspect_title!id $mol_view sub / <= key!id \
+		<= Filter_aspect_tags!id $mol_row sub <= filter_aspect_tags!id /
+	Filter_tag!id $mol_check
+		checked?val <=> filter_tag_checked!id?val true
+		label /
+			<= Filter_tag_title!id $mol_view
+				attr * hyoo_scout_tag_id <= tag_title!id \
+				sub / <= tag_title!id \
+	
+	Gist_link!id $mol_link
+		sub /
+			<= Gist_link_icon!id $mol_view sub / <= gist_icon!id \
+			<= Gist_link_title!id $mol_dimmer
+				needle <= gists_filter_query
+				haystack <= gist_title!id \
+		arg * gist <= key!id \
+	
+	Gist!id $mol_page
+		title <= gist_title!id \
+		minimal_width 400
+		event_top?val <=> event_front_up?val
+		tools /
+			<= Gist_favorite!id $mol_check_icon
+				checked?val <=> gist_favorite!id?val false
+				Icon <= Gist_favorite_icon $mol_icon_favorite
+			<= Gist_close $mol_link
+				arg * gist null
+				sub / <= Gist_close_icon $mol_icon_cross
+		body /
+			<= Gist_content!id $mol_text text <= gist_content!id \
+			<= Gist_aspects!id $mol_list rows <= gist_aspects!id /
+			<= Gist_remarks!id $mol_textarea
+				hint \Личные заметки
+				value?val <=> gist_remarks!id?val \
+	
+	Gist_aspect!id $mol_row sub /
+		<= Gist_aspect_title!id $mol_view sub /
+			<= key!id \
+			\: 
+		<= Gist_aspect_tags!id $mol_view sub <= gist_aspect_tags!id /
+	Gist_tag!id $mol_view
+		attr * hyoo_scout_tag_id <= tag_title!id \
+		sub / <= tag_title!id \
