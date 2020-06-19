@@ -1,17 +1,12 @@
-$hyoo_scout_placeholder $mol_page
-	minimal_width 400
-	attr *
-		^
-		tabindex null
-	title \
-
-$hyoo_scout $mol_book
+$hyoo_scout $mol_book2
 	data /any
+	plugins /
+		<= Theme $mol_theme_auto
 	pages /
 		<= Filter $mol_page
 			title \Фильтры
-			minimal_width 400
-			event_top?val <=> event_front_up?val
+			tools /
+				<= Lights $mol_lights_toggle
 			body /
 				<= Filter_aspects $mol_list rows <= filter_aspects /
 				<= Feedback $mol_link
@@ -19,8 +14,6 @@ $hyoo_scout $mol_book
 					uri \https://vk.com/scout_hyoo_ru
 		<= Gists $mol_page
 			title <= gists_title \Игротека вожатого
-			minimal_width 400
-			event_top?val <=> event_front_up?val
 			tools /
 				<= Suggest_link $mol_link
 					arg *
@@ -40,8 +33,6 @@ $hyoo_scout $mol_book
 					query?val <=> gists_filter_query?val \
 				<= Gists_list $mol_list rows <= gist_links /
 		<= Suggest $hyoo_scout_suggest
-			event_top?val <=> event_front_up?val
-	Placeholder $hyoo_scout_placeholder
 	
 	Filter_aspect!id $mol_list rows /
 		<= Filter_aspect_title!id $mol_view sub / <= key!id \
@@ -59,12 +50,12 @@ $hyoo_scout $mol_book
 			<= Gist_link_title!id $mol_dimmer
 				needle <= gists_filter_query
 				haystack <= gist_title!id \
-		arg * gist <= key!id \
+		arg *
+			gist <= key!id \
+			suggest null
 	
 	Gist!id $mol_page
 		title <= gist_title!id \
-		minimal_width 400
-		event_top?val <=> event_front_up?val
 		tools /
 			<= Gist_favorite!id $mol_check_icon
 				checked?val <=> gist_favorite!id?val false
