@@ -17,6 +17,16 @@ $mol_book2 $mol_scroll
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
 
+$mol_speck $mol_view
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+	style *
+		^
+		minHeight \1em
+	sub /
+		<= value null
+
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
@@ -31,9 +41,10 @@ $mol_button $mol_view
 		disabled <= disabled false
 		role \button
 		tabindex <= tab_index 0
-		title <= hint \
+		title <= hint_or_error <= hint \
 	sub /$mol_view_content
 		<= title
+	Speck $mol_speck
 
 $mol_page $mol_view
 	sub /
@@ -186,11 +197,18 @@ $mol_pop_bubble $mol_scroll
 		mol_pop_align <= align \
 		tabindex 0
 
-$mol_dimmer $mol_view
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
+
+$mol_dimmer $mol_paragraph
 	haystack \
 	needle \
 	sub <= parts /$mol_view_content
-	Low!id $mol_view
+	Low!id $mol_paragraph
+		sub /
+			<= string!id \
+	High!id $mol_paragraph
 		sub /
 			<= string!id \
 
@@ -331,6 +349,9 @@ $mol_form $mol_view
 			sub <= buttons /$mol_view
 
 $mol_float $mol_view
+	style *
+		^
+		minHeight \auto
 
 $mol_check_expand $mol_check
 	minimal_height 40
@@ -392,10 +413,6 @@ $mol_grid_cell $mol_view
 	minimal_height 40
 
 $mol_grid_number $mol_grid_cell
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 8
 
 $mol_image $mol_view
 	dom_name \img
@@ -498,6 +515,7 @@ $mol_switch $mol_view
 	sub <= items /$mol_check
 
 $mol_switch_option $mol_check
+	minimal_height 24
 	attr *
 		^
 		mol_theme <= theme \
