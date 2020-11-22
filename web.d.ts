@@ -847,6 +847,11 @@ declare namespace $ {
         maxHeight?: Size;
         margin?: Directions<Length | 'auto'>;
         padding?: Directions<Length | 'auto'>;
+        position?: 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed';
+        top?: Length | 'auto' | Common;
+        right?: Length | 'auto' | Common;
+        bottom?: Length | 'auto' | Common;
+        left?: Length | 'auto' | Common;
         border?: {
             radius?: Length | [Length, Length];
             style?: 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | Common;
@@ -1316,8 +1321,7 @@ declare namespace $.$$ {
 declare namespace $ {
     class $mol_page extends $mol_view {
         sub(): readonly any[];
-        event_top(val?: any): any;
-        Title(): $$.$mol_button;
+        Title(): $mol_view;
         tools(): readonly (string | number | boolean | Node | $mol_view)[];
         Tools(): $mol_view;
         head(): readonly any[];
@@ -2106,7 +2110,7 @@ declare namespace $ {
     class $mol_labeler extends $mol_list {
         rows(): readonly any[];
         label(): readonly (string | number | boolean | Node | $mol_view)[];
-        Title(): $mol_view;
+        Label(): $mol_view;
         content(): readonly any[];
         Content(): $mol_view;
     }

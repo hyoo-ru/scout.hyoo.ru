@@ -3886,17 +3886,11 @@ var $;
                 this.Foot()
             ];
         }
-        event_top(val) {
-            if (val !== undefined)
-                return val;
-            return null;
-        }
         Title() {
-            const obj = new this.$.$mol_button();
+            const obj = new this.$.$mol_view();
             obj.sub = () => [
                 this.title()
             ];
-            obj.event_click = (val) => this.event_top(val);
             return obj;
         }
         tools() {
@@ -3941,9 +3935,6 @@ var $;
             return obj;
         }
     }
-    __decorate([
-        $.$mol_mem
-    ], $mol_page.prototype, "event_top", null);
     __decorate([
         $.$mol_mem
     ], $mol_page.prototype, "Title", null);
@@ -3996,7 +3987,7 @@ var $;
             Head: {
                 display: 'flex',
                 flexWrap: 'wrap',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
                 flex: 'none',
                 position: 'relative',
                 margin: 0,
@@ -4017,11 +4008,14 @@ var $;
                 minHeight: rem(2),
                 padding: $.$mol_gap.text,
                 wordBreak: 'normal',
-                cursor: 'default',
                 textShadow: '0 0',
             },
             Tools: {
-                flex: 'auto',
+                flex: {
+                    basis: 'auto',
+                    grow: 0,
+                    shrink: 1,
+                },
                 display: 'flex',
                 justifyContent: 'flex-end',
                 alignItems: 'flex-start',
@@ -6428,7 +6422,7 @@ var $;
     class $mol_labeler extends $.$mol_list {
         rows() {
             return [
-                this.Title(),
+                this.Label(),
                 this.Content()
             ];
         }
@@ -6437,7 +6431,7 @@ var $;
                 this.title()
             ];
         }
-        Title() {
+        Label() {
             const obj = new this.$.$mol_view();
             obj.minimal_height = () => 24;
             obj.sub = () => this.label();
@@ -6455,7 +6449,7 @@ var $;
     }
     __decorate([
         $.$mol_mem
-    ], $mol_labeler.prototype, "Title", null);
+    ], $mol_labeler.prototype, "Label", null);
     __decorate([
         $.$mol_mem
     ], $mol_labeler.prototype, "Content", null);
@@ -6466,7 +6460,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_title] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
+    $.$mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tcolor: var(--mol_theme_shade);\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
 })($ || ($ = {}));
 //labeler.view.css.js.map
 ;
