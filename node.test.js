@@ -5405,10 +5405,6 @@ var $;
                 return event;
             return null;
         }
-        Meter() {
-            const obj = new this.$.$mol_meter();
-            return obj;
-        }
         top() {
             return this.Meter().top();
         }
@@ -5420,6 +5416,10 @@ var $;
         }
         right() {
             return this.Meter().right();
+        }
+        Meter() {
+            const obj = new this.$.$mol_meter();
+            return obj;
         }
         Anchor() {
             return null;
@@ -8657,6 +8657,9 @@ var $;
             obj.disabled = () => this.submit_blocked();
             return obj;
         }
+        submit_blocked() {
+            return this.Form().submit_blocked();
+        }
         Form() {
             const obj = new this.$.$mol_form();
             obj.form_fields = () => [
@@ -8674,9 +8677,6 @@ var $;
                 this.Submit()
             ];
             return obj;
-        }
-        submit_blocked() {
-            return this.Form().submit_blocked();
         }
     }
     __decorate([
@@ -9747,12 +9747,12 @@ var $;
 var $;
 (function ($) {
     class $mol_view_tree_test_binding_right extends $.$mol_view {
+        outer_width(v) {
+            return this.Test().width(v);
+        }
         Test() {
             const obj = new this.$.$mol_view_tree_test_binding_right_test();
             return obj;
-        }
-        outer_width(v) {
-            return this.Test().width(v);
         }
     }
     __decorate([
