@@ -8652,29 +8652,6 @@ var $;
             obj.control = () => this.Duration();
             return obj;
         }
-        Main_bar() {
-            const obj = new this.$.$mol_bar();
-            obj.sub = () => [
-                this.Name_field(),
-                this.Icon_field()
-            ];
-            return obj;
-        }
-        Tags_bar() {
-            const obj = new this.$.$mol_bar();
-            obj.sub = () => [
-                this.Duration_field(),
-                this.Reason_field()
-            ];
-            return obj;
-        }
-        fields() {
-            return [
-                this.Main_bar(),
-                this.Descr_field(),
-                this.Tags_bar()
-            ];
-        }
         submit(val) {
             if (val !== undefined)
                 return val;
@@ -8798,12 +8775,6 @@ var $;
     __decorate([
         $.$mol_mem
     ], $hyoo_scout_suggest.prototype, "Duration_field", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_scout_suggest.prototype, "Main_bar", null);
-    __decorate([
-        $.$mol_mem
-    ], $hyoo_scout_suggest.prototype, "Tags_bar", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_scout_suggest.prototype, "submit", null);

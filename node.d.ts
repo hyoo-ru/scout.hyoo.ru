@@ -2693,9 +2693,6 @@ declare namespace $ {
         duration(val?: any): any;
         Duration(): $$.$mol_switch;
         Duration_field(): $mol_form_field;
-        Main_bar(): $mol_bar;
-        Tags_bar(): $mol_bar;
-        fields(): readonly any[];
         submit(val?: any): any;
         Submit(): $mol_button_major;
         submit_blocked(): boolean;
