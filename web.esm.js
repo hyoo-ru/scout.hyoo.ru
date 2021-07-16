@@ -4101,22 +4101,6 @@ var $;
 //auto.view.js.map
 ;
 "use strict";
-var $;
-(function ($) {
-    class $mol_check_icon extends $.$mol_check {
-    }
-    $.$mol_check_icon = $mol_check_icon;
-})($ || ($ = {}));
-//icon.view.tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_style_attach("mol/check/icon/icon.view.css", "[mol_check_icon][mol_check_checked] {\n\tcolor: var(--mol_theme_focus);\n}\n");
-})($ || ($ = {}));
-//icon.view.css.js.map
-;
-"use strict";
 var $node = $node || {};
 //node.web.js.map
 ;
@@ -4761,6 +4745,58 @@ var $;
 var $;
 (function ($) {
     $.$mol_style_attach("mol/icon/icon.view.css", "[mol_icon] {\n\tfill: currentColor;\n\tstroke: none;\n\twidth: 1em;\n\theight: 1em;\n\tflex: 0 0 auto;\n\tvertical-align: top;\n\tmargin: .25em 0;\n\tdisplay: inline-block;\n}\n");
+})($ || ($ = {}));
+//icon.view.css.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_github_circle extends $.$mol_icon {
+        path() {
+            return "M12,2C6.48,2 2,6.48 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12C22,6.48 17.52,2 12,2Z";
+        }
+    }
+    $.$mol_icon_github_circle = $mol_icon_github_circle;
+})($ || ($ = {}));
+//circle.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_link_source extends $.$mol_link {
+        hint() {
+            return this.$.$mol_locale.text('$mol_link_source_hint');
+        }
+        sub() {
+            return [
+                this.Icon()
+            ];
+        }
+        Icon() {
+            const obj = new this.$.$mol_icon_github_circle();
+            return obj;
+        }
+    }
+    __decorate([
+        $.$mol_mem
+    ], $mol_link_source.prototype, "Icon", null);
+    $.$mol_link_source = $mol_link_source;
+})($ || ($ = {}));
+//source.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_check_icon extends $.$mol_check {
+    }
+    $.$mol_check_icon = $mol_check_icon;
+})($ || ($ = {}));
+//icon.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_style_attach("mol/check/icon/icon.view.css", "[mol_check_icon][mol_check_checked] {\n\tcolor: var(--mol_theme_focus);\n}\n");
 })($ || ($ = {}));
 //icon.view.css.js.map
 ;
@@ -8976,6 +9012,11 @@ var $;
             const obj = new this.$.$mol_theme_auto();
             return obj;
         }
+        Source() {
+            const obj = new this.$.$mol_link_source();
+            obj.uri = () => "https://github.com/hyoo-ru/scout.hyoo.ru/";
+            return obj;
+        }
         Lights() {
             const obj = new this.$.$mol_lights_toggle();
             return obj;
@@ -8998,6 +9039,7 @@ var $;
             const obj = new this.$.$mol_page();
             obj.title = () => "Фильтры";
             obj.tools = () => [
+                this.Source(),
                 this.Lights()
             ];
             obj.body = () => [
@@ -9242,6 +9284,9 @@ var $;
     ], $hyoo_scout.prototype, "Theme", null);
     __decorate([
         $.$mol_mem
+    ], $hyoo_scout.prototype, "Source", null);
+    __decorate([
+        $.$mol_mem
     ], $hyoo_scout.prototype, "Lights", null);
     __decorate([
         $.$mol_mem
@@ -9439,7 +9484,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("hyoo/scout/scout.view.css", "[hyoo_scout] {\n\t--mol_theme_current: hsl( 30, 93%, 90% );\n\t--mol_theme_control: hsl( 30 , 70% , 40% );\n}\n\n[hyoo_scout] [mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: hsl( 30 , 90% , 50% );\n\t--mol_theme_hover: hsl( 30 , 90% , 40% );\n\t--mol_theme_text: white;\n\t--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );\n\t--mol_theme_control: white;\n\t--mol_theme_current: hsl( 30 , 90% , 30% );\n\tstroke: currentColor;\n}\n\n[hyoo_scout_filter] {\n\tflex: 0 0 16rem;\n\twidth: 400px;\n\tmax-width: 75%;\n}\n\n[hyoo_scout_gists] {\n\tflex: 0 0 24rem;\n}\n\n[hyoo_scout_gists_body] {\n\tpadding: .75rem;\n}\n\n[hyoo_scout_gists_search] {\n\talign-self: stretch;\n\tflex: none;\n}\n\n[hyoo_scout_gist] {\n\tflex: 1000 0 30rem;\n}\n\n[hyoo_scout_gist_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[hyoo_scout_filter_aspect] {\n\tpadding: .5rem;\n\tdisplay :flex;\n\tflex-direction: column;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\tbackground: var(--mol_theme_back);\n}\n\n[hyoo_scout_filter_aspect_title] {\n\tpadding: .5rem;\n\tfont-weight: 600;\n}\n\n[hyoo_scout_filter_aspect_tags] {\n\tpadding: 0;\n}\n\n[hyoo_scout_filter_tag] {\n\tmargin: 0;\n\tfont-weight: 600;\n}\n\n[hyoo_scout_filter_tag][mol_check_checked] {\n}\n\n[hyoo_scout_gists_favorite] {\n\talign-items: center;\n\tflex-direction: row-reverse;\n}\n\n[hyoo_scout_gists_favorite_duration] {\n\tmargin-right: .25rem;\n\tcolor: var(--mol_theme_text);\n}\n\n[hyoo_scout_gist_favorite] {\n\talign-items: center;\n}\n\n[hyoo_scout_gist_link] {\n\tdisplay: flex;\n}\n\n[hyoo_scout_gist_link_icon] {\n    width: 1.5rem;\n    text-align: center;\n\tpadding-right: .5rem;\n}\n\n[hyoo_scout_gist_link_title] {\n\tflex: 1 1 auto;\n}\n\n[hyoo_scout_gist_content] {\n\tbox-shadow: none;\n}\n\n[hyoo_scout_gist_aspects] {\n\tpadding: 0 .5rem .5rem;\n}\n\n[hyoo_scout_gist_aspect] {\n\tfont-weight: 600;\n\tpadding: .25rem;\n}\n\n[hyoo_scout_gist_aspect] > * ,\n[hyoo_scout_gist_aspect] > * > * {\n\tmargin: 0 .25rem;\n}\n\n[hyoo_scout_gist_remarks] {\n\tmargin-top: .5rem;\n\tflex: 1 0 auto;\n}\n\n[hyoo_scout_tag_id=\"Любой\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Малыши\"] { color: hsl( 340 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Среднячки\"] { color: hsl( 280 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Старшаки\"] { color: hsl( 40 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Внимание\"] { color: hsl( 0 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Знакомство\"] { color: hsl( 50 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Раскрепощение\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Разминка\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Творчество\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Сплочение\"] { color: hsl( 250 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Обратная связь\"] { color: hsl( 300 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Обсуждение\"] { color: hsl( 350 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Лидерство\"] { color: hsl( 30 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Доверие\"] { color: hsl( 80 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Усвоение\"] { color: hsl( 130 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Мышление\"] { color: hsl( 180 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Развлечение\"] { color: hsl( 230 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Нет\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Особый\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Бумага\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Скотч\"] { color: hsl( 250 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Стикеры\"] { color: hsl( 300 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Карандаши\"] { color: hsl( 350 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Ручки\"] { color: hsl( 40 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Платочек\"] { color: hsl( 90 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Удобная обувь\"] { color: hsl( 140 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Мешочек\"] { color: hsl( 190 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Стол\"] { color: hsl( 240 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Нет\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"1 минута\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"5 минут\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"10 минут\"] { color: hsl( 250 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"20 минут\"] { color: hsl( 300 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"30 минут\"] { color: hsl( 350 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"40 минут\"] { color: hsl( 40 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Любое\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Зал\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Просторное\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Тихое\"] { color: hsl( 250 , 80% , 40% ) }\n\n[hyoo_scout_feedback] {\n\tdisplay: block;\n\tpadding: .5rem 1rem;\n}\n\n:not([mol_check_checked]) > [hyoo_scout_filter_tag_title] {\n\tcolor: var(--mol_theme_shade);\n}\n\n");
+    $.$mol_style_attach("hyoo/scout/scout.view.css", "[hyoo_scout] {\n\t--mol_theme_current: hsl( 30, 93%, 90% );\n\t--mol_theme_control: hsl( 30 , 70% , 40% );\n}\n\n[hyoo_scout] [mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_back: hsl( 30 , 90% , 50% );\n\t--mol_theme_hover: hsl( 30 , 90% , 40% );\n\t--mol_theme_text: white;\n\t--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );\n\t--mol_theme_control: white;\n\t--mol_theme_current: hsl( 30 , 90% , 30% );\n\tstroke: currentColor;\n}\n\n[hyoo_scout_filter] {\n\tflex: 0 0 16rem;\n\twidth: 400px;\n\tmax-width: 75%;\n}\n\n[hyoo_scout_gists] {\n\tflex: 0 0 24rem;\n}\n\n[hyoo_scout_gists_body] {\n\tpadding: .75rem;\n}\n\n[hyoo_scout_gists_search] {\n\talign-self: stretch;\n\tflex: none;\n}\n\n[hyoo_scout_gist] {\n\tflex: 1000 0 30rem;\n}\n\n[hyoo_scout_gist_body] {\n\tdisplay: flex;\n\tflex-direction: column;\n}\n\n[hyoo_scout_filter_body] {\n\tpadding: 0;\n}\n\n[hyoo_scout_gist_content] {\n\tpadding: 0;\n}\n\n[hyoo_scout_filter_aspect] {\n\tpadding: .75rem;\n\tdisplay :flex;\n\tflex-direction: column;\n\tbox-shadow: 0 0 0 1px var(--mol_theme_line);\n\tbackground: var(--mol_theme_back);\n}\n\n[hyoo_scout_filter_aspect_title] {\n\tpadding: .5rem .75rem;\n\tfont-weight: 600;\n}\n\n[hyoo_scout_filter_aspect_tags] {\n\tpadding: 0;\n}\n\n[hyoo_scout_filter_tag] {\n\tmargin: 0;\n\tfont-weight: 600;\n}\n\n[hyoo_scout_filter_tag][mol_check_checked] {\n}\n\n[hyoo_scout_gists_favorite] {\n\talign-items: center;\n\tflex-direction: row-reverse;\n}\n\n[hyoo_scout_gists_favorite_duration] {\n\tmargin-right: .25rem;\n\tcolor: var(--mol_theme_text);\n}\n\n[hyoo_scout_gist_favorite] {\n\talign-items: center;\n}\n\n[hyoo_scout_gist_link] {\n\tdisplay: flex;\n}\n\n[hyoo_scout_gist_link_icon] {\n    width: 1.5rem;\n    text-align: center;\n\tpadding-right: .5rem;\n}\n\n[hyoo_scout_gist_link_title] {\n\tflex: 1 1 auto;\n}\n\n[hyoo_scout_gist_content] {\n\tbox-shadow: none;\n}\n\n[hyoo_scout_gist_aspect] {\n\tfont-weight: 600;\n}\n\n[hyoo_scout_gist_aspect] > * ,\n[hyoo_scout_gist_aspect] > * > * {\n\tmargin: 0 .25rem;\n}\n\n[hyoo_scout_gist_remarks] {\n\tmargin-top: .5rem;\n\tflex: 1 0 auto;\n}\n\n[hyoo_scout_tag_id=\"Любой\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Малыши\"] { color: hsl( 340 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Среднячки\"] { color: hsl( 280 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Старшаки\"] { color: hsl( 40 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Внимание\"] { color: hsl( 0 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Знакомство\"] { color: hsl( 50 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Раскрепощение\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Разминка\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Творчество\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Сплочение\"] { color: hsl( 250 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Обратная связь\"] { color: hsl( 300 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Обсуждение\"] { color: hsl( 350 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Лидерство\"] { color: hsl( 30 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Доверие\"] { color: hsl( 80 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Усвоение\"] { color: hsl( 130 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Мышление\"] { color: hsl( 180 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Развлечение\"] { color: hsl( 230 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Нет\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Особый\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Бумага\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Скотч\"] { color: hsl( 250 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Стикеры\"] { color: hsl( 300 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Карандаши\"] { color: hsl( 350 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Ручки\"] { color: hsl( 40 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Платочек\"] { color: hsl( 90 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Удобная обувь\"] { color: hsl( 140 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Мешочек\"] { color: hsl( 190 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Стол\"] { color: hsl( 240 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Нет\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"1 минута\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"5 минут\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"10 минут\"] { color: hsl( 250 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"20 минут\"] { color: hsl( 300 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"30 минут\"] { color: hsl( 350 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"40 минут\"] { color: hsl( 40 , 80% , 40% ) }\n\n[hyoo_scout_tag_id=\"Любое\"] { color: hsl( 100 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Зал\"] { color: hsl( 150 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Просторное\"] { color: hsl( 200 , 80% , 40% ) }\n[hyoo_scout_tag_id=\"Тихое\"] { color: hsl( 250 , 80% , 40% ) }\n\n[hyoo_scout_feedback] {\n\tdisplay: block;\n\tpadding: .5rem 1rem;\n}\n\n:not([mol_check_checked]) > [hyoo_scout_filter_tag_title] {\n\tcolor: var(--mol_theme_shade);\n}\n\n");
 })($ || ($ = {}));
 //scout.view.css.js.map
 ;

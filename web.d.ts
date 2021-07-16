@@ -1248,14 +1248,6 @@ declare namespace $.$$ {
     }
 }
 
-declare namespace $ {
-    class $mol_check_icon extends $mol_check {
-    }
-}
-
-declare namespace $ {
-}
-
 declare var $node: any;
 
 declare namespace $ {
@@ -1434,6 +1426,28 @@ declare namespace $ {
         sub(): readonly any[];
         path(): string;
         Path(): $mol_svg_path;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_icon_github_circle extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_link_source extends $mol_link {
+        hint(): string;
+        sub(): readonly any[];
+        Icon(): $mol_icon_github_circle;
+    }
+}
+
+declare namespace $ {
+    class $mol_check_icon extends $mol_check {
     }
 }
 
@@ -2605,6 +2619,7 @@ declare namespace $ {
         Gist_aspect(id: any): $mol_row;
         Gist_tag(id: any): $mol_view;
         Theme(): $$.$mol_theme_auto;
+        Source(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
         filter_aspects(): readonly any[];
         Filter_aspects(): $$.$mol_list;
