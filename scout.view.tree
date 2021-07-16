@@ -6,6 +6,8 @@ $hyoo_scout $mol_book2
 		<= Filter $mol_page
 			title \Фильтры
 			tools /
+				<= Source $mol_link_source
+					uri \https://github.com/hyoo-ru/scout.hyoo.ru/
 				<= Lights $mol_lights_toggle
 			body /
 				<= Filter_aspects $mol_list rows <= filter_aspects /

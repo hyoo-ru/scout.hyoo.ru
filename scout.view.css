@@ -41,8 +41,16 @@
 	flex-direction: column;
 }
 
+[hyoo_scout_filter_body] {
+	padding: 0;
+}
+
+[hyoo_scout_gist_content] {
+	padding: 0;
+}
+
 [hyoo_scout_filter_aspect] {
-	padding: .5rem;
+	padding: .75rem;
 	display :flex;
 	flex-direction: column;
 	box-shadow: 0 0 0 1px var(--mol_theme_line);
@@ -50,7 +58,7 @@
 }
 
 [hyoo_scout_filter_aspect_title] {
-	padding: .5rem;
+	padding: .5rem .75rem;
 	font-weight: 600;
 }
 
@@ -98,13 +106,8 @@
 	box-shadow: none;
 }
 
-[hyoo_scout_gist_aspects] {
-	padding: 0 .5rem .5rem;
-}
-
 [hyoo_scout_gist_aspect] {
 	font-weight: 600;
-	padding: .25rem;
 }
 
 [hyoo_scout_gist_aspect] > * ,
