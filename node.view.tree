@@ -39,6 +39,7 @@ $mol_speck $mol_view
 $mol_button $mol_view
 	enabled true
 	minimal_height 40
+	minimal_width 40
 	click?event null
 	event_click?event null
 	event *
@@ -165,6 +166,8 @@ $mol_pop $mol_view
 	align_hor \
 	sub /
 		<= Anchor null
+	sub_visible /
+		<= Anchor
 		<= Bubble $mol_pop_bubble
 			align <= align \bottom_center
 			content <= bubble_content /$mol_view_content
@@ -269,6 +272,7 @@ $mol_search $mol_pop
 			keys_y <= nav_components /$mol_view
 			current_y?component <=> nav_focused?component null
 	showed?val <=> suggests_showed?val false
+	align_hor \right
 	Anchor $mol_view
 		sub <= anchor_content /
 			<= Query $mol_string
@@ -294,7 +298,7 @@ $mol_search $mol_pop
 $mol_labeler $mol_list
 	rows /
 		<= Label $mol_view
-			minimal_height 24
+			minimal_height 16
 			sub <= label /$mol_view_content
 				<= title
 		<= Content $mol_view
@@ -357,10 +361,9 @@ $mol_textarea $mol_view
 		keydown?event <=> press?event null
 		pointermove?event <=> hover?event null
 	sub /
-		<= Edit $mol_string
-			dom_name \textarea
+		<= Edit $mol_textarea_edit
 			value?val <=> value?val \
-			hint <= hint \
+			hint <= hint \ 
 			enabled <= enabled true
 			length_max <= length_max Infinity
 			selection?val <=> selection?val /number
@@ -371,11 +374,18 @@ $mol_textarea $mol_view
 			sidebar_showed <= sidebar_showed
 			highlight <= highlight \
 
+$mol_textarea_edit $mol_string
+	dom_name \textarea
+	field *
+		^
+		scrollTop 0
+
 $mol_switch $mol_view
 	Option!id $mol_check
 		checked?val <=> option_checked!id?val false
 		label <= option_label!id / <= option_title!id \
 		enabled <= option_enabled!id <= enabled true
+		hint <= option_hint!id \
 		minimal_height 24
 	value?val null
 	options *
@@ -585,6 +595,7 @@ $mol_image $mol_view
 		^
 		src <= uri \
 		alt <= title
+		loading <= loading \lazy
 
 $mol_link_iconed $mol_link
 	sub /
@@ -664,7 +675,9 @@ $mol_text_image $mol_view
 		mol_text_type <= type?val \
 		data <= link?val \
 	sub /
-		<= title?val \
+		<= Image $mol_image
+			uri <= link
+			title <= title?val \
 
 $hyoo_scout $mol_book2
 	data /any
