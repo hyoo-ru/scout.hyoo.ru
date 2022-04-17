@@ -312,7 +312,8 @@ $mol_form_field $mol_labeler
 		<= name \
 		<= Bid $mol_view
 			sub / <= bid \
-	Content <= control null
+	content /
+		<= control null
 
 $mol_text_code_token $mol_dimmer
 	attr *
