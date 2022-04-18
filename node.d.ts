@@ -990,7 +990,7 @@ declare namespace $ {
         disabled(): boolean;
         tab_index(): number;
         hint(): string;
-        hint_or_error(): string;
+        error(): string;
     }
 }
 
@@ -1110,7 +1110,6 @@ declare namespace $.$$ {
         event_key_press(event: KeyboardEvent): void;
         tab_index(): number;
         error(): string;
-        hint_or_error(): string;
         sub_visible(): ($mol_view_content | $mol_speck)[];
     }
 }
@@ -1500,15 +1499,11 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_pop extends $mol_view {
-        event(): {
-            keydown: (event?: any) => any;
-        };
         showed(val?: any): boolean;
         align_vert(): string;
         align_hor(): string;
         sub(): readonly any[];
         sub_visible(): readonly any[];
-        keydown(event?: any): any;
         Anchor(): any;
         align(): string;
         bubble_content(): readonly $mol_view_content[];
@@ -1541,7 +1536,6 @@ declare namespace $.$$ {
         align(): string;
         align_vert(): "suspense" | "top" | "bottom";
         align_hor(): "suspense" | "left" | "right";
-        keydown(event: KeyboardEvent): void;
     }
 }
 
