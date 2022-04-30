@@ -1,3 +1,7 @@
+[hyoo_scout] {
+	--mol_theme_hue: 30deg;
+}
+
 [hyoo_scout_filter] {
 	flex: 0 0 16rem;
 	width: 400px;
