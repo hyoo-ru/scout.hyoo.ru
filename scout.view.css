@@ -1,18 +1,3 @@
-[hyoo_scout] {
-	--mol_theme_current: hsl( 30, 93%, 90% );
-	--mol_theme_control: hsl( 30 , 70% , 40% );
-}
-
-[hyoo_scout] [mol_theme="$mol_theme_base"] {
-	--mol_theme_back: hsl( 30 , 90% , 50% );
-	--mol_theme_hover: hsl( 30 , 90% , 40% );
-	--mol_theme_text: white;
-	--mol_theme_shade: rgba( 0 , 0 , 0 , .5 );
-	--mol_theme_control: white;
-	--mol_theme_current: hsl( 30 , 90% , 30% );
-	stroke: currentColor;
-}
-
 [hyoo_scout_filter] {
 	flex: 0 0 16rem;
 	width: 400px;
