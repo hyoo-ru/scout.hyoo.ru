@@ -1989,6 +1989,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_form_field extends $mol_labeler {
+        bids(): readonly string[];
         label(): readonly any[];
         content(): readonly any[];
         name(): string;
@@ -1999,6 +2000,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_form_field extends $.$mol_form_field {
+        bid(): string;
+    }
 }
 
 declare namespace $ {
@@ -2188,7 +2195,7 @@ declare namespace $ {
     class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
-        row_id(index: any): any;
+        row_id(id: any): any;
         col_ids(): readonly any[];
         records(): {};
         record(id: any): any;
@@ -2481,7 +2488,7 @@ declare namespace $ {
         length_max(): number;
         selection(val?: any): readonly number[];
         Edit(): $mol_textarea_edit;
-        row_numb(index: any): number;
+        row_numb(id: any): number;
         highlight(): string;
         View(): $$.$mol_text_code;
     }
@@ -2594,6 +2601,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_form extends $.$mol_form {
+        form_fields(): readonly $mol_form_field[];
+        submit_allowed(): boolean;
         submit_blocked(): boolean;
         keydown(next: KeyboardEvent): void;
     }
@@ -2610,35 +2619,35 @@ declare namespace $ {
         name_bid(): string;
         name(val?: any): string;
         Name(): $$.$mol_string;
-        Name_field(): $mol_form_field;
+        Name_field(): $$.$mol_form_field;
         icon_bid(): string;
         icon(val?: any): string;
         Icon(): $$.$mol_string;
-        Icon_field(): $mol_form_field;
+        Icon_field(): $$.$mol_form_field;
         descr_bid(): string;
         descr(val?: any): string;
         Descr(): $$.$mol_textarea;
-        Descr_field(): $mol_form_field;
+        Descr_field(): $$.$mol_form_field;
         reason_bid(): string;
         reason(val?: any): string;
         Reason(): $$.$mol_switch;
-        Reason_field(): $mol_form_field;
+        Reason_field(): $$.$mol_form_field;
         age(val?: any): string;
         Age(): $$.$mol_switch;
-        Age_field(): $mol_form_field;
+        Age_field(): $$.$mol_form_field;
         place(val?: any): string;
         Place(): $$.$mol_switch;
-        Place_field(): $mol_form_field;
+        Place_field(): $$.$mol_form_field;
         stuff(val?: any): string;
         Stuff(): $$.$mol_string;
-        Stuff_field(): $mol_form_field;
+        Stuff_field(): $$.$mol_form_field;
         prep_bid(): string;
         prep(val?: any): string;
         Prep(): $$.$mol_switch;
-        Prep_field(): $mol_form_field;
+        Prep_field(): $$.$mol_form_field;
         duration(val?: any): string;
         Duration(): $$.$mol_switch;
-        Duration_field(): $mol_form_field;
+        Duration_field(): $$.$mol_form_field;
         submit(val?: any): any;
         Submit(): $mol_button_major;
         submit_blocked(): boolean;
