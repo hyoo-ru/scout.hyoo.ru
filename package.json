@@ -152,6 +152,7 @@
     "$mol_form",
     "$mol_labeler",
     "$mol_textarea",
+    "$mol_stack",
     "$mol_text_code",
     "$mol_text",
     "$mol_grid",
