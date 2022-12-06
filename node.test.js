@@ -10789,10 +10789,10 @@ var $;
             $mol_mem_key
         ], $hyoo_scout.prototype, "gist_favorite", null);
         __decorate([
-            $mol_mem_key
+            $mol_mem
         ], $hyoo_scout.prototype, "gists_favorite_duration", null);
         __decorate([
-            $mol_mem_key
+            $mol_mem
         ], $hyoo_scout.prototype, "gists_favorite_label", null);
         __decorate([
             $mol_mem_key
