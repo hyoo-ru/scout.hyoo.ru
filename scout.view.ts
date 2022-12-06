@@ -41,7 +41,7 @@ namespace $.$$ {
 			return this.$.$mol_state_local.value( `${ this }.gist_favorite(${ id })` , next ) || false
 		}
 
-		@ $mol_mem_key
+		@ $mol_mem
 		gists_favorite_duration() {
 			
 			const dur = this.data()
@@ -51,7 +51,7 @@ namespace $.$$ {
 			return dur ? `${ dur } мин` : ''
 		}
 
-		@ $mol_mem_key
+		@ $mol_mem
 		gists_favorite_label() {
 			return this.gists_favorite_duration() ? [ this.Gists_favorite_duration() ] : []
 		}			
