@@ -439,6 +439,7 @@ $mol_button_major $mol_button_typed
 		mol_theme \$mol_theme_accent
 
 $mol_form $mol_list
+	submit_allowed true
 	submit_blocked false
 	event *
 		^
