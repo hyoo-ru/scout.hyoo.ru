@@ -177,6 +177,7 @@
     "$mol_state_session",
     "$mol_button_major",
     "$mol_text_text",
+    "$mol_text_list",
     "$mol_grid",
     "$mol_float",
     "$mol_check_expand",
