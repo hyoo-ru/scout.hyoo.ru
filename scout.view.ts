@@ -70,7 +70,7 @@ namespace $.$$ {
 
 					const tags = gist.tags
 					
-					aspect : for( const aspect in tags ) {
+					aspect : for( const aspect of Object.keys( tags ) as ( keyof typeof tags )[] ) {
 
 						for( const tag of tags[ aspect ] ) {
 							if( this.filter_tag_checked({ aspect , tag }) ) continue aspect
@@ -120,7 +120,7 @@ namespace $.$$ {
 			return this.$.$mol_state_local.value( `${ this }.gist_remarks(${ JSON.stringify( id ) })` , next ) || ''
 		}
 
-		gist_aspect_tags( aspect : string ) {
+		gist_aspect_tags( aspect : keyof $hyoo_scout_gist['tags'] ) {
 			return this.gist_current()!.tags[ aspect ].map( ( tag : string ) => this.Gist_tag({ aspect , tag }) )
 		}
 
@@ -133,13 +133,13 @@ namespace $.$$ {
 		}
 
 		filter_aspects() {
-			return Object.keys( $hyoo_scout_gist.make({}).tags )
+			return ( Object.keys( $hyoo_scout_gist.make({}).tags ) as ( keyof $hyoo_scout_gist['tags'] )[] )
 			.filter( aspect => this.filter_aspect_tags( aspect ).length > 1 )
 			.map( aspect => this.Filter_aspect( aspect ) )
 		}
 
 		@ $mol_mem_key
-		filter_aspect_tags( aspect : string ) {
+		filter_aspect_tags( aspect : keyof $hyoo_scout_gist['tags'] ) {
 
 			const values = new Set< string >()
 			
