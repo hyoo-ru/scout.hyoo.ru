@@ -19,7 +19,7 @@ namespace $.$$ {
 		@ $mol_mem
 		data() {
 			const text = $mol_fetch.text( 'hyoo/scout/_games.tree' )
-			const json = $mol_tree.fromString( text ).sub.map( tree => tree.clone({ type : '*' }).toJSON() )
+			const json = this.$.$mol_tree2_from_string( text ).kids.map( tree => this.$.$mol_tree2_to_json(tree.struct('*')) )
 			return json as $hyoo_scout_gist[]
 		}
 
