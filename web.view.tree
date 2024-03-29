@@ -505,6 +505,7 @@ $mol_switch $mol_check_list
 	value? \
 
 $mol_button_major $mol_button_minor
+	theme \$mol_theme_base
 
 $mol_row $mol_view
 
