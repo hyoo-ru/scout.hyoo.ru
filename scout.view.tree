@@ -64,7 +64,7 @@ $hyoo_scout $mol_book2
 				Icon <= Gist_favorite_icon $mol_icon_favorite
 			<= Gist_close $mol_link
 				arg * gist null
-				sub / <= Gist_close_icon $mol_icon_cross
+				sub / <= Gist_close_icon $mol_icon_close
 		body /
 			<= Gist_content!id $mol_text text <= gist_content!id \
 			<= Gist_aspects!id $mol_list rows <= gist_aspects!id /

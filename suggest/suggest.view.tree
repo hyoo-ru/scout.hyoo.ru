@@ -4,7 +4,7 @@ $hyoo_scout_suggest $mol_page
 	tools /
 		<= Close $mol_link
 			arg * suggest null
-			sub / <= close_icon $mol_icon_cross
+			sub / <= close_icon $mol_icon_close
 	body /
 		<= Form $mol_form
 			form_fields /
