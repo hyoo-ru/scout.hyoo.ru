@@ -40,7 +40,7 @@ namespace $.$$ {
 				content : this.descr() ,
 			}
 			
-			const gist = new $mol_tree({ type : 'game' , sub : $mol_tree.fromJSON( data ).sub })
+			const gist = $mol_tree2.struct('game', $mol_tree2_from_json( data ).kids)
 
 			const body = encodeURIComponent( gist.toString() + '\n' )
 
