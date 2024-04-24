@@ -167,7 +167,7 @@
     "$mol_hotkey",
     "$mol_nav",
     "$mol_string",
-    "$mol_icon_cross",
+    "$mol_icon_close",
     "$mol_dimmer",
     "$mol_paragraph",
     "$mol_regexp",
