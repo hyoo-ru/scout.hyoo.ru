@@ -216,6 +216,7 @@
     "$mol_embed_youtube",
     "$mol_icon_youtube",
     "$mol_frame",
+    "$mol_expander",
     "$mol_fetch",
     "$mol_dom_parse",
     "$mol_tree2_to_json",
