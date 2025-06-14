@@ -9982,8 +9982,9 @@ var $;
 
 ;
 	($.$mol_embed_native) = class $mol_embed_native extends ($.$mol_scroll) {
-		mime(){
-			return "";
+		uri(next){
+			if(next !== undefined) return next;
+			return "about:config";
 		}
 		title(){
 			return "";
@@ -9998,22 +9999,14 @@ var $;
 			if(next !== undefined) return next;
 			return null;
 		}
-		uri(next){
-			if(next !== undefined) return next;
-			return "";
-		}
 		dom_name(){
-			return "object";
+			return "iframe";
 		}
 		window(){
 			return null;
 		}
 		attr(){
-			return {
-				...(super.attr()), 
-				"data": (this.uri()), 
-				"type": (this.mime())
-			};
+			return {...(super.attr()), "src": (this.uri())};
 		}
 		sub(){
 			return [(this.Fallback())];
@@ -10022,9 +10015,9 @@ var $;
 			return {"hashchange": (next) => (this.uri_change(next))};
 		}
 	};
+	($mol_mem(($.$mol_embed_native.prototype), "uri"));
 	($mol_mem(($.$mol_embed_native.prototype), "Fallback"));
 	($mol_mem(($.$mol_embed_native.prototype), "uri_change"));
-	($mol_mem(($.$mol_embed_native.prototype), "uri"));
 
 
 ;
@@ -10122,7 +10115,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/embed/native/native.view.css", "[mol_embed_native] {\n\tmax-width: 100%;\n\tmax-height: 100vh;\n\tobject-fit: cover;\n\tdisplay: flex;\n\tflex: 1 1 auto;\n\tobject-position: top left;\n\tborder-radius: var(--mol_gap_round);\n\taspect-ratio: 4/3;\n}\n");
+    $mol_style_attach("mol/embed/native/native.view.css", "[mol_embed_native] {\n\tmax-width: 100%;\n\tmax-height: 100vh;\n\tobject-fit: cover;\n\tdisplay: flex;\n\tflex: 1 1 auto;\n\tobject-position: top left;\n\tborder-radius: var(--mol_gap_round);\n\taspect-ratio: 4/3;\n\tborder: none;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -10141,23 +10134,13 @@ var $;
 		allow(){
 			return "";
 		}
-		uri(next){
-			if(next !== undefined) return next;
-			return "about:config";
-		}
 		html(){
 			return null;
-		}
-		dom_name(){
-			return "iframe";
 		}
 		attr(){
 			return {
 				...(super.attr()), 
-				"data": null, 
-				"type": null, 
 				"allow": (this.allow()), 
-				"src": (this.uri()), 
 				"srcdoc": (this.html())
 			};
 		}
@@ -10186,7 +10169,6 @@ var $;
 			return true;
 		}
 	};
-	($mol_mem(($.$mol_frame.prototype), "uri"));
 
 
 ;
