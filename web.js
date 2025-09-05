@@ -3275,7 +3275,7 @@ var $;
             return node;
         }
         auto() {
-            return null;
+            return [];
         }
         render() {
             const node = this.dom_node_actual();
@@ -11956,6 +11956,7 @@ var $;
                         return response;
                     const headers = new Headers(response.headers);
                     headers.set("$mol_offline", "");
+                    headers.set("Origin-Agent-Cluster", "?1");
                     return new Response(response.body, {
                         status: response.status,
                         statusText: response.statusText,
