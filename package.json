@@ -233,6 +233,8 @@
     "$mol_embed_vklive",
     "$mol_expander",
     "$mol_fetch",
+    "$mol_rest_code",
+    "$mol_rest",
     "$mol_dom_parse",
     "$mol_tree2_to_json",
     "$mol_match",
