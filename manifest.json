@@ -1,0 +1,42 @@
+{
+	"name": "Игротека вожатого",
+	"short_name": "Игротека",
+	"description": "",
+	"id": "hyoo_scout",
+	"start_url": "../..",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#ffffff",
+	"icons": [
+		{
+			"src": "../../hyoo/scout/logo/logo_16.png",
+			"type": "image/png",
+			"sizes": "16x16"
+		},
+		{
+			"src": "../../hyoo/scout/logo/logo_48.png",
+			"type": "image/png",
+			"sizes": "48x48"
+		},
+		{
+			"src": "../../hyoo/scout/logo/logo_96.png",
+			"type": "image/png",
+			"sizes": "96x96"
+		},
+		{
+			"src": "../../hyoo/scout/logo/logo_128.png",
+			"type": "image/png",
+			"sizes": "128x128"
+		},
+		{
+			"src": "../../hyoo/scout/logo/logo_192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "../../hyoo/scout/logo/logo_512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	]
+}
